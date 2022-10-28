@@ -15,7 +15,7 @@ public class PaqueteFiguritasNormal{
 	{
 	paquete = new PaqueteFiguritasNormal(); // Instancia de paquete
 	Random numeroFiguritas = new Random(); // Random para numero de figurita
-	int cantidadFigus = paquete.getCantiadadFiguritas(); // Cantidad de cada paquete
+	int cantidadFigus = paquete.getCantidadFiguritas(); // Cantidad de cada paquete
 	int cantidadTotalFigus = paquete.getCantidadTotalFiguritas(); // Cantidad total de figuritas album
 	for(int i = 0; i < cantidadFigus ;i++) // Relleno de figuritas el paquete
 	{
@@ -34,7 +34,11 @@ public class PaqueteFiguritasNormal{
 	}
 	
 	// > Getters && Setters
-	public int getCantiadadFiguritas()
+	public LinkedList<Integer> getPaqueteFiguritas()
+	{
+		return paqueteFiguritas;
+	}
+	public int getCantidadFiguritas()
 	{
 	return cantidadFiguritasPaquete;
 	}
