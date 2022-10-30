@@ -2,10 +2,9 @@ package modelo;
 
 import java.util.LinkedList;
 
-public class SimulacionUnaPersona {
+public class SimulacionUnaPersona implements Simulacion{
 	
 	private Persona persona;
-	private Album albumPersona;
 	private int valorFiguritas;
 	private int gastoTotal;
 	
@@ -13,23 +12,23 @@ public class SimulacionUnaPersona {
 	{
 	persona = new Persona(1);
 	this.valorFiguritas = valorFiguritas;
-	albumPersona = new Album(persona.getId());
 	}
 	
-	public int iniciarSimulacion() 
+	@Override
+	public int iniciarSimulacion()
 	{
 	int cantPaquetes = 1;
-	while(!albumPersona.estaCompletoAlbum())
+	while(!persona.albumEstaCompleto())
+	{
 		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas());
 		gastoTotal = cantPaquetes * valorFiguritas;
+	}
 	return gastoTotal;
 	}
 	
-	public void rellenarAlbum(LinkedList<Integer> paquete) 
+	protected void rellenarAlbum(LinkedList<Integer> paquete)
 	{
 	for(int i = 0; i < paquete.size();i++) 
-	{
-	albumPersona.ingresarFigurita(paquete.get(i));
-	}
+		persona.insertarFiguritaEnAlbum(paquete.get(i));
 	}
 }
