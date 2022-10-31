@@ -6,7 +6,6 @@ public class FabricaDeSimulaciones {
 	
 	public Simulacion getSimulacion(String nombreDeSimulacion, int valorFiguritas) 
 	{
-		
 	if(nombreDeSimulacion == null)
 		throw new NullPointerException("Nombre de solicitud de simulacion no puede ser nulo.");
 	
@@ -15,7 +14,7 @@ public class FabricaDeSimulaciones {
 	simulacion = new SimulacionUnaPersona(valorFiguritas);
 	return simulacion;
 	}
-	return simulacion;
+		return simulacion;
 	}
 	
 	public Simulacion getSimulacion(String nombreDeSimulacion, int valorFiguritas, int cantPersonas) 
@@ -33,12 +32,12 @@ public class FabricaDeSimulaciones {
 	simulacion = new SimulacionVariasPersonaRegalo(valorFiguritas, cantPersonas);
 	return simulacion;
 	}
-	return simulacion;
+		return simulacion;
 	}
 	
 	public String[] getTodasLasSimulaciones()
 	{
 	String[] simulaciones = {"unaPersona","nPersonasRegalo","nPersonasIntercambio"};
-	return simulaciones;
+		return simulaciones;
 	}
 }
