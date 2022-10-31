@@ -10,7 +10,7 @@ public class SimulacionUnaPersona implements Simulacion{
 	
 	public SimulacionUnaPersona(int valorFiguritas) 
 	{
-	persona = new Persona(1);
+	persona = new Persona();
 	this.valorFiguritas = valorFiguritas;
 	}
 	

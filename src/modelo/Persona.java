@@ -2,13 +2,13 @@ package modelo;
 
 public class Persona {
 
-	private int id;
+	private int id = 0;
 	private Album miAlbum;
 	
 	// > Constructor
-	public Persona(int id)
+	public Persona()
 	{
-	this.id = id;
+	id++;
 	miAlbum = new Album(id);
 	}
 	
