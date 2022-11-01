@@ -1,0 +1,64 @@
+package modelo;
+
+import static org.junit.Assert.*;
+
+import java.util.LinkedList;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class PersonaTest {
+	
+	private Persona persona1;
+	private Persona persona2;
+	
+	@Before
+	public void seteo()
+	{		
+	persona1 = new Persona();
+	persona2 = new Persona();
+	
+	//Tiene repetida la figurita: 7 y 8
+	persona1.insertarFiguritaEnAlbum(1);
+	persona1.insertarFiguritaEnAlbum(2);
+	persona1.insertarFiguritaEnAlbum(3);
+	persona1.insertarFiguritaEnAlbum(4);
+	persona1.insertarFiguritaEnAlbum(7);
+	persona1.insertarFiguritaEnAlbum(7);
+	persona1.insertarFiguritaEnAlbum(8);
+	persona1.insertarFiguritaEnAlbum(8);
+	
+	//Tiene repetida la figurita: 5 y 6
+	persona2.insertarFiguritaEnAlbum(1);
+	persona2.insertarFiguritaEnAlbum(2);
+	persona2.insertarFiguritaEnAlbum(3);
+	persona2.insertarFiguritaEnAlbum(4);
+	persona2.insertarFiguritaEnAlbum(5);
+	persona2.insertarFiguritaEnAlbum(5);
+	persona2.insertarFiguritaEnAlbum(6);
+	persona2.insertarFiguritaEnAlbum(6);
+	}
+	
+	@Test
+	public void crearPersonaTrue()
+	{	
+	assertTrue(persona1.getId() == 1);
+	}
+	
+	@Test
+	public void crearPersonaFalse() 
+	{
+	assertFalse(persona2.getId() == 3);
+	}
+	
+	//Persona
+	public void RegalarFiguritas(Persona persona2) 
+	{
+	
+	}
+	
+	
+	
+	
+	
+}

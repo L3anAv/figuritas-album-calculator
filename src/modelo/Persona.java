@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.LinkedList;
+
 public class Persona {
 
 	private int id = 0;
@@ -45,13 +47,36 @@ public class Persona {
 		estaCompleto = true;
 	return estaCompleto;
 	}
-	
-	public int figuritasParaRegalar(int numDeFiguritaRequerida) 
+
+//	public int existefiguritaParaRegalar(int numDeFiguritaRequerida) 
+//	{
+//	int figurita = -1;
+//	if(miAlbum.existeFiguritasEnRepetidas(numDeFiguritaRequerida))
+//		return numDeFiguritaRequerida;
+//	return figurita;
+//	}
+
+	public void RegalarFiguritas(Persona personaParaRegalarFigus) 
 	{
-	int figurita = -1;
-	if(miAlbum.existeFiguritasEnRepetidas(numDeFiguritaRequerida))
-		return numDeFiguritaRequerida;
-	return figurita;
+	LinkedList<Integer> FigusParaRegalar = getfiguritasRepetidas();
+	LinkedList<Integer> figusDePersona2 = personaParaRegalarFigus.getMisFiguritas();
+	
+	for(int i = 0; i < FigusParaRegalar.size(); i++)
+	{ 
+	if(!figusDePersona2.contains(FigusParaRegalar.get(i))) 
+		personaParaRegalarFigus.insertarFiguritaEnAlbum(FigusParaRegalar.get(i));
+	}
+	
+	}
+	
+	public LinkedList<Integer> getfiguritasRepetidas()
+	{
+	return miAlbum.getFiguritasRepetidas();
+	}
+	
+	public LinkedList<Integer> getMisFiguritas()
+	{
+		return miAlbum.getFiguritasDeAlbum();
 	}
 	
 	public int getId() 
