@@ -53,6 +53,12 @@ public class PersonaTest {
 	assertFalse(persona2.getId() == 3);
 	}
 	
+	@Test
+	public void NoexisteFiguritaRepetidaAntesDeRegalar() 
+	{
+		assertFalse(persona2.tieneFigurita(7));
+	}
+	
 	@Test //Persona
 	public void RegalarFiguritas() 
 	{
@@ -60,7 +66,19 @@ public class PersonaTest {
 	assertTrue(persona2.tieneFigurita(7));
 	}
 	
+	@Test
+	public void RegalarFiguritasNoContengaFiguritaRegalada7() 
+	{
+	persona1.RegalarFiguritas(persona2);
+	assertFalse(persona1.existeFiguritaRepetida(7));
+	}
 	
+	@Test
+	public void RegalarFiguritasNoContengaFiguritaRegalada8() 
+	{
+	persona1.RegalarFiguritas(persona2);
+	assertFalse(persona1.existeFiguritaRepetida(8));
+	}
 	
 	
 	

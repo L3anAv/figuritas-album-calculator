@@ -21,18 +21,6 @@ public class Persona {
 	miAlbum.ingresarFigurita(numDeFigurita);
 	}
 	
-//	public int intercambioDeFiguritas(int numDeFiguritaRequerida, int numDeFiguritaNueva) 
-//	{
-//	int numDeFiguritaParaDar = -1;
-//	if(miAlbum.existeFiguritasEnRepetidas(numDeFiguritaRequerida) && !miAlbum.existeFiguritaEnAlbum(numDeFiguritaNueva)) 
-//	{
-//		numDeFiguritaParaDar = numDeFiguritaRequerida;
-//		miAlbum.eliminarFigurita(numDeFiguritaNueva);
-//		insertarFiguritaEnAlbum(numDeFiguritaNueva);
-//	}
-//	return numDeFiguritaParaDar;
-//	}
-	
 	public boolean tieneFigurita(int numDeFigurita) 
 	{
 	boolean existe = false;
@@ -49,21 +37,28 @@ public class Persona {
 	return estaCompleto;
 	}
 
+	public boolean existeFiguritaRepetida(int numDeFigurita) 
+	{
+	boolean existe = false;
+	if(miAlbum.getFiguritasRepetidas().contains(numDeFigurita))
+		existe = true;
+	return existe;
+	}
+	
 	public void RegalarFiguritas(Persona personaParaRegalarFigus) 
 	{
 	LinkedList<Integer> FigusParaRegalar = getfiguritasRepetidas();
 	LinkedList<Integer> figusDePersona2 = personaParaRegalarFigus.getMisFiguritas();
 	LinkedList<Integer> figuritasParaEliminarDeRepetidas = new LinkedList<Integer>();
 	
-	Iterator<Integer> it = FigusParaRegalar.iterator();
-	
-	while(it.hasNext()){
-		int figurita = (int) it.next();
-		if(!figusDePersona2.contains(figurita)) 
-			personaParaRegalarFigus.insertarFiguritaEnAlbum(figurita);
-			figuritasParaEliminarDeRepetidas.add(figurita);
+	for(int i = 0; i < FigusParaRegalar.size(); i++) 
+	{
+		if(!figusDePersona2.contains(FigusParaRegalar.get(i)))
+			personaParaRegalarFigus.insertarFiguritaEnAlbum(FigusParaRegalar.get(i));
+			figuritasParaEliminarDeRepetidas.add(FigusParaRegalar.get(i));
 	}
 	eliminarRepetidasRegaladas(figuritasParaEliminarDeRepetidas);
+	figuritasParaEliminarDeRepetidas.clear();
 	}
 	
 	public void eliminarRepetidasRegaladas(LinkedList<Integer> figuritasParaEliminarDeRepetidas) 
