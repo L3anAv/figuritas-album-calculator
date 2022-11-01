@@ -47,6 +47,12 @@ public class SimulacionUnaPersona implements Simulacion{
 		return null;
 	}
 
+	@Override
+	public int getPaquetesAbiertos() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 }

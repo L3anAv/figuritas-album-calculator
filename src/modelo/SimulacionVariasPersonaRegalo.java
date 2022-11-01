@@ -36,7 +36,8 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		this.cantPaquetesTotal = 0;
 		this.random = new GeneradorRandom();
 		
-		generarIndividuos();
+		
+
 	}
 	
 	public void registrarObservador(Observador obs) {
@@ -52,6 +53,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
  			personas.add(persona);
 			
 		}
+
 	}
 	
 	protected void rellenarAlbumsDeTodos() {
@@ -111,11 +113,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 			
 			
 			notificarObservadores();
-			
-			
-			
-			
-			
+
 			iteraciones++;
 			this.iteracionesGlobales = iteraciones;
 		}
@@ -139,6 +137,12 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	public ArrayList<Persona> getPersonas() {
 		
 		return this.personas;
+	}
+
+	@Override
+	public int getPaquetesAbiertos() {
+		
+		return cantPaquetesTotal;
 	}
 	
 	

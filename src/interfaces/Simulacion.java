@@ -10,4 +10,7 @@ public interface Simulacion {
 
 	public int getIteracion();
 	public ArrayList<Persona> getPersonas();
+	public int getPaquetesAbiertos();
+
+
 }
