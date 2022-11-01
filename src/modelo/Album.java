@@ -57,9 +57,10 @@ public class Album {
 	return figuritasRepetidas;
 	}
 	
-	public void eliminarFigurita(int numDeFigurita) 
+	public void eliminarFiguritaDeRepetidas(int numDeFigurita) 
 	{
-		album.remove(numDeFigurita);
+		int index = figuritasRepetidas.get(numDeFigurita);
+		
 	}
 	
 	public int getIdPropietarioAlbum() 

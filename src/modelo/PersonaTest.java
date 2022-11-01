@@ -19,6 +19,7 @@ public class PersonaTest {
 	persona2 = new Persona();
 	
 	//Tiene repetida la figurita: 7 y 8
+	//No tiene la figurita: 5 y 6
 	persona1.insertarFiguritaEnAlbum(1);
 	persona1.insertarFiguritaEnAlbum(2);
 	persona1.insertarFiguritaEnAlbum(3);
@@ -29,6 +30,7 @@ public class PersonaTest {
 	persona1.insertarFiguritaEnAlbum(8);
 	
 	//Tiene repetida la figurita: 5 y 6
+	//No Tiene la figurita: 7 y 8
 	persona2.insertarFiguritaEnAlbum(1);
 	persona2.insertarFiguritaEnAlbum(2);
 	persona2.insertarFiguritaEnAlbum(3);
@@ -51,10 +53,11 @@ public class PersonaTest {
 	assertFalse(persona2.getId() == 3);
 	}
 	
-	//Persona
-	public void RegalarFiguritas(Persona persona2) 
+	@Test //Persona
+	public void RegalarFiguritas() 
 	{
-	
+	persona1.RegalarFiguritas(persona2);
+	assertTrue(persona2.tieneFigurita(7));
 	}
 	
 	
