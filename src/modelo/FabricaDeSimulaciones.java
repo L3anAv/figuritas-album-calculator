@@ -1,5 +1,7 @@
 package modelo;
 
+import interfaces.Simulacion;
+
 public class FabricaDeSimulaciones {
 	
 	private Simulacion simulacion;

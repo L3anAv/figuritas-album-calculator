@@ -1,17 +1,18 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Persona {
 
-	private int id = 0;
+	private int id;
 	private Album miAlbum;
 	
 	// > Constructor
-	public Persona()
-	{
-	id++;
+	public Persona(int id){
+	this.id = id;
+		
 	miAlbum = new Album(id);
 	}
 	
@@ -21,19 +22,18 @@ public class Persona {
 	miAlbum.ingresarFigurita(numDeFigurita);
 	}
 	
-	public boolean tieneFigurita(int numDeFigurita) 
-	{
+	public boolean tieneFigurita(int numDeFigurita) {
 	boolean existe = false;
 	if(miAlbum.existeFiguritaEnAlbum(numDeFigurita))
 		existe = true;
 	return existe;
 	}
 	
-	public boolean albumEstaCompleto() 
-	{
+	public boolean albumEstaCompleto() {
 	boolean estaCompleto = false;
 	if(miAlbum.estaCompletoAlbum())
 		estaCompleto = true;
+	
 	return estaCompleto;
 	}
 
@@ -47,9 +47,13 @@ public class Persona {
 	
 	public void RegalarFiguritas(Persona personaParaRegalarFigus) 
 	{
-	LinkedList<Integer> FigusParaRegalar = getfiguritasRepetidas();
+	
+
+		
+	LinkedList<Integer> FigusParaRegalar = getFiguritasRepetidas();
 	LinkedList<Integer> figusDePersona2 = personaParaRegalarFigus.getMisFiguritas();
 	LinkedList<Integer> figuritasParaEliminarDeRepetidas = new LinkedList<Integer>();
+	
 	
 	for(int i = 0; i < FigusParaRegalar.size(); i++) 
 	{
@@ -63,7 +67,7 @@ public class Persona {
 	
 	public void eliminarRepetidasRegaladas(LinkedList<Integer> figuritasParaEliminarDeRepetidas) 
 	{
-		LinkedList<Integer> FigusParaRegalar = getfiguritasRepetidas();
+		LinkedList<Integer> FigusParaRegalar = getFiguritasRepetidas();
 		for(int i = 0; i < figuritasParaEliminarDeRepetidas.size(); i++) {
 			if(FigusParaRegalar.contains(figuritasParaEliminarDeRepetidas.get(i)))
 				FigusParaRegalar.remove(figuritasParaEliminarDeRepetidas.get(i));
@@ -75,7 +79,7 @@ public class Persona {
 		miAlbum.eliminarFiguritaDeRepetidas(numDeFigurita);
 	}
 	
-	public LinkedList<Integer> getfiguritasRepetidas()
+	public LinkedList<Integer> getFiguritasRepetidas()
 	{
 	return miAlbum.getFiguritasRepetidas();
 	}
@@ -89,4 +93,18 @@ public class Persona {
 	{
 	return id;
 	}
+
+	public boolean hayRepetidas() {
+		
+	return getFiguritasRepetidas().size() != 0;
+	}
+
+	@Override
+	public String toString() {
+		return "Persona [id=" + id + ", Figuritas conseguidas= " + miAlbum.getFiguritasDeAlbum().size() + " de " + "683" + "]";
+	}
+	
+	
+	
+	
 }

@@ -9,11 +9,13 @@ public class Album {
 	private LinkedList<Integer> figuritasRepetidas;
 	
 	// > Constructor
-	public Album(int idPropietario)
-	{
-	this.idPropietario = idPropietario;
-	album = new LinkedList<Integer>();
-	figuritasRepetidas = new LinkedList<Integer>();
+	public Album(int idPropietario){
+	
+		this.idPropietario = idPropietario;
+	
+		album = new LinkedList<Integer>();
+	
+		figuritasRepetidas = new LinkedList<Integer>();
 	}
 
 	// > Metodos de clase

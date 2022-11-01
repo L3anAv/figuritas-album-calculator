@@ -1,4 +1,4 @@
-package modelo;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import modelo.Persona;
 
 public class PersonaTest {
 	
@@ -15,8 +17,8 @@ public class PersonaTest {
 	@Before
 	public void seteo()
 	{		
-	persona1 = new Persona();
-	persona2 = new Persona();
+	persona1 = new Persona(1);
+	persona2 = new Persona(2);
 	
 	//Tiene repetida la figurita: 7 y 8
 	//No tiene la figurita: 5 y 6
