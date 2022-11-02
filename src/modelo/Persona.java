@@ -1,10 +1,5 @@
 package modelo;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.Iterator;
-=======
->>>>>>> 7cb303c (Mis Ultimos Cambios)
 import java.util.LinkedList;
 
 public class Persona {
@@ -13,32 +8,29 @@ public class Persona {
 	private Album miAlbum;
 	
 	// > Constructor
-	public Persona(int id){
-	this.id = id;
-		
-	miAlbum = new Album(id);
-	}
+	public Persona(){
+		id++;
+		miAlbum = new Album(id);
+}
 	
 	// > Metodos de clase
-	public void insertarFiguritaEnAlbum(int numDeFigurita) 
-	{
-	miAlbum.ingresarFigurita(numDeFigurita);
-	}
+	public void insertarFiguritaEnAlbum(int numDeFigurita){
+		miAlbum.ingresarFigurita(numDeFigurita); 
+}
 	
-	public boolean tieneFigurita(int numDeFigurita) {
-	boolean existe = false;
-	if(miAlbum.existeFiguritaEnAlbum(numDeFigurita))
-		existe = true;
-	return existe;
-	}
+	public boolean tieneFigurita(int numDeFigurita){
+		boolean existe = false;
+		if(miAlbum.existeFiguritaEnAlbum(numDeFigurita))
+			existe = true;
+		return existe;
+}
 	
-	public boolean albumEstaCompleto() {
-	boolean estaCompleto = false;
-	if(miAlbum.estaCompletoAlbum())
-		estaCompleto = true;
-	
-	return estaCompleto;
-	}
+	public boolean albumEstaCompleto(){
+		boolean estaCompleto = false;
+		if(miAlbum.estaCompletoAlbum())
+			estaCompleto = true;
+		return estaCompleto;
+}
 
 	public boolean existeFiguritaRepetida(int numDeFigurita) 
 	{
@@ -77,33 +69,24 @@ public class Persona {
 		}
 	}
 	
-	public void eliminarFiguritasDeRepetidas(int numDeFigurita) 
-	{
-		miAlbum.eliminarFiguritaDeRepetidas(numDeFigurita);
-	}
+	public void eliminarFiguritasDeRepetidas(int numDeFigurita)
+	{ miAlbum.eliminarFiguritaDeRepetidas(numDeFigurita); }
 	
 	public LinkedList<Integer> getFiguritasRepetidas()
-	{
-	return miAlbum.getFiguritasRepetidas();
-	}
+	{ return miAlbum.getFiguritasRepetidas(); }
 	
 	public LinkedList<Integer> getMisFiguritas()
-	{
-		return miAlbum.getFiguritasDeAlbum();
-	}
+	{ return miAlbum.getFiguritasDeAlbum(); }
 	
 	public int getId() 
-	{
-	return id;
-	}
+	{ return id; }
 
-	public boolean hayRepetidas() {
-		
-	return getFiguritasRepetidas().size() != 0;
-	}
+	public boolean hayRepetidas()
+	{ return getFiguritasRepetidas().size() != 0; }
 
+	// Esto va con stringbuilder
 	@Override
-	public String toString() {
+	public String toString(){
 		return "Persona [id=" + id + ", Figuritas conseguidas= " + miAlbum.getFiguritasDeAlbum().size() + " de " + "683" + "]";
 	}
 	

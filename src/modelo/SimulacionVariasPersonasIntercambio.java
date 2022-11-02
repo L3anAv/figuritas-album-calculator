@@ -5,65 +5,45 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import interfaces.Generador;
 import interfaces.Observador;
 import interfaces.Simulacion;
-import util.GeneradorRandom;
+import utilidades.GeneradorRandom;
 
 public class SimulacionVariasPersonasIntercambio implements Simulacion {
-
-	//Variables
+	
 		private ArrayList<Persona> personas;
 		private int valorFiguritas;
 		private int gastoTotal;
 		private int cantPaquetesTotal;
 		private int cantPersonas;
-		//Iteraciones
-		private int iteracionesGlobales;	
-	
-	
-	
-		//Log
+		private int iteracionesGlobales;
 		public StringBuilder sb;
-		
-		//Generador Random
 		private Generador random;
-		
-		//Observador
 		private Observador observador;
 		
-	
-		public SimulacionVariasPersonasIntercambio(int cantPersonas, int valorFiguritas)
-		{
-			this.valorFiguritas = valorFiguritas;
-			
-			this.personas = new ArrayList<Persona>(cantPersonas);
-			this.cantPersonas = cantPersonas;
-			this.cantPaquetesTotal = 0;
-			this.random = new GeneradorRandom();
-			this.sb = new StringBuilder();
-		}
+	public SimulacionVariasPersonasIntercambio(int cantPersonas, int valorFiguritas){
+		this.valorFiguritas = valorFiguritas;
+		this.personas = new ArrayList<Persona>(cantPersonas);
+		this.cantPersonas = cantPersonas;
+		this.cantPaquetesTotal = 0;
+		this.random = new GeneradorRandom();
+		this.sb = new StringBuilder();
+}
 
 	
 	
 	@Override
-	public void registrarObservador(Observador obs) {
-			
+	public void registrarObservador(Observador obs){
 			this.observador = obs;
-			
-	}
+}
 	
-	public void generarIndividuos() {
-		
-		for(int i = 0 ; i <= cantPersonas; i++) {
-			
-			Persona persona = new Persona(i);
- 			personas.add(persona);
-			
-		}
-
+	public void generarIndividuos(){	
+	for(int i = 0 ; i <= cantPersonas; i++){
+		Persona persona = new Persona();
+ 		personas.add(persona);
 	}
+}
 	
 	protected void rellenarAlbumsDeTodos() {
 		
@@ -205,24 +185,4 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		observador.notificar();
 		
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

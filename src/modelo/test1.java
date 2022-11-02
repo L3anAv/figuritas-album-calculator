@@ -1,6 +1,6 @@
 package modelo;
 
-import util.ObservadorPorConsola;
+import utilidades.ObservadorPorConsola;
 
 public class test1 {
 

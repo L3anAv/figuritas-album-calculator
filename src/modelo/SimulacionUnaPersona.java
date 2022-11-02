@@ -14,90 +14,66 @@ public class SimulacionUnaPersona implements Simulacion{
 	private Persona persona;
 	private int valorFiguritas;
 	private int gastoTotal;
-	
-	
-	//StringBuilder
 	private StringBuilder sb;
-	
-	//observador
 	private Observador observador;
 	
-	public SimulacionUnaPersona(int valorFiguritas) 
-	{
-	persona = new Persona(1);
+
+	public SimulacionUnaPersona(int valorFiguritas) {
+	persona = new Persona();
 	this.valorFiguritas = valorFiguritas;
-	this.sb = new StringBuilder();
-	
-	
-	}
+}
 	
 	@Override
-	public int iniciarSimulacion()
-	{
+	public int iniciarSimulacion(){
 	int cantPaquetes = 1;
-	while(!persona.albumEstaCompleto())
-	{
+	while(!persona.albumEstaCompleto()){
 		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas());
 		gastoTotal = cantPaquetes * valorFiguritas;
 	}
 	return gastoTotal;
-	}
+}
 	
-	protected void rellenarAlbum(LinkedList<Integer> paquete)
-	{
+	protected void rellenarAlbum(LinkedList<Integer> paquete){
 	for(int i = 0; i < paquete.size();i++) 
 		persona.insertarFiguritaEnAlbum(paquete.get(i));
-	}
+}
 
 	@Override
 	public int getIteracion() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	return 0;
+}
+	
 	@Override
 	public ArrayList<Persona> getPersonas() {
 		ArrayList<Persona> ret = new ArrayList<Persona>(1);
 		ret.add(this.persona);
 		return ret;
-	}
+}
 
 	@Override
 	public int getPaquetesAbiertos() {
-		// TODO Auto-generated method stub
 		return 0;
-	}
+}
 
-	
-	
 	@Override
 	public void escribirLog() {
-		this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");
-		
-		this.sb.append(persona.toString()).append("\n");
-				
-	}
-	
-	
-	
+	this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");	
+	this.sb.append(persona.toString()).append("\n");		
+}
 	
 	@Override
 	public void crearLog() {
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"));
-			writer.write(this.sb.toString());
-		} catch (IOException e) {
+	try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"))) {
+		writer.write(this.sb.toString());
+	}catch(IOException e){
 			e.printStackTrace();
-		}		
 	}
+}
 
 	@Override
 	public void registrarObservador(Observador obs) {
-		
-		this.observador = obs;
-		
-	}
-
+		this.observador = obs;	
+}
 
 
 }

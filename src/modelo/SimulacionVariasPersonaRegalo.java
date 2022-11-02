@@ -5,184 +5,132 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import interfaces.Generador;
 import interfaces.Observador;
 import interfaces.Simulacion;
-import util.GeneradorRandom;
-import util.ObservadorPorConsola;
+import utilidades.GeneradorRandom;
+
 
 public class SimulacionVariasPersonaRegalo implements Simulacion{
 	
-	//Variables
 	private ArrayList<Persona> personas;
 	private int valorFiguritas;
 	private int gastoTotal;
 	private int cantPaquetesTotal;
 	private int cantPersonas;
-	//Iteraciones
 	private int iteracionesGlobales;
-	
-	//Log
 	public StringBuilder sb;
-	
-	//Generador Random
 	private Generador random;
-	
-	//Observador
 	private Observador observador;
 	
-	public SimulacionVariasPersonaRegalo(int cantPersonas, int valorFiguritas)
-	{
+	public SimulacionVariasPersonaRegalo(int cantPersonas, int valorFiguritas){
 		this.valorFiguritas = valorFiguritas;
-		
 		this.personas = new ArrayList<Persona>(cantPersonas);
 		this.cantPersonas = cantPersonas;
 		this.cantPaquetesTotal = 0;
 		this.random = new GeneradorRandom();
 		this.sb = new StringBuilder();
-		
-
-	}
-	@Override
-	public void registrarObservador(Observador obs) {
-		
+}
+	
+	public void registrarObservador(Observador obs){
 		this.observador = obs;
-	}
+}
 	
-	public void generarIndividuos() {
-		
-		for(int i = 0 ; i <= cantPersonas; i++) {
-			
-			Persona persona = new Persona(i);
- 			personas.add(persona);
-			
-		}
+	public void generarIndividuos(){
+	for(int i = 0 ; i <= cantPersonas; i++){
+		Persona persona = new Persona();
+ 		personas.add(persona);	
+	}
+}
 
-	}
-	
-	protected void rellenarAlbumsDeTodos() {
-	
-		int iteraciones = 0;
-	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15) {	
-		
+	protected void rellenarAlbumsDeTodos(){
+	int iteraciones = 0;
+	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15){	
 		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
 		iteraciones++;
-		}
-	
 	}
+}
 	
 	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p){
-	
-		for(int i = 0; i < paquete.size();i++) 
-			if(!p.albumEstaCompleto()){
-				p.insertarFiguritaEnAlbum(paquete.get(i));
-				cantPaquetesTotal++;
-			}
+	for(int i = 0; i < paquete.size();i++) 
+		if(!p.albumEstaCompleto()){
+			p.insertarFiguritaEnAlbum(paquete.get(i));
+			cantPaquetesTotal++;
 	}
+}
 	
 	public boolean satisfactorio() {
-		boolean aux = true;
-		
-		for(Persona p: personas) {
-			
-			aux = aux && p.albumEstaCompleto();
-			
-		}
-		
-		return aux;
+	boolean aux = true;
+	for(Persona p: personas) {	
+		aux = aux && p.albumEstaCompleto();
 	}
-	
-	
-	private void compartirRepetidas() {
-		
-		for(Persona p: personas) if (p.hayRepetidas() && p.getId() != personas.get(random.nextInt(personas.size())).getId()) {
-			p.RegalarFiguritas(personas.get(random.nextInt(personas.size())));
-						
-		}
-		
+	return aux;
+}
+
+	private void compartirRepetidas(){	
+	for(Persona p: personas) if (p.hayRepetidas()) {
+		p.RegalarFiguritas(personas.get(random.nextInt(personas.size())));				
 	}
+}
 	
 	@Override
 	public int iniciarSimulacion() {
 		
-		int iteraciones = 0;
-		this.iteracionesGlobales = 0;
-		generarIndividuos();
-		while(!satisfactorio()) {
-			
-			
-			rellenarAlbumsDeTodos();
-			compartirRepetidas();
-			
-			
-			notificarObservadores();
-			
-			try {
-				Thread.sleep(40);
-				escribirLog();
-			} catch (InterruptedException e) {
+	int iteraciones = 0;
+	this.iteracionesGlobales = 0;
+	generarIndividuos();
+	while(!satisfactorio()){
+		rellenarAlbumsDeTodos();
+		compartirRepetidas();
+		notificarObservadores();
+		
+	try{
+		Thread.sleep(40);
+		escribirLog();
+		}catch(InterruptedException e){
 				e.printStackTrace();
-			}
-			
+}
 			iteraciones++;
 			this.iteracionesGlobales = iteraciones;
-		}
-		
+}
 		crearLog();
-		
-		
 		return iteraciones;
-	}
-
+}
 	//Getters
 	
 	public int getIteracion() {
 		return this.iteracionesGlobales;
-	}
+}
 
 	@Override
-	public ArrayList<Persona> getPersonas() {
-		
+	public ArrayList<Persona> getPersonas(){
 		return this.personas;
-	}
+}
 
 	@Override
-	public int getPaquetesAbiertos() {
-		
+	public int getPaquetesAbiertos(){
 		return cantPaquetesTotal;
-	}
-	
-	
-	
-	//Herramientas
+}
+
 	@Override
-	public void escribirLog() {
-		
-		this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");
-		
-		for(Persona p: personas) {
-			
-			this.sb.append(p.toString()).append("\n");
-		}
-	
-		
-	}
+	public void escribirLog() {	
+	this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");	
+	for(Persona p: personas){		
+		this.sb.append(p.toString()).append("\n");
+	}	
+}
 	
 	@Override
-	public void crearLog() {
-		
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"));
+	public void crearLog(){
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"))){
 			writer.write(this.sb.toString());
-		} catch (IOException e) {
+		}catch (IOException e){
 			e.printStackTrace();
-		}
 	}
+}
 	
-	private void notificarObservadores() {
-		
+	private void notificarObservadores(){
 		observador.notificar();
-		
-	}
+}
+	
 }

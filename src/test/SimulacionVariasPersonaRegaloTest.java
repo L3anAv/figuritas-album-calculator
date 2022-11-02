@@ -3,7 +3,7 @@ package test;
 import org.junit.Test;
 
 import modelo.SimulacionVariasPersonaRegalo;
-import util.ObservadorPorConsola;
+import utilidades.ObservadorPorConsola;
 
 public class SimulacionVariasPersonaRegaloTest {
 
