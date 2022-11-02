@@ -56,6 +56,16 @@ public class PersonaTest {
 	}
 	
 	@Test
+	public void tieneFiguritaTrue() {
+		assertTrue(persona1.tieneFigurita(1));
+	}
+	
+	@Test
+	public void tieneFiguritaFalse() {
+		assertFalse(persona1.tieneFigurita(5));
+	}
+	
+	@Test
 	public void NoexisteFiguritaRepetidaAntesDeRegalar() 
 	{
 		assertFalse(persona2.tieneFigurita(7));

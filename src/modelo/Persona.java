@@ -1,7 +1,10 @@
 package modelo;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Iterator;
+=======
+>>>>>>> 7cb303c (Mis Ultimos Cambios)
 import java.util.LinkedList;
 
 public class Persona {
