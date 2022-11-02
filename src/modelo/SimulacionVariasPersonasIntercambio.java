@@ -10,44 +10,48 @@ import interfaces.Generador;
 import interfaces.Observador;
 import interfaces.Simulacion;
 import util.GeneradorRandom;
-import util.ObservadorPorConsola;
 
-public class SimulacionVariasPersonaRegalo implements Simulacion{
-	
+public class SimulacionVariasPersonasIntercambio implements Simulacion {
+
 	//Variables
-	private ArrayList<Persona> personas;
-	private int valorFiguritas;
-	private int gastoTotal;
-	private int cantPaquetesTotal;
-	private int cantPersonas;
-	//Iteraciones
-	private int iteracionesGlobales;
+		private ArrayList<Persona> personas;
+		private int valorFiguritas;
+		private int gastoTotal;
+		private int cantPaquetesTotal;
+		private int cantPersonas;
+		//Iteraciones
+		private int iteracionesGlobales;	
 	
-	//Log
-	public StringBuilder sb;
 	
-	//Generador Random
-	private Generador random;
 	
-	//Observador
-	private Observador observador;
-	
-	public SimulacionVariasPersonaRegalo(int cantPersonas, int valorFiguritas)
-	{
-		this.valorFiguritas = valorFiguritas;
+		//Log
+		public StringBuilder sb;
 		
-		this.personas = new ArrayList<Persona>(cantPersonas);
-		this.cantPersonas = cantPersonas;
-		this.cantPaquetesTotal = 0;
-		this.random = new GeneradorRandom();
-		this.sb = new StringBuilder();
+		//Generador Random
+		private Generador random;
 		
+		//Observador
+		private Observador observador;
+		
+	
+		public SimulacionVariasPersonasIntercambio(int cantPersonas, int valorFiguritas)
+		{
+			this.valorFiguritas = valorFiguritas;
+			
+			this.personas = new ArrayList<Persona>(cantPersonas);
+			this.cantPersonas = cantPersonas;
+			this.cantPaquetesTotal = 0;
+			this.random = new GeneradorRandom();
+			this.sb = new StringBuilder();
+		}
 
-	}
+	
+	
 	@Override
 	public void registrarObservador(Observador obs) {
-		
-		this.observador = obs;
+			
+			this.observador = obs;
+			
 	}
 	
 	public void generarIndividuos() {
@@ -62,7 +66,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 	
 	protected void rellenarAlbumsDeTodos() {
-	
+		
 		int iteraciones = 0;
 	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15) {	
 		
@@ -81,6 +85,14 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 			}
 	}
 	
+	private void intercambiarRepetidas() {
+		
+		
+		
+	}
+	
+	
+	
 	public boolean satisfactorio() {
 		boolean aux = true;
 		
@@ -94,17 +106,11 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 	
 	
-	private void compartirRepetidas() {
-		
-		for(Persona p: personas) if (p.hayRepetidas() && p.getId() != personas.get(random.nextInt(personas.size())).getId()) {
-			p.RegalarFiguritas(personas.get(random.nextInt(personas.size())));
-						
-		}
-		
-	}
+	
 	
 	@Override
 	public int iniciarSimulacion() {
+		
 		
 		int iteraciones = 0;
 		this.iteracionesGlobales = 0;
@@ -113,7 +119,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 			
 			
 			rellenarAlbumsDeTodos();
-			compartirRepetidas();
+			intercambiarRepetidas();
 			
 			
 			notificarObservadores();
@@ -133,10 +139,29 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		
 		
 		return iteraciones;
+		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//Getters
 	
+	@Override
 	public int getIteracion() {
 		return this.iteracionesGlobales;
 	}
@@ -144,7 +169,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	@Override
 	public ArrayList<Persona> getPersonas() {
 		
-		return this.personas;
+		return personas;
 	}
 
 	@Override
@@ -152,26 +177,21 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		
 		return cantPaquetesTotal;
 	}
-	
-	
+
 	
 	//Herramientas
 	@Override
 	public void escribirLog() {
-		
 		this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");
 		
 		for(Persona p: personas) {
 			
 			this.sb.append(p.toString()).append("\n");
 		}
-	
-		
 	}
-	
+
 	@Override
 	public void crearLog() {
-		
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"));
 			writer.write(this.sb.toString());
@@ -185,4 +205,24 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		observador.notificar();
 		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

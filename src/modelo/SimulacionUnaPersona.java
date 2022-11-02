@@ -1,8 +1,12 @@
 package modelo;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import interfaces.Observador;
 import interfaces.Simulacion;
 
 public class SimulacionUnaPersona implements Simulacion{
@@ -11,10 +15,20 @@ public class SimulacionUnaPersona implements Simulacion{
 	private int valorFiguritas;
 	private int gastoTotal;
 	
+	
+	//StringBuilder
+	private StringBuilder sb;
+	
+	//observador
+	private Observador observador;
+	
 	public SimulacionUnaPersona(int valorFiguritas) 
 	{
 	persona = new Persona(1);
 	this.valorFiguritas = valorFiguritas;
+	this.sb = new StringBuilder();
+	
+	
 	}
 	
 	@Override
@@ -43,14 +57,45 @@ public class SimulacionUnaPersona implements Simulacion{
 
 	@Override
 	public ArrayList<Persona> getPersonas() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Persona> ret = new ArrayList<Persona>(1);
+		ret.add(this.persona);
+		return ret;
 	}
 
 	@Override
 	public int getPaquetesAbiertos() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	
+	
+	@Override
+	public void escribirLog() {
+		this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");
+		
+		this.sb.append(persona.toString()).append("\n");
+				
+	}
+	
+	
+	
+	
+	@Override
+	public void crearLog() {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"));
+			writer.write(this.sb.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+
+	@Override
+	public void registrarObservador(Observador obs) {
+		
+		this.observador = obs;
+		
 	}
 
 
