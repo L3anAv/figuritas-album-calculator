@@ -68,10 +68,8 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	private void intercambiarRepetidas() {
 		
 		
-		
+	
 	}
-	
-	
 	
 	public boolean satisfactorio() {
 		boolean aux = true;

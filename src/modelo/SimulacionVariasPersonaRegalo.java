@@ -13,15 +13,15 @@ import utilidades.GeneradorRandom;
 
 public class SimulacionVariasPersonaRegalo implements Simulacion{
 	
-	private ArrayList<Persona> personas;
-	private int valorFiguritas;
 	private int gastoTotal;
-	private int cantPaquetesTotal;
-	private int cantPersonas;
-	private int iteracionesGlobales;
 	public StringBuilder sb;
+	private int cantPersonas;
 	private Generador random;
+	private int valorFiguritas;
+	private int cantPaquetesTotal;
 	private Observador observador;
+	private int iteracionesGlobales;
+	private ArrayList<Persona> personas;
 	
 	public SimulacionVariasPersonaRegalo(int cantPersonas, int valorFiguritas){
 		this.valorFiguritas = valorFiguritas;
@@ -30,6 +30,29 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		this.cantPaquetesTotal = 0;
 		this.random = new GeneradorRandom();
 		this.sb = new StringBuilder();
+}
+	
+	@Override
+	public int iniciarSimulacion(){
+		
+	int iteraciones = 0;
+	this.iteracionesGlobales = 0;
+	generarIndividuos();
+		while(!satisfactorio()){
+				rellenarAlbumsDeTodos();
+				compartirRepetidas();
+				notificarObservadores();
+	try{
+			Thread.sleep(40);
+			escribirLog();
+			}catch(InterruptedException e){
+					e.printStackTrace();
+		}
+				iteraciones++;
+				this.iteracionesGlobales = iteraciones;
+	}
+		crearLog();
+		return iteraciones;
 }
 	
 	public void registrarObservador(Observador obs){
@@ -66,36 +89,15 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 	return aux;
 }
-
+	// Este puede cambiar
 	private void compartirRepetidas(){	
-	for(Persona p: personas) if (p.hayRepetidas()) {
-		p.RegalarFiguritas(personas.get(random.nextInt(personas.size())));				
+	for(Persona p: personas) {
+		if (p.hayRepetidas()){
+			p.regalarFiguritas(personas.get(random.nextInt(personas.size())));
+		}	
 	}
 }
-	
-	@Override
-	public int iniciarSimulacion() {
-		
-	int iteraciones = 0;
-	this.iteracionesGlobales = 0;
-	generarIndividuos();
-	while(!satisfactorio()){
-		rellenarAlbumsDeTodos();
-		compartirRepetidas();
-		notificarObservadores();
-		
-	try{
-		Thread.sleep(40);
-		escribirLog();
-		}catch(InterruptedException e){
-				e.printStackTrace();
-}
-			iteraciones++;
-			this.iteracionesGlobales = iteraciones;
-}
-		crearLog();
-		return iteraciones;
-}
+
 	//Getters
 	
 	public int getIteracion() {

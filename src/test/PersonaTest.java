@@ -1,9 +1,9 @@
 package test;
 
 import static org.junit.Assert.*;
+import java.util.LinkedList;
 import org.junit.Before;
 import org.junit.Test;
-
 import modelo.Persona;
 
 public class PersonaTest {
@@ -62,7 +62,7 @@ public class PersonaTest {
 	@Test /* Realizo regalo de figuritas repetidas de la persona 1 a la persona 2,
 	ademas de testear que el regalo sea efectuado correctamente */
 	public void RegalarFiguritas(){
-	persona1.RegalarFiguritas(persona2);
+	persona1.regalarFiguritas(persona2);
 	assertTrue(persona2.tieneFigurita(7));
 }
 	
@@ -70,16 +70,80 @@ public class PersonaTest {
 	
 	@Test 
 	public void personaNoContengaFiguritaRegalada7() {
-	persona1.RegalarFiguritas(persona2);
+	persona1.regalarFiguritas(persona2);
 	assertFalse(persona1.existeFiguritaRepetida(7));
 }
 	
 	@Test 
 	public void personaNoContengaFiguritaRegalada8(){
-	persona1.RegalarFiguritas(persona2);
+	persona1.regalarFiguritas(persona2);
 	assertFalse(persona1.existeFiguritaRepetida(8));
 }
 	
+/* Testeo de intercambio de figuritas entre dos personas */
 	
+	@Test
+	public void personaTieneFiguritaParaIntercambiar(){
+	assertTrue(persona1.tieneFiguritaParaIntercambiar(persona2.getFiguritasRepetidas()));
+}
 	
+	@Test
+	public void personaDevuelveUnaFiguParaIntercambiarCorrectamente(){
+	
+	Persona persona3 = new Persona();
+	Persona persona4 = new Persona();
+	
+	// > Necesita la figurita 3
+	persona3.insertarFiguritaEnAlbum(1);
+	persona3.insertarFiguritaEnAlbum(2);
+	
+	// > Tiene repetida solo la figurita 3
+	persona4.insertarFiguritaEnAlbum(1);
+	persona4.insertarFiguritaEnAlbum(2);
+	persona4.insertarFiguritaEnAlbum(3);
+	persona4.insertarFiguritaEnAlbum(3);
+
+	LinkedList<Integer> persona4FiguritasRepetidas = persona4.getFiguritasRepetidas();
+	int figuritaParaCambiarQueNecesitaP3 = persona3.buscarFiguritaParaIntercambiar(persona4FiguritasRepetidas);
+	assertTrue(figuritaParaCambiarQueNecesitaP3 == 3);
+	
+}
+	
+	@Test
+	public void personasRealizanIntercambioCorrectamente(){
+	
+	Persona persona3 = new Persona();
+	Persona persona4 = new Persona();
+	
+	// > Necesitas las figuritas: 3 y 4 
+	persona3.insertarFiguritaEnAlbum(1);
+	persona3.insertarFiguritaEnAlbum(2);
+	persona3.insertarFiguritaEnAlbum(5);
+	persona3.insertarFiguritaEnAlbum(5);
+	persona3.insertarFiguritaEnAlbum(6);
+	persona3.insertarFiguritaEnAlbum(6);
+	
+	//  > Necesitas las figuritas: 5 y 6 
+	persona4.insertarFiguritaEnAlbum(1);
+	persona4.insertarFiguritaEnAlbum(2);
+	persona4.insertarFiguritaEnAlbum(3);
+	persona4.insertarFiguritaEnAlbum(3);
+	persona4.insertarFiguritaEnAlbum(4);
+	persona4.insertarFiguritaEnAlbum(4);
+	
+	System.out.println("Antes de intercambiar persona 3 (Figurita 3): " + persona3.tieneFigurita(3));
+	System.out.println("Antes de intercambiar persona 3 (Figurita 4): " + persona3.tieneFigurita(4));
+	System.out.println("------");
+	System.out.println("Antes de intercambiar persona 4 (Figurita 5): " + persona4.tieneFigurita(5));
+	System.out.println("Antes de intercambiar persona 4 (Figurita 6): " + persona4.tieneFigurita(6));
+	
+	persona3.intercambiarFiguritas(persona4);
+	
+	System.out.println("Despues de intercambiar persona 3 (Figurita 3): " + persona3.tieneFigurita(3));
+	System.out.println("Despues de intercambiar persona 3 (Figurita 4): " + persona3.tieneFigurita(4));
+	System.out.println("------");
+	System.out.println("Despues de intercambiar persona 4 (Figurita 5): " + persona4.tieneFigurita(5));
+	System.out.println("Despues de intercambiar persona 4 (Figurita 6): " + persona4.tieneFigurita(6));
+	
+}	
 }

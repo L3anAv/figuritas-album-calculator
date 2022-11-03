@@ -18,9 +18,9 @@ public class Album {
 
 	// > Metodos de clase
 	public void ingresarFigurita(int figurita){
-		if(!album.contains(figurita))
+		if(!album.contains(figurita)) 
 			album.add(figurita);
-		else
+		else 
 			figuritasRepetidas.add(figurita);
 }
 	

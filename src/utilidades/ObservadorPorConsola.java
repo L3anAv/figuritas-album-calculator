@@ -24,11 +24,9 @@ public class ObservadorPorConsola implements Observador {
 	@Override
 	public void notificar()
 	{
-		
 		System.out.print("It: " + sim.getIteracion() + " Paquetes abiertos: " + sim.getPaquetesAbiertos() + "\n");
 		
-		for(Persona p: lista) {
-			
+		for(Persona p: lista) {	
 			System.out.println(p.toString());
 		}
 		
