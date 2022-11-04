@@ -77,8 +77,8 @@ public class SimulacionUnaPersona implements Simulacion{
 
 	@Override
 	public double promedioPaquetesXPersona() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return this.getPaquetesAbiertos();
 	}
 
 

@@ -29,14 +29,8 @@ public class ObservadorPorConsola implements Observador {
 		for(Persona p: lista) {	
 			System.out.println(p.toString());
 		}
+
 		
-//		try {
-//			Thread.sleep(30);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		//System.out.println();
 	}
 
 	

@@ -40,7 +40,7 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	
 	public void generarIndividuos(){	
 	for(int i = 0 ; i <= cantPersonas; i++){
-		Persona persona = new Persona();
+		Persona persona = new Persona(i);
  		personas.add(persona);
 	}
 }
@@ -51,6 +51,7 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15) {	
 		
 		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
+		cantPaquetesTotal++;
 		iteraciones++;
 		}
 	
@@ -61,7 +62,6 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		for(int i = 0; i < paquete.size();i++) 
 			if(!p.albumEstaCompleto()){
 				p.insertarFiguritaEnAlbum(paquete.get(i));
-				cantPaquetesTotal++;
 			}
 	}
 	
@@ -189,6 +189,6 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	@Override
 	public double promedioPaquetesXPersona() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.cantPaquetesTotal/cantPersonas;
 	}
 }
