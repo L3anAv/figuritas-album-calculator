@@ -183,4 +183,12 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		observador.notificar();
 		
 	}
+
+
+
+	@Override
+	public double promedioPaquetesXPersona() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

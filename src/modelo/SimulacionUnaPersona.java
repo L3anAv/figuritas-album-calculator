@@ -75,5 +75,11 @@ public class SimulacionUnaPersona implements Simulacion{
 		this.observador = obs;	
 }
 
+	@Override
+	public double promedioPaquetesXPersona() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }

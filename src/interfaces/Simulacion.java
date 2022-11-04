@@ -14,6 +14,7 @@ public interface Simulacion {
 	public int getIteracion();
 	public ArrayList<Persona> getPersonas();
 	public int getPaquetesAbiertos();
+	public double promedioPaquetesXPersona();
 	public void escribirLog();
 	public void crearLog();
 

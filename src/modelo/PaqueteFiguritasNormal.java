@@ -20,6 +20,7 @@ public class PaqueteFiguritasNormal{
 	for(int i = 0; i < cantidadFigus ;i++) // Relleno de figuritas el paquete
 	{
 		int numeroFigurita = numeroFiguritas.nextInt(cantidadTotalFigus);
+		
 		paquete.setFigurita(numeroFigurita);
 	}
 	return paquete; // Retorno el paquete

@@ -61,7 +61,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	
 	public void generarIndividuos(){
 	for(int i = 0 ; i <= cantPersonas; i++){
-		Persona persona = new Persona();
+		Persona persona = new Persona(i);
  		personas.add(persona);	
 	}
 }
@@ -71,6 +71,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15){	
 		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
 		iteraciones++;
+		cantPaquetesTotal++;
 	}
 }
 	
@@ -78,7 +79,6 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	for(int i = 0; i < paquete.size();i++) 
 		if(!p.albumEstaCompleto()){
 			p.insertarFiguritaEnAlbum(paquete.get(i));
-			cantPaquetesTotal++;
 	}
 }
 	
@@ -92,9 +92,13 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	// Este puede cambiar
 	private void compartirRepetidas(){	
 	for(Persona p: personas) {
-		if (p.hayRepetidas()){
-			p.regalarFiguritas(personas.get(random.nextInt(personas.size())));
+		Persona p2 = personas.get(random.nextIntCExclusion(personas.size(), p.getId()));
+		if (p.hayRepetidas() ){
+			p.regalarFiguritas(p2);
 		}	
+		
+		
+	
 	}
 }
 
@@ -134,5 +138,11 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	private void notificarObservadores(){
 		observador.notificar();
 }
+
+	@Override
+	public double promedioPaquetesXPersona() {
+		
+		return cantPaquetesTotal/personas.size();
+	}
 	
 }

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Persona {
 
@@ -12,10 +13,13 @@ public class Persona {
 		id++;
 		miAlbum = new Album(id);
 }
-	
+	public Persona(int id) {
+		this.id = id;
+		miAlbum = new Album(id);
+	}
 	// > Metodos de clase
 	public void insertarFiguritaEnAlbum(int numDeFigurita){
-	System.out.println("Insertando Figurita" + numDeFigurita);
+	//System.out.println("Insertando Figurita" + numDeFigurita);
 	miAlbum.ingresarFigurita(numDeFigurita);
 }
 	
@@ -65,15 +69,22 @@ public class Persona {
 		if(!personaParaIntercambiar.tieneFigurita(figuritaIntercambiable) &&
 		   tieneFiguritaParaIntercambiar(figusDeOtraPersonaParaIntercambiar)){
 			int figuritaOtraPersonaIntercambio = buscarFiguritaParaIntercambiar(figusDeOtraPersonaParaIntercambiar);
-			System.out.println( "Aca intercambio: " + figuritaOtraPersonaIntercambio);
+			
+			//System.out.println( "Aca intercambio: " + figuritaOtraPersonaIntercambio);
 			
 			// > Los inserto en una lista de cuales intercambio
 			insertarFiguritaEnAlbum(figuritaOtraPersonaIntercambio);
-			System.out.println( "Se hace el intercambio" + figuritaOtraPersonaIntercambio);
+			//System.out.println( "Se hace el intercambio" + figuritaOtraPersonaIntercambio);
 			personaParaIntercambiar.insertarFiguritaEnAlbum(figuritaIntercambiable);
+			//System.out.println("Se hace el intercambio final");
 		}
+	
+		//System.out.println("Loopea");
+	
 	}
-}
+
+	//System.out.println("Termina la ejecucion de intercambio");
+	}
 	
 	public boolean tieneFiguritaParaIntercambiar(LinkedList<Integer> figusParaIntercambio){
 	int index = 0;
@@ -126,6 +137,24 @@ public class Persona {
 	@Override
 	public String toString(){
 		return "Persona [id=" + id + ", Figuritas conseguidas= " + miAlbum.getFiguritasDeAlbum().size() + " de " + "683" + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, miAlbum);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		
+		return this.id == other.id;
 	}
 	
 	
