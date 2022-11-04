@@ -104,7 +104,8 @@ public class PersonaTest {
 	persona4.insertarFiguritaEnAlbum(3);
 
 	LinkedList<Integer> persona4FiguritasRepetidas = persona4.getFiguritasRepetidas();
-	int figuritaParaCambiarQueNecesitaP3 = persona3.buscarFiguritaParaIntercambiar(persona4FiguritasRepetidas);
+	LinkedList<Integer> figuritasOfrecidas = new LinkedList<Integer>();
+	int figuritaParaCambiarQueNecesitaP3 = persona3.buscarFiguritaParaIntercambiar(persona4FiguritasRepetidas, figuritasOfrecidas);
 	assertTrue(figuritaParaCambiarQueNecesitaP3 == 3);
 	
 }
@@ -115,35 +116,34 @@ public class PersonaTest {
 	Persona persona3 = new Persona();
 	Persona persona4 = new Persona();
 	
-	// > Necesitas las figuritas: 3 y 4 
+	// > Necesitas las figurita: 5 y 6
 	persona3.insertarFiguritaEnAlbum(1);
 	persona3.insertarFiguritaEnAlbum(2);
-	persona3.insertarFiguritaEnAlbum(5);
-	persona3.insertarFiguritaEnAlbum(5);
-	persona3.insertarFiguritaEnAlbum(6);
-	persona3.insertarFiguritaEnAlbum(6);
-	
-	//  > Necesitas las figuritas: 5 y 6 
+	persona3.insertarFiguritaEnAlbum(3);
+	persona3.insertarFiguritaEnAlbum(3);
+	persona3.insertarFiguritaEnAlbum(4);
+	persona3.insertarFiguritaEnAlbum(4);
+
+	//  > Necesitas las figurita:  3 y 4
 	persona4.insertarFiguritaEnAlbum(1);
 	persona4.insertarFiguritaEnAlbum(2);
-	persona4.insertarFiguritaEnAlbum(3);
-	persona4.insertarFiguritaEnAlbum(3);
-	persona4.insertarFiguritaEnAlbum(4);
-	persona4.insertarFiguritaEnAlbum(4);
+	persona4.insertarFiguritaEnAlbum(5);
+	persona4.insertarFiguritaEnAlbum(5);
+	persona4.insertarFiguritaEnAlbum(6);
+	persona4.insertarFiguritaEnAlbum(6);
 	
-	System.out.println("Antes de intercambiar persona 3 (Figurita 3): " + persona3.tieneFigurita(3));
-	System.out.println("Antes de intercambiar persona 3 (Figurita 4): " + persona3.tieneFigurita(4));
+	System.out.println("Antes de intercambiar persona 3 (Figurita 5): " + persona3.tieneFigurita(5));
+	System.out.println("Antes de intercambiar persona 3 (Figurita 6): " + persona3.tieneFigurita(6));
+	System.out.println("Antes de intercambiar persona 4 (Figurita 3): " + persona4.tieneFigurita(3));
+	System.out.println("Antes de intercambiar persona 4 (Figurita 4): " + persona4.tieneFigurita(4));
 	System.out.println("------");
-	System.out.println("Antes de intercambiar persona 4 (Figurita 5): " + persona4.tieneFigurita(5));
-	System.out.println("Antes de intercambiar persona 4 (Figurita 6): " + persona4.tieneFigurita(6));
 	
 	persona3.intercambiarFiguritas(persona4);
 	
-	System.out.println("Despues de intercambiar persona 3 (Figurita 3): " + persona3.tieneFigurita(3));
-	System.out.println("Despues de intercambiar persona 3 (Figurita 4): " + persona3.tieneFigurita(4));
+	System.out.println("Despues de intercambiar persona 3 (Figurita 5): " + persona3.tieneFigurita(5));
+	System.out.println("Despues de intercambiar persona 3 (Figurita 6): " + persona3.tieneFigurita(6));
+	System.out.println("Despues de intercambiar persona 4 (Figurita 3): " + persona4.tieneFigurita(3));
+	System.out.println("Despues de intercambiar persona 4 (Figurita 4): " + persona4.tieneFigurita(4));
 	System.out.println("------");
-	System.out.println("Despues de intercambiar persona 4 (Figurita 5): " + persona4.tieneFigurita(5));
-	System.out.println("Despues de intercambiar persona 4 (Figurita 6): " + persona4.tieneFigurita(6));
-	
 }	
 }
