@@ -66,7 +66,7 @@ public class PersonaTest {
 	assertTrue(persona2.tieneFigurita(7));
 }
 	
-/* > Testeo que la persona 1 ya no tenga las figuritas repetidas regaladas. */
+/* > Testeo que la persona 1 ya no tenga las figuritas repetidas que ya regalo. */
 	
 	@Test 
 	public void personaNoContengaFiguritaRegalada7() {
@@ -80,14 +80,15 @@ public class PersonaTest {
 	assertFalse(persona1.existeFiguritaRepetida(8));
 }
 	
-/* Testeo de intercambio de figuritas entre dos personas */
+	/* > Testeo de metodos de intercambio de figuritas repetidas. */
 	
-	@Test
+	@Test /* Testeo de metodo encargado de ver si una persona tiene una figurita de interes para otro */
 	public void personaTieneFiguritaParaIntercambiar(){
 	assertTrue(persona1.tieneFiguritaParaIntercambiar(persona2.getFiguritasRepetidas()));
 }
 	
-	@Test
+	@Test /* Testeo de metodo encargado de devolver las figuritas para intercambiar de una persona
+	 		a otra persona. */
 	public void personaDevuelveUnaFiguParaIntercambiarCorrectamente(){
 	
 	Persona persona3 = new Persona();
@@ -110,7 +111,7 @@ public class PersonaTest {
 	
 }
 	
-	@Test
+	@Test /* Testeo de metodo que realiza el intercambio entre dos Personas */
 	public void personasRealizanIntercambioCorrectamente(){
 	
 	Persona persona3 = new Persona();
