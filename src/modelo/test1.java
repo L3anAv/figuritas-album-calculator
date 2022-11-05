@@ -9,6 +9,5 @@ public class test1 {
 		sim.registrarObservador(new ObservadorPorConsola(sim));
 		sim.iniciarSimulacion();
 	}
-
 	
 }

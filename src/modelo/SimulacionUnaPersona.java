@@ -19,7 +19,7 @@ public class SimulacionUnaPersona implements Simulacion{
 	
 
 	public SimulacionUnaPersona(int valorFiguritas) {
-	persona = new Persona();
+	persona = new Persona(1);
 	this.valorFiguritas = valorFiguritas;
 }
 	
