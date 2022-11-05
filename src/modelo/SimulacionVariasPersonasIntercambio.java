@@ -188,7 +188,6 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 
 	@Override
 	public double promedioPaquetesXPersona() {
-		// TODO Auto-generated method stub
 		return this.cantPaquetesTotal/cantPersonas;
 	}
 }
