@@ -1,9 +1,11 @@
 package Vista;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.im.InputContext;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -17,6 +19,8 @@ import com.formdev.flatlaf.FlatDarkLaf;
 
 import interfaces.Simulacion;
 import modelo.SimulacionUnaPersona;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class InterfazSettingSimulacion {
 
@@ -32,9 +36,23 @@ public class InterfazSettingSimulacion {
 	
 	
 	//Labels de Valores default
-	private JLabel default_CantFigus;
-	private JLabel default_CantFigusPaq;
-	private JLabel default_Precio;
+	private JLabel defaultLbl_CantFigus;
+	private JLabel defaultLbl_CantFigusPaq;
+	private JLabel defaultLbl_Precio;
+	
+	
+	//Variables
+	private int cantTotalFigus;
+	private int cantFigusPaq;
+	private int precioPaq;
+	private int cantSims;
+	
+	//Variables default
+	private final int default_CantFigus = 630;
+	private final int default_CantFigusPaq = 5;
+	private final int default_Precio = 200;
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -131,31 +149,114 @@ public class InterfazSettingSimulacion {
 
 	private void iniciarTxtFields() {
 		
-		
+		//Field cantidad total de figuritas
 		field_CantTotalFigus = new JTextField();
+		field_CantTotalFigus.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			
+				char c = e.getKeyChar();
+				
+				if(Character.isDigit(c)) {
+					
+					cantTotalFigus = cantTotalFigus + c;
+				}
+				else {
+					
+					JLabel lblErrorIngeso_CantTotal = new JLabel("Ingrese solo numeros!");
+					lblErrorIngeso_CantTotal.setBounds(46, 143, 200, 14);
+					lblErrorIngeso_CantTotal.setFont(new Font("Inconsolata", Font.ITALIC, 11));
+					lblErrorIngeso_CantTotal.setForeground(Color.RED);
+					layeredPane.add(lblErrorIngeso_CantTotal);
+
+				}
+			}
+		});
+		
 		field_CantTotalFigus.setBounds(46, 121, 281, 20);
 		field_CantTotalFigus.setColumns(10);
 		layeredPane.add(field_CantTotalFigus, Integer.valueOf(1));
-		//frame.getContentPane().add(field_CantTotalFigus);
 		
+		//Field cantidad de figurita en paquete
 		field_CantFigusPaq = new JTextField();
+		field_CantFigusPaq.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			
+				char c = e.getKeyChar();
+				
+				if(Character.isDigit(c)) {
+					
+					cantFigusPaq = cantFigusPaq + c;
+				}
+				else {
+				
+					JLabel lblErrorIngreso_CantFigusPaq = new JLabel("Ingrese solo numeros!");
+					lblErrorIngreso_CantFigusPaq.setBounds(46, 212, 200, 14);
+					lblErrorIngreso_CantFigusPaq.setFont(new Font("Inconsolata", Font.ITALIC, 11));
+					lblErrorIngreso_CantFigusPaq.setForeground(Color.RED);
+					layeredPane.add(lblErrorIngreso_CantFigusPaq);
+				}
+			}
+		});
+
 		field_CantFigusPaq.setBounds(46, 190, 281, 20);
 		field_CantFigusPaq.setColumns(10);
 		layeredPane.add(field_CantFigusPaq, Integer.valueOf(1));
-		//frame.getContentPane().add(field_CantPaq);
 		
+		//Field precio
 		field_Precio = new JTextField();
+		field_Precio.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				
+				if(Character.isDigit(c)) {
+					
+					precioPaq = precioPaq + c;
+				}
+				else {
+					JLabel lblErrorIngresoPrecio = new JLabel("Ingrese solo numeros!");
+					lblErrorIngresoPrecio.setBounds(46, 280, 200, 14);
+					lblErrorIngresoPrecio.setFont(new Font("Inconsolata", Font.ITALIC, 11));
+					lblErrorIngresoPrecio.setForeground(Color.RED);
+					layeredPane.add(lblErrorIngresoPrecio);
+				}
+			}
+		});
+	
 		field_Precio.setBounds(46, 259, 281, 20);
 		field_Precio.setColumns(10);
 		layeredPane.add(field_Precio, Integer.valueOf(1));
-		//frame.getContentPane().add(field_Precio);
 		
 		
+		
+		//Field Simulaciones
 		field_CantSims = new JTextField();
+		field_CantSims.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				
+				if(Character.isDigit(c)) {
+					
+					cantSims = cantSims
+							+ c;
+				}
+				else {
+					JLabel lblErrorIngresoCantSims = new JLabel("Ingrese solo numeros!");
+					lblErrorIngresoCantSims.setBounds(46, 350, 200, 14);
+					lblErrorIngresoCantSims.setFont(new Font("Inconsolata", Font.ITALIC, 11));
+					lblErrorIngresoCantSims.setForeground(Color.RED);
+					layeredPane.add(lblErrorIngresoCantSims);
+				}
+			}
+		});
+	
 		field_CantSims.setBounds(46, 328, 281, 20);
 		field_CantSims.setColumns(10);
 		layeredPane.add(field_CantSims, Integer.valueOf(1));
-		//frame.getContentPane().add(field_CantSims);
+		
 		
 		iniciarLblsDefault();
 		//default_CantFigus.setEnabled(false);
@@ -166,7 +267,8 @@ public class InterfazSettingSimulacion {
 				if(chkDefaultCantFigus.isSelected()) {
 					
 					field_CantTotalFigus.setEnabled(false);	
-					default_CantFigus.setVisible(true);	
+					defaultLbl_CantFigus.setVisible(true);	
+					field_CantTotalFigus.setText("");
 					frame.revalidate();
 					frame.repaint();
 					
@@ -174,7 +276,7 @@ public class InterfazSettingSimulacion {
 				else {
 					
 					field_CantTotalFigus.setEnabled(true);
-					default_CantFigus.setVisible(false);
+					defaultLbl_CantFigus.setVisible(false);
 	
 					frame.revalidate();
 					frame.repaint();
@@ -193,7 +295,9 @@ public class InterfazSettingSimulacion {
 			if(chkDefaultFigusPaq.isSelected()) {
 				
 				field_CantFigusPaq.setEnabled(false);
-				default_CantFigusPaq.setVisible(true);
+				field_CantFigusPaq.setText("");
+				defaultLbl_CantFigusPaq.setVisible(true);
+				
 				frame.revalidate();
 				frame.repaint();
 				
@@ -202,7 +306,7 @@ public class InterfazSettingSimulacion {
 			else {
 				
 				field_CantFigusPaq.setEnabled(true);
-				default_CantFigusPaq.setVisible(false);
+				defaultLbl_CantFigusPaq.setVisible(false);
 				frame.revalidate();
 				frame.repaint();
 				
@@ -221,11 +325,12 @@ public class InterfazSettingSimulacion {
 			
 			if(chkDefaultPrecio.isSelected()) {
 				field_Precio.setEnabled(false);
-				default_Precio.setVisible(true);
+				field_Precio.setText("");
+				defaultLbl_Precio.setVisible(true);
 			}
 			else {
 				field_Precio.setEnabled(true);
-				default_Precio.setVisible(false);
+				defaultLbl_Precio.setVisible(false);
 				
 			}
 			
@@ -241,26 +346,30 @@ public class InterfazSettingSimulacion {
 		
 		
 		frame.getContentPane().add(layeredPane);
+		
+
+		
+		
+	
 	}
 
 	
 	private void iniciarLblsDefault() {
 		
-		default_CantFigus = new JLabel("630");
-		default_CantFigus.setBounds(46,121,281,20);
-		default_CantFigus.setVisible(false);
-		layeredPane.add(default_CantFigus, Integer.valueOf(2));
+		defaultLbl_CantFigus = new JLabel("630");
+		defaultLbl_CantFigus.setBounds(46,121,281,20);
+		defaultLbl_CantFigus.setVisible(false);
+		layeredPane.add(defaultLbl_CantFigus, Integer.valueOf(2));
 		
-		default_CantFigusPaq = new JLabel("5");
-		default_CantFigusPaq.setBounds(46, 190, 281, 20);
-		default_CantFigusPaq.setVisible(false);
-		layeredPane.add(default_CantFigusPaq, Integer.valueOf(2));
+		defaultLbl_CantFigusPaq = new JLabel("5");
+		defaultLbl_CantFigusPaq.setBounds(46, 190, 281, 20);
+		defaultLbl_CantFigusPaq.setVisible(false);
+		layeredPane.add(defaultLbl_CantFigusPaq, Integer.valueOf(2));
 		
-		default_Precio = new JLabel("200");
-		default_Precio.setBounds(46, 259, 281, 20);
-		default_Precio.setVisible(false);
-		layeredPane.add(default_Precio, Integer.valueOf(2));
+		defaultLbl_Precio = new JLabel("200");
+		defaultLbl_Precio.setBounds(46, 259, 281, 20);
+		defaultLbl_Precio.setVisible(false);
+		layeredPane.add(defaultLbl_Precio, Integer.valueOf(2));
 	}
-
 }
 
