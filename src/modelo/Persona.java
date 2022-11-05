@@ -17,7 +17,7 @@ public class Persona {
 }
 	
 	// > Metodos de clase
-	public void insertarFiguritaEnAlbum(int numDeFigurita)
+	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception
 	{ miAlbum.ingresarFigurita(numDeFigurita); }
 	
 	public boolean tieneFigurita(int numDeFigurita){
@@ -41,7 +41,7 @@ public class Persona {
 	return existe;
 }
 	
-	public void regalarFiguritas(Persona personaParaRegalarFigus){
+	public void regalarFiguritas(Persona personaParaRegalarFigus) throws Exception{
 	LinkedList<Integer> figusParaRegalar = getFiguritasRepetidas();
 	LinkedList<Integer> figuritasRegaladas = new LinkedList<Integer>();
 	LinkedList<Integer> figusDeOtraPersona = personaParaRegalarFigus.getMisFiguritas();
@@ -55,7 +55,7 @@ public class Persona {
 		figuritasRegaladas.clear();
 }
 	
-	public void intercambiarFiguritas(Persona personaParaIntercambiar){
+	public void intercambiarFiguritas(Persona personaParaIntercambiar) throws Exception{
 	
 	LinkedList<Integer> figusMiasParaIntercambiar = getFiguritasRepetidas();
 	LinkedList<Integer> figusDeOtraPersonaParaIntercambiar = personaParaIntercambiar.getFiguritasRepetidas();
@@ -83,7 +83,7 @@ public class Persona {
 	figuritasOtraPersonaOfrecidas.clear();
 }
 	
-	public void realizarIntercambio(LinkedList<Integer> figuritasMiasPersonaOfrecidas, LinkedList<Integer> figuritasOtraPersonaOfrecidas, Persona otraPersona){
+	public void realizarIntercambio(LinkedList<Integer> figuritasMiasPersonaOfrecidas, LinkedList<Integer> figuritasOtraPersonaOfrecidas, Persona otraPersona) throws Exception{
 	for(int i = 0; i < figuritasMiasPersonaOfrecidas.size(); i++){
 		insertarFiguritaEnAlbum(figuritasOtraPersonaOfrecidas.get(i));
 		otraPersona.insertarFiguritaEnAlbum(figuritasMiasPersonaOfrecidas.get(i));

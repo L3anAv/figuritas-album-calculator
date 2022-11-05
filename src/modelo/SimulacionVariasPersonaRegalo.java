@@ -33,7 +33,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 }
 	
 	@Override
-	public int iniciarSimulacion(){
+	public int iniciarSimulacion() throws Exception{
 		
 	int iteraciones = 0;
 	this.iteracionesGlobales = 0;
@@ -80,7 +80,8 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p){
 		for(int i = 0; i < paquete.size();i++) {
 			if(!p.albumEstaCompleto()){
-				p.insertarFiguritaEnAlbum(paquete.get(i));
+				try { p.insertarFiguritaEnAlbum(paquete.get(i));}
+				catch ( Exception e) {e.printStackTrace(); }
 		}
 	}
 }
@@ -93,7 +94,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	return aux;
 }
 	
-	private void compartirRepetidas(){	
+	private void compartirRepetidas() throws Exception{	
 	for(Persona p: personas){
 		Persona p2 = personas.get(random.nextIntCExclusion(personas.size(), p.getId()));
 		if (p.hayRepetidas()){

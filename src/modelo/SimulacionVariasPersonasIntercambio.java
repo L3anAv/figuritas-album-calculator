@@ -45,7 +45,7 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	}
 }
 	
-	protected void rellenarAlbumsDeTodos() {
+	protected void rellenarAlbumsDeTodos() throws Exception {
 		
 		int iteraciones = 0;
 	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15) {	
@@ -57,7 +57,7 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	
 	}
 	
-	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p){
+	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p) throws Exception{
 	
 		for(int i = 0; i < paquete.size();i++) 
 			if(!p.albumEstaCompleto()){
@@ -87,19 +87,15 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	
 	
 	@Override
-	public int iniciarSimulacion() {
+	public int iniciarSimulacion() throws Exception {
 		
 		
 		int iteraciones = 0;
 		this.iteracionesGlobales = 0;
 		generarIndividuos();
 		while(!satisfactorio()) {
-			
-			
 			rellenarAlbumsDeTodos();
 			intercambiarRepetidas();
-			
-			
 			notificarObservadores();
 			
 			try {
