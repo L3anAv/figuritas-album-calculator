@@ -11,8 +11,7 @@ public class PaqueteFiguritasNormal{
 	private LinkedList<Integer> paqueteFiguritas;
 	
 	// > Generador de paquetes nuevos de figuritas.
-	public static PaqueteFiguritasNormal nuevo()
-	{
+	public static PaqueteFiguritasNormal nuevo(){
 	paquete = new PaqueteFiguritasNormal(); // Instancia de paquete
 	Random numeroFiguritas = new Random(); // Random para numero de figurita
 	int cantidadFigus = paquete.getCantidadFiguritas(); // Cantidad de cada paquete
@@ -20,18 +19,17 @@ public class PaqueteFiguritasNormal{
 	for(int i = 0; i < cantidadFigus ;i++) // Relleno de figuritas el paquete
 	{
 		int numeroFigurita = numeroFiguritas.nextInt(cantidadTotalFigus);
-		
 		paquete.setFigurita(numeroFigurita);
 	}
 	return paquete; // Retorno el paquete
-	}
+}
 	
 	// > Constructor
 	private PaqueteFiguritasNormal() 
 	{
 	cantidadTotalFiguritas = 683;
 	cantidadFiguritasPaquete = 5;
-	paqueteFiguritas = new LinkedList<Integer>();  
+	paqueteFiguritas = new LinkedList<Integer>();
 	}
 	
 	// > Getters && Setters

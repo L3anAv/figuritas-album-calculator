@@ -15,23 +15,19 @@ public class ObservadorPorConsola implements Observador {
 	private ArrayList<Persona> lista;
 	private String sb;
 	
-	public ObservadorPorConsola(Simulacion sim)
-	{
+	public ObservadorPorConsola(Simulacion sim){
 		this.sim = sim;
 		this.lista = sim.getPersonas();
-	}
+}
 	
 	@Override
-	public void notificar()
-	{
-		System.out.print("It: " + sim.getIteracion() + " Paquetes abiertos: " + sim.getPaquetesAbiertos() + " Promedio paquetes por Persona: "  + sim.promedioPaquetesXPersona() +  "\n");
+	public void notificar(){
+	System.out.print("It: " + sim.getIteracion() + " Paquetes abiertos: " + sim.getPaquetesAbiertos() + " Promedio paquetes por Persona: "  + sim.promedioPaquetesXPersona() +  "\n");
 		
-		for(Persona p: lista) {	
-			System.out.println(p.toString());
-		}
-
-		
+	for(Persona p: lista){	
+		System.out.println(p.toString());
 	}
+}
 
 	
 	

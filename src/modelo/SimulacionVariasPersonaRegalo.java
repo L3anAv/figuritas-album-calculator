@@ -69,18 +69,18 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	protected void rellenarAlbumsDeTodos(){
 	int iteraciones = 0;
 	for(Persona p : personas){
-		if (!p.albumEstaCompleto() && iteraciones < 15){	
+		if (!p.albumEstaCompleto() && iteraciones < 15){
 			rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
 			iteraciones++;
 			cantPaquetesTotal++;
 		}
 	}
 }
-	
+
 	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p){
 		for(int i = 0; i < paquete.size();i++) {
 			if(!p.albumEstaCompleto()){
-				try { p.insertarFiguritaEnAlbum(paquete.get(i));}
+				try { p.insertarFiguritaEnAlbum(paquete.get(i)); }
 				catch ( Exception e) {e.printStackTrace(); }
 		}
 	}
@@ -125,7 +125,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	.append(" \n");
 
 	for(Persona p: personas)
-	{ this.sb.append(p.toString()).append(" \n"); }	
+	{ this.sb.append(p.toString()).append(" \n"); }
 }
 
 	@Override
@@ -144,5 +144,5 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	@Override
 	public double promedioPaquetesXPersona() 
 	{ return cantPaquetesTotal/personas.size(); }
-	
+
 }
