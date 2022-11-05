@@ -6,8 +6,6 @@ import modelo.Persona;
 
 public interface Simulacion {
 	
-	
-	
 	//Metodos
 	public void registrarObservador(Observador obs);
 	public int iniciarSimulacion();

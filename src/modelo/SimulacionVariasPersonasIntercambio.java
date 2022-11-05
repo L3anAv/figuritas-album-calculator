@@ -191,3 +191,4 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		return this.cantPaquetesTotal/cantPersonas;
 	}
 }
+

@@ -89,21 +89,17 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 	return aux;
 }
-	// Este puede cambiar
+	
 	private void compartirRepetidas(){	
 	for(Persona p: personas) {
 		Persona p2 = personas.get(random.nextIntCExclusion(personas.size(), p.getId()));
 		if (p.hayRepetidas() ){
 			p.regalarFiguritas(p2);
-		}	
-		
-		
-	
+		}
 	}
 }
-
-	//Getters
 	
+	//Getters
 	public int getIteracion() {
 		return this.iteracionesGlobales;
 }
@@ -125,7 +121,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		this.sb.append(p.toString()).append("\n");
 	}	
 }
-	
+
 	@Override
 	public void crearLog(){
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"))){

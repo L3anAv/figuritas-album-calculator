@@ -111,40 +111,4 @@ public class PersonaTest {
 	
 }
 	
-	@Test /* Testeo de metodo que realiza el intercambio entre dos Personas */
-	public void personasRealizanIntercambioCorrectamente(){
-	
-	Persona persona3 = new Persona();
-	Persona persona4 = new Persona();
-	
-	// > Necesitas las figurita: 5 y 6
-	persona3.insertarFiguritaEnAlbum(1);
-	persona3.insertarFiguritaEnAlbum(2);
-	persona3.insertarFiguritaEnAlbum(3);
-	persona3.insertarFiguritaEnAlbum(3);
-	persona3.insertarFiguritaEnAlbum(4);
-	persona3.insertarFiguritaEnAlbum(4);
-
-	//  > Necesitas las figurita:  3 y 4
-	persona4.insertarFiguritaEnAlbum(1);
-	persona4.insertarFiguritaEnAlbum(2);
-	persona4.insertarFiguritaEnAlbum(5);
-	persona4.insertarFiguritaEnAlbum(5);
-	persona4.insertarFiguritaEnAlbum(6);
-	persona4.insertarFiguritaEnAlbum(6);
-	
-	System.out.println("Antes de intercambiar persona 3 (Figurita 5): " + persona3.tieneFigurita(5));
-	System.out.println("Antes de intercambiar persona 3 (Figurita 6): " + persona3.tieneFigurita(6));
-	System.out.println("Antes de intercambiar persona 4 (Figurita 3): " + persona4.tieneFigurita(3));
-	System.out.println("Antes de intercambiar persona 4 (Figurita 4): " + persona4.tieneFigurita(4));
-	System.out.println("------");
-	
-	persona3.intercambiarFiguritas(persona4);
-	
-	System.out.println("Despues de intercambiar persona 3 (Figurita 5): " + persona3.tieneFigurita(5));
-	System.out.println("Despues de intercambiar persona 3 (Figurita 6): " + persona3.tieneFigurita(6));
-	System.out.println("Despues de intercambiar persona 4 (Figurita 3): " + persona4.tieneFigurita(3));
-	System.out.println("Despues de intercambiar persona 4 (Figurita 4): " + persona4.tieneFigurita(4));
-	System.out.println("------");
-}	
 }
