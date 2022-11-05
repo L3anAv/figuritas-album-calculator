@@ -6,11 +6,9 @@ import modelo.Persona;
 
 public interface Simulacion {
 	
-	
-	
 	//Metodos
 	public void registrarObservador(Observador obs);
-	public int iniciarSimulacion();
+	public int iniciarSimulacion() throws Exception;
 	public int getIteracion();
 	public ArrayList<Persona> getPersonas();
 	public int getPaquetesAbiertos();

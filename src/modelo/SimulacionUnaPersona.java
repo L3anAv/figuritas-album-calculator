@@ -19,21 +19,22 @@ public class SimulacionUnaPersona implements Simulacion{
 	
 
 	public SimulacionUnaPersona(int valorFiguritas) {
-	persona = new Persona();
+	persona = new Persona(1);
 	this.valorFiguritas = valorFiguritas;
 }
-	
+
 	@Override
 	public int iniciarSimulacion(){
 	int cantPaquetes = 1;
 	while(!persona.albumEstaCompleto()){
-		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas());
+		try { rellenarAlbum( PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas()); } 
+			catch (Exception e) { e.printStackTrace();}
 		gastoTotal = cantPaquetes * valorFiguritas;
 	}
-	return gastoTotal;
+		return gastoTotal;
 }
 	
-	protected void rellenarAlbum(LinkedList<Integer> paquete){
+	protected void rellenarAlbum(LinkedList<Integer> paquete) throws Exception{
 	for(int i = 0; i < paquete.size();i++) 
 		persona.insertarFiguritaEnAlbum(paquete.get(i));
 }

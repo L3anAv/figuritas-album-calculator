@@ -8,7 +8,7 @@ public class Album {
 	private LinkedList<Integer> album;
 	private int cantidadFiguritas = 683;
 	private LinkedList<Integer> figuritasRepetidas;
-	
+
 	// > Constructor
 	public Album(int idPropietario){
 		album = new LinkedList<Integer>();
@@ -17,28 +17,23 @@ public class Album {
 }
 
 	// > Metodos de clase
-	public void ingresarFigurita(int figurita){
-		if(!album.contains(figurita)) 
+	public void ingresarFigurita(int figurita) throws Exception{	
+		
+		if(figurita < 1)
+			throw new Exception("El numero no pude ser menor a 1. No existen figuritas Negativas.");
+		else if(!album.contains(figurita))
 			album.add(figurita);
 		else 
 			figuritasRepetidas.add(figurita);
 }
-	
-	public boolean existeFiguritaEnAlbum(int numDeFigurita) 
-	{
+
+	public boolean existeFiguritaEnAlbum(int numDeFigurita){
 	boolean existe = false;
 		if(album.contains(numDeFigurita))
 			existe = true;
 	return existe;
-	}
-	
-	public boolean existeFiguritasEnRepetidas(int numDeFigurita) {
-	boolean existe = false;
-		if(figuritasRepetidas.contains(numDeFigurita))
-			existe = true;
-	return existe;
 }
-	
+
 	public boolean estaCompletoAlbum(){
 	return album.size() == cantidadFiguritas;
 }
@@ -50,10 +45,6 @@ public class Album {
 	
 	public LinkedList<Integer> getFiguritasRepetidas(){
 	return figuritasRepetidas;
-}
-	
-	public void eliminarFiguritaDeRepetidas(int numDeFigurita) {
-	//int index = figuritasRepetidas.get(numDeFigurita);	
 }
 	
 	public int getIdPropietarioAlbum() {

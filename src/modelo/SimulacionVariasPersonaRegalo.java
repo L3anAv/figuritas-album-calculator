@@ -33,7 +33,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 }
 	
 	@Override
-	public int iniciarSimulacion(){
+	public int iniciarSimulacion() throws Exception{
 		
 	int iteraciones = 0;
 	this.iteracionesGlobales = 0;
@@ -42,12 +42,12 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 				rellenarAlbumsDeTodos();
 				compartirRepetidas();
 				notificarObservadores();
-	try{
-			Thread.sleep(40);
-			escribirLog();
-			}catch(InterruptedException e){
-					e.printStackTrace();
-		}
+//	try{
+//			Thread.sleep(40);
+//			escribirLog();
+//			}catch(InterruptedException e){
+//					e.printStackTrace();
+//		}
 				iteraciones++;
 				this.iteracionesGlobales = iteraciones;
 	}
@@ -68,42 +68,41 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 
 	protected void rellenarAlbumsDeTodos(){
 	int iteraciones = 0;
-	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15){	
-		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
-		iteraciones++;
-		cantPaquetesTotal++;
+	for(Persona p : personas){
+		if (!p.albumEstaCompleto() && iteraciones < 15){	
+			rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
+			iteraciones++;
+			cantPaquetesTotal++;
+		}
 	}
 }
 	
 	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p){
-	for(int i = 0; i < paquete.size();i++) 
-		if(!p.albumEstaCompleto()){
-			p.insertarFiguritaEnAlbum(paquete.get(i));
+		for(int i = 0; i < paquete.size();i++) {
+			if(!p.albumEstaCompleto()){
+				try { p.insertarFiguritaEnAlbum(paquete.get(i));}
+				catch ( Exception e) {e.printStackTrace(); }
+		}
 	}
 }
 	
-	public boolean satisfactorio() {
+	public boolean satisfactorio(){
 	boolean aux = true;
-	for(Persona p: personas) {	
-		aux = aux && p.albumEstaCompleto();
-	}
+		for(Persona p: personas) {	
+			aux = aux && p.albumEstaCompleto();
+		}
 	return aux;
 }
-	// Este puede cambiar
-	private void compartirRepetidas(){	
-	for(Persona p: personas) {
-		Persona p2 = personas.get(random.nextIntCExclusion(personas.size(), p.getId()));
-		if (p.hayRepetidas() ){
-			p.regalarFiguritas(p2);
-		}	
-		
-		
 	
+	private void compartirRepetidas() throws Exception{	
+	for(Persona p: personas){
+		Persona p2 = personas.get(random.nextIntCExclusion(personas.size(), p.getId()));
+		if (p.hayRepetidas()){
+			p.regalarFiguritas(p2);
+		}
 	}
 }
-
 	//Getters
-	
 	public int getIteracion() {
 		return this.iteracionesGlobales;
 }
@@ -119,13 +118,16 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 }
 
 	@Override
-	public void escribirLog() {	
-	this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");	
-	for(Persona p: personas){		
-		this.sb.append(p.toString()).append("\n");
-	}	
+	public void escribirLog(){	
+
+	this.sb.append("It: ").append(getIteracion())
+	.append("Paquetes abiertos: ").append(getPaquetesAbiertos())
+	.append(" \n");
+
+	for(Persona p: personas)
+	{ this.sb.append(p.toString()).append(" \n"); }	
 }
-	
+
 	@Override
 	public void crearLog(){
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"))){
@@ -134,15 +136,13 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 			e.printStackTrace();
 	}
 }
-	
+
 	private void notificarObservadores(){
 		observador.notificar();
 }
 
 	@Override
-	public double promedioPaquetesXPersona() {
-		
-		return cantPaquetesTotal/personas.size();
-	}
+	public double promedioPaquetesXPersona() 
+	{ return cantPaquetesTotal/personas.size(); }
 	
 }
