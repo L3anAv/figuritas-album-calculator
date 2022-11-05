@@ -12,6 +12,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
@@ -111,6 +112,12 @@ public class InterfazSettingSimulacion {
 		
 		
 		JButton btnStart = new JButton("Comenzar");
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				iniciarSimulacion();
+			}
+		});
 		btnStart.setBounds(311, 386, 89, 23);
 		frame.getContentPane().add(btnStart);
 		frame.setTitle("Simulacion Album Figuritas 2022");
@@ -240,8 +247,7 @@ public class InterfazSettingSimulacion {
 				
 				if(Character.isDigit(c)) {
 					
-					cantSims = cantSims
-							+ c;
+					cantSims = cantSims + c;
 				}
 				else {
 					JLabel lblErrorIngresoCantSims = new JLabel("Ingrese solo numeros!");
@@ -266,6 +272,7 @@ public class InterfazSettingSimulacion {
 			
 				if(chkDefaultCantFigus.isSelected()) {
 					
+					cantTotalFigus = default_CantFigus;
 					field_CantTotalFigus.setEnabled(false);	
 					defaultLbl_CantFigus.setVisible(true);	
 					field_CantTotalFigus.setText("");
@@ -293,7 +300,7 @@ public class InterfazSettingSimulacion {
 			
 			
 			if(chkDefaultFigusPaq.isSelected()) {
-				
+				cantFigusPaq = default_CantFigusPaq;
 				field_CantFigusPaq.setEnabled(false);
 				field_CantFigusPaq.setText("");
 				defaultLbl_CantFigusPaq.setVisible(true);
@@ -324,6 +331,7 @@ public class InterfazSettingSimulacion {
 			public void actionPerformed(ActionEvent e) {
 			
 			if(chkDefaultPrecio.isSelected()) {
+				precioPaq = default_Precio;
 				field_Precio.setEnabled(false);
 				field_Precio.setText("");
 				defaultLbl_Precio.setVisible(true);
@@ -352,7 +360,37 @@ public class InterfazSettingSimulacion {
 		
 	
 	}
+	
+	private void iniciarSimulacion() {
+		
+		
+		if(this.cantTotalFigus <=0) {
+			JOptionPane.showMessageDialog(null, "Ingrese una cantidad total de figuritas valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
+			
+		}
+		
+		
+		if(this.cantFigusPaq <=0) {
+			JOptionPane.showMessageDialog(null, "Ingrese una cantidad de figuritas por paquete valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
 
+		}
+		
+		if(this.precioPaq <= 0) {
+			JOptionPane.showMessageDialog(null, "Ingrese un precio valido (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(this.cantSims <= 0) {
+			JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
+				
+		}
+		
+	
+		
+		
+		
+		
+	}
+	
 	
 	private void iniciarLblsDefault() {
 		
