@@ -32,27 +32,23 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		this.sb = new StringBuilder();
 }
 	
-	@Override
+	@Override //Deberia retornar la cantidad de paquetes el gasto mejor dicho
 	public int iniciarSimulacion() throws Exception{
-		
+
 	int iteraciones = 0;
 	this.iteracionesGlobales = 0;
 	generarIndividuos();
-		while(!satisfactorio()){
-				rellenarAlbumsDeTodos();
-				compartirRepetidas();
-				notificarObservadores();
-//	try{
-//			Thread.sleep(40);
-//			escribirLog();
-//			}catch(InterruptedException e){
-//					e.printStackTrace();
-//		}
-				iteraciones++;
-				this.iteracionesGlobales = iteraciones;
+
+	while(!satisfactorio()){
+		rellenarAlbumsDeTodos();
+		compartirRepetidas();
+		notificarObservadores();
+		iteraciones++;
+		this.iteracionesGlobales = iteraciones;
 	}
-		crearLog();
-		return iteraciones;
+	crearLog();
+	gastoTotal = cantPaquetesTotal * valorFiguritas;
+	return gastoTotal;
 }
 	
 	public void registrarObservador(Observador obs){
@@ -88,9 +84,9 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	
 	public boolean satisfactorio(){
 	boolean aux = true;
-		for(Persona p: personas) {	
-			aux = aux && p.albumEstaCompleto();
-		}
+	for(Persona p: personas){	
+		aux = aux && p.albumEstaCompleto();
+	}
 	return aux;
 }
 	

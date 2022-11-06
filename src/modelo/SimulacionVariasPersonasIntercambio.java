@@ -30,8 +30,6 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		this.random = new GeneradorRandom();
 		this.sb = new StringBuilder();
 }
-
-	
 	
 	@Override
 	public void registrarObservador(Observador obs){
@@ -46,29 +44,24 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 }
 	
 	protected void rellenarAlbumsDeTodos() throws Exception {
-		
-		int iteraciones = 0;
-	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15) {	
-		
+	int iteraciones = 0;
+	
+	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15){	
 		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
 		cantPaquetesTotal++;
 		iteraciones++;
-		}
-	
 	}
 	
-	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p) throws Exception{
+}
 	
-		for(int i = 0; i < paquete.size();i++) 
-			if(!p.albumEstaCompleto()){
-				p.insertarFiguritaEnAlbum(paquete.get(i));
-			}
+	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p) throws Exception{
+	for(int i = 0; i < paquete.size();i++) 
+		if(!p.albumEstaCompleto()){
+			p.insertarFiguritaEnAlbum(paquete.get(i));
+		}
 	}
 	
 	private void intercambiarRepetidas() {
-		
-		
-	
 	}
 	
 	public boolean satisfactorio() {
