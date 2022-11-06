@@ -14,7 +14,9 @@ public class FabricaDeSimulaciones {
 	return null;
 }
 
-	public static Simulacion getSimulacion(String nombreDeSimulacion, int valorFiguritas, int cantPersonas){
+	public static Simulacion getSimulacion(String nombreDeSimulacion, 
+	int valorFiguritas, 
+	int cantPersonas){
 	if(nombreDeSimulacion == null) {
 		throw new NullPointerException("Nombre de solicitud de simulacion no puede ser nulo.");
 	} else if(nombreDeSimulacion.equals("nPersonasRegalo")) {

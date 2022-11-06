@@ -17,19 +17,35 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	public StringBuilder sb;
 	private int cantPersonas;
 	private Generador random;
-	private int valorFiguritas;
+	private int precioPorPaquete;
 	private int cantPaquetesTotal;
 	private Observador observador;
 	private int iteracionesGlobales;
 	private ArrayList<Persona> personas;
 	
-	public SimulacionVariasPersonaRegalo(int cantPersonas, int valorFiguritas){
-		this.valorFiguritas = valorFiguritas;
-		this.personas = new ArrayList<Persona>(cantPersonas);
-		this.cantPersonas = cantPersonas;
-		this.cantPaquetesTotal = 0;
-		this.random = new GeneradorRandom();
-		this.sb = new StringBuilder();
+	//Constructor con valores default(menos participantes y precio paquetes)
+	public SimulacionVariasPersonaRegalo(int cantPersonas, int precioPorPaquete){
+	this.cantPaquetesTotal = 0;
+	this.sb = new StringBuilder();
+	this.cantPersonas = cantPersonas;
+	this.random = new GeneradorRandom();
+	this.precioPorPaquete = precioPorPaquete;
+	this.personas = new ArrayList<Persona>(cantPersonas);
+}
+	//Constructor con valores seteados por usuario
+	public SimulacionVariasPersonaRegalo(int cantPersonas,
+	int precioPorPaquete,  
+	int cantidadFiguritasTotal, 
+	int cantidadFiguritasPorPaquete){
+	this.cantPaquetesTotal = 0;
+	this.sb = new StringBuilder();
+	this.cantPersonas = cantPersonas;
+	this.random = new GeneradorRandom();
+	this.precioPorPaquete = precioPorPaquete;
+	this.personas = new ArrayList<Persona>(cantPersonas);
+	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
+	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
+	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
 }
 	
 	@Override //Deberia retornar la cantidad de paquetes el gasto mejor dicho
@@ -47,7 +63,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		this.iteracionesGlobales = iteraciones;
 	}
 	crearLog();
-	gastoTotal = cantPaquetesTotal * valorFiguritas;
+	gastoTotal = cantPaquetesTotal * precioPorPaquete;
 	return gastoTotal;
 }
 	
@@ -98,6 +114,14 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		}
 	}
 }
+
+	public void nuevaConfig(ArrayList<Persona> personas, int cantidadFiguritasTotal, int cantidadFiguritasPorPaquete){
+	for(Persona persona: personas){
+		persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
+		persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
+	}
+}
+
 	//Getters
 	public int getIteracion() {
 		return this.iteracionesGlobales;

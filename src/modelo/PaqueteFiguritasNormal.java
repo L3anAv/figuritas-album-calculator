@@ -5,10 +5,10 @@ import java.util.Random;
 
 public class PaqueteFiguritasNormal{
 
-	public static PaqueteFiguritasNormal paquete;
-	private int cantidadTotalFiguritas;
-	private int cantidadFiguritasPaquete;
+	private static int cantidadTotalFiguritas;
+	private static int cantidadFiguritasPaquete;
 	private LinkedList<Integer> paqueteFiguritas;
+	private static PaqueteFiguritasNormal paquete;
 
 	// > Generador de paquetes nuevos de figuritas.
 	public static PaqueteFiguritasNormal nuevo(){
@@ -25,18 +25,21 @@ public class PaqueteFiguritasNormal{
 
 	// > Constructor
 	private PaqueteFiguritasNormal(){
-	cantidadTotalFiguritas = 683;
 	cantidadTotalFiguritas = 5;
+	cantidadTotalFiguritas = 638;
 	paqueteFiguritas = new LinkedList<Integer>();
 }
 
 	// > Getters && Setters
-	public LinkedList<Integer> getPaqueteFiguritas(){
-		return paqueteFiguritas;
-}
 
-	public void setCantidadFiguritasPaquete(int nuevaCantidadPorPaquete)
+	public static void setCantidadFiguritasPaquete(int nuevaCantidadPorPaquete)
 	{ cantidadTotalFiguritas = nuevaCantidadPorPaquete; }
+
+	public static void setCantidadFiguritasTotales(int nuevaCantidadDeFiguritas)
+	{ cantidadFiguritasPaquete = nuevaCantidadDeFiguritas; }
+
+	public LinkedList<Integer> getPaqueteFiguritas()
+	{ return paqueteFiguritas; }
 
 	public int getCantidadFiguritas()
 	{ return cantidadFiguritasPaquete; }

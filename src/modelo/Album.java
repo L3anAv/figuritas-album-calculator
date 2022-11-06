@@ -3,10 +3,11 @@ package modelo;
 import java.util.LinkedList;
 
 public class Album {
-	
+
 	private int idPropietario;
 	private LinkedList<Integer> album;
-	private int cantidadFiguritas = 683;
+	private int cantidadFiguritas = 638;
+	private int cantidadFiguritaPorPaquete = 5;
 	private LinkedList<Integer> figuritasRepetidas;
 
 	// > Constructor
@@ -34,21 +35,27 @@ public class Album {
 	return existe;
 }
 
-	public boolean estaCompletoAlbum(){
-	return album.size() == cantidadFiguritas;
-}
+	public boolean estaCompletoAlbum()
+	{ return album.size() == cantidadFiguritas; }
 
 	// > Getters & Setters
-	public LinkedList<Integer> getFiguritasDeAlbum() {
-	return album;
-}
+
+	public LinkedList<Integer> getFiguritasDeAlbum()
+	{ return album; }
+
+	public LinkedList<Integer> getFiguritasRepetidas()
+	{ return figuritasRepetidas; }
 	
-	public LinkedList<Integer> getFiguritasRepetidas(){
-	return figuritasRepetidas;
-}
-	
-	public int getIdPropietarioAlbum() {
-	return idPropietario;
-}
-	
+	public int getIdPropietarioAlbum()
+	{ return idPropietario; }
+
+	public int getcantidadFiguritaPorPaquete()
+	{ return cantidadFiguritaPorPaquete; }
+
+	public void setCantidadFiguritasTotales(int nuevaCantidadFiguritasTotales)
+	{ cantidadFiguritas = nuevaCantidadFiguritasTotales; }
+
+	public void setCantidadFiguritasPorPaquete(int nuevaCantidadFiguritasPaquete)
+	{ cantidadFiguritaPorPaquete = nuevaCantidadFiguritasPaquete; }
+
 }

@@ -123,17 +123,22 @@ public class Persona {
 	}
 }
 
-	public LinkedList<Integer> getFiguritasRepetidas()
-	{ return miAlbum.getFiguritasRepetidas(); }
+	public boolean hayRepetidas()
+	{ return getFiguritasRepetidas().size() != 0; }
 
-	public LinkedList<Integer> getMisFiguritas()
-	{ return miAlbum.getFiguritasDeAlbum(); }
+	// Getter & Setter
 
 	public int getId() 
 	{ return id; }
 
-	public boolean hayRepetidas()
-	{ return getFiguritasRepetidas().size() != 0; }
+	public Album getAlbum()
+	{ return miAlbum; }
+
+	public LinkedList<Integer> getMisFiguritas()
+	{ return miAlbum.getFiguritasDeAlbum(); }
+
+	public LinkedList<Integer> getFiguritasRepetidas()
+	{ return miAlbum.getFiguritasRepetidas(); }
 
 	@Override
 	public String toString(){
