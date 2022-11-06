@@ -59,10 +59,11 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		if(!p.albumEstaCompleto()){
 			p.insertarFiguritaEnAlbum(paquete.get(i));
 		}
-	}
-	
-	private void intercambiarRepetidas() {
-	}
+}
+
+	private void intercambiarRepetidas(){
+		
+}
 	
 	public boolean satisfactorio() {
 		boolean aux = true;
@@ -81,8 +82,6 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	
 	@Override
 	public int iniciarSimulacion() throws Exception {
-		
-		
 		int iteraciones = 0;
 		this.iteracionesGlobales = 0;
 		generarIndividuos();

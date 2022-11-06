@@ -18,7 +18,7 @@ public class InterfazSimuladorAlbum {
 
 	private JFrame frame;
 	private JTextField textField;
-	
+
 	public static void main(String[] args) 
 	{
 	EventQueue.invokeLater(new Runnable(){
@@ -87,21 +87,18 @@ public class InterfazSimuladorAlbum {
 	public void itemStateChanged(ItemEvent arg0){
 	String seleccionado = SeleccionDeSimulacion.getSelectedItem().toString();
 	frame.setTitle(seleccionado);
-	if(seleccionado.equals("Simulacion una sola persona")) 
-	{
+	if(seleccionado.equals("Simulacion una sola persona")){
 	textField.setEnabled(false);
 	lblCantidadDePersonas.setText(" Campo no solicitado ");
 	lblCantidadDePersonas.setFont(new Font("Inconsolata",Font.ITALIC ,20));
 	lblCantidadDePersonas.setForeground(new Color(224, 27, 36));
-	}
-	else
-	{	
+	} else {
 	textField.setEnabled(true);
 	lblCantidadDePersonas.setText("Cantidad de participantes: ");
 	lblCantidadDePersonas.setFont(new Font("Inconsolata",Font.ITALIC ,20));
 	lblCantidadDePersonas.setForeground(Color.WHITE);
 	}}});
-	
+
 	panel.add(SeleccionDeSimulacion);
 	frame.getContentPane().add(panel);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

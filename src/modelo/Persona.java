@@ -15,18 +15,18 @@ public class Persona {
 		miAlbum = new Album(id);
 		toStringPersona = new StringBuilder();
 }
-	
+
 	// > Metodos de clase
 	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception
 	{ miAlbum.ingresarFigurita(numDeFigurita); }
-	
+
 	public boolean tieneFigurita(int numDeFigurita){
 	boolean existe = false;
 	if(miAlbum.existeFiguritaEnAlbum(numDeFigurita))
 		existe = true;
 	return existe;
 }
-	
+
 	public boolean albumEstaCompleto(){
 	boolean estaCompleto = false;
 	if(miAlbum.estaCompletoAlbum())
@@ -40,7 +40,7 @@ public class Persona {
 			existe = true;
 	return existe;
 }
-	
+
 	public void regalarFiguritas(Persona personaParaRegalarFigus) throws Exception{
 	LinkedList<Integer> figusParaRegalar = getFiguritasRepetidas();
 	LinkedList<Integer> figuritasRegaladas = new LinkedList<Integer>();
@@ -54,7 +54,7 @@ public class Persona {
 		eliminarDeRepetidasFiguExtraidas(figuritasRegaladas);
 		figuritasRegaladas.clear();
 }
-	
+
 	public void intercambiarFiguritas(Persona personaParaIntercambiar) throws Exception{
 	
 	LinkedList<Integer> figusMiasParaIntercambiar = getFiguritasRepetidas();
@@ -82,7 +82,7 @@ public class Persona {
 	figuritasMiasIntercambiables.clear();
 	figuritasOtraPersonaOfrecidas.clear();
 }
-	
+
 	public void realizarIntercambio(LinkedList<Integer> figuritasMiasPersonaOfrecidas, LinkedList<Integer> figuritasOtraPersonaOfrecidas, Persona otraPersona) throws Exception{
 	for(int i = 0; i < figuritasMiasPersonaOfrecidas.size(); i++){
 		insertarFiguritaEnAlbum(figuritasOtraPersonaOfrecidas.get(i));
@@ -122,32 +122,31 @@ public class Persona {
 				FigusParaRegalar.remove(figuritasParaEliminarDeRepetidas.get(i));
 	}
 }
-	
+
 	public LinkedList<Integer> getFiguritasRepetidas()
 	{ return miAlbum.getFiguritasRepetidas(); }
-	
+
 	public LinkedList<Integer> getMisFiguritas()
 	{ return miAlbum.getFiguritasDeAlbum(); }
-	
+
 	public int getId() 
 	{ return id; }
 
 	public boolean hayRepetidas()
 	{ return getFiguritasRepetidas().size() != 0; }
 
-
 	@Override
 	public String toString(){
-		
+	
 	toStringPersona.append("Persona [id= ")
 		.append(id)
 		.append(", Figuritas conseguidas= ")
 		.append(miAlbum.getFiguritasDeAlbum().size())
 		.append(" de 683 ]");
-	
+
 	return  toStringPersona.toString();
 }
-	
+
 	@Override
 	public int hashCode() 
 	{ return Objects.hash(id, miAlbum); }
@@ -163,8 +162,4 @@ public class Persona {
 	Persona other = (Persona) obj;
 	return this.id == other.id;
 }
-	
-	
-	
-	
 }

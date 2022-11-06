@@ -9,46 +9,42 @@ public class PaqueteFiguritasNormal{
 	private int cantidadTotalFiguritas;
 	private int cantidadFiguritasPaquete;
 	private LinkedList<Integer> paqueteFiguritas;
-	
+
 	// > Generador de paquetes nuevos de figuritas.
 	public static PaqueteFiguritasNormal nuevo(){
 	paquete = new PaqueteFiguritasNormal(); // Instancia de paquete
 	Random numeroFiguritas = new Random(); // Random para numero de figurita
 	int cantidadFigus = paquete.getCantidadFiguritas(); // Cantidad de cada paquete
 	int cantidadTotalFigus = paquete.getCantidadTotalFiguritas(); // Cantidad total de figuritas album
-	for(int i = 0; i < cantidadFigus ;i++) // Relleno de figuritas el paquete
-	{
+	for(int i = 0; i < cantidadFigus ;i++){ // Relleno de figuritas el paquete
 		int numeroFigurita = numeroFiguritas.nextInt(cantidadTotalFigus);
 		paquete.setFigurita(numeroFigurita);
 	}
 	return paquete; // Retorno el paquete
 }
-	
+
 	// > Constructor
-	private PaqueteFiguritasNormal() 
-	{
+	private PaqueteFiguritasNormal(){
 	cantidadTotalFiguritas = 683;
-	cantidadFiguritasPaquete = 5;
+	cantidadTotalFiguritas = 5;
 	paqueteFiguritas = new LinkedList<Integer>();
-	}
-	
+}
+
 	// > Getters && Setters
-	public LinkedList<Integer> getPaqueteFiguritas()
-	{
+	public LinkedList<Integer> getPaqueteFiguritas(){
 		return paqueteFiguritas;
-	}
+}
+
+	public void setCantidadFiguritasPaquete(int nuevaCantidadPorPaquete)
+	{ cantidadTotalFiguritas = nuevaCantidadPorPaquete; }
+
 	public int getCantidadFiguritas()
-	{
-	return cantidadFiguritasPaquete;
-	}
-	
+	{ return cantidadFiguritasPaquete; }
+
 	public int getCantidadTotalFiguritas()
-	{
-	return cantidadTotalFiguritas;
-	}
-	
+	{ return cantidadTotalFiguritas; }
+
 	public void setFigurita(int numDeFigu) 
-	{
-	paqueteFiguritas.add(numDeFigu);
-	}
+	{ paqueteFiguritas.add(numDeFigu); }
+
 }

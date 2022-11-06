@@ -29,7 +29,7 @@ public class SimulacionUnaPersona implements Simulacion{
 		
 		try { rellenarAlbum( PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas()); } 
 		catch (Exception e) { e.printStackTrace();}
-		
+		notificarObservadores();
 		gastoTotal = cantPaquetes * valorFiguritas;
 	}
 		return gastoTotal;
@@ -71,11 +71,16 @@ public class SimulacionUnaPersona implements Simulacion{
 			e.printStackTrace();
 	}
 }
+ 
+	private void notificarObservadores(){
+		observador.notificar();
+}
 
 	@Override
 	public void registrarObservador(Observador obs){
 		this.observador = obs;
 }
+	
 
 	@Override
 	public double promedioPaquetesXPersona(){
