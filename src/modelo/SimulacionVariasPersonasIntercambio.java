@@ -11,9 +11,9 @@ import interfaces.Simulacion;
 import utilidades.GeneradorRandom;
 
 public class SimulacionVariasPersonasIntercambio implements Simulacion {
-	
+
 		private ArrayList<Persona> personas;
-		private int valorFiguritas;
+		private int precioPorPaquete;
 		private int gastoTotal;
 		private int cantPaquetesTotal;
 		private int cantPersonas;
@@ -22,15 +22,31 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		private Generador random;
 		private Observador observador;
 		
-	public SimulacionVariasPersonasIntercambio(int cantPersonas, int valorFiguritas){
-		this.valorFiguritas = valorFiguritas;
+	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
+	int precioPorPaquete){
+		this.precioPorPaquete = precioPorPaquete;
 		this.personas = new ArrayList<Persona>(cantPersonas);
 		this.cantPersonas = cantPersonas;
 		this.cantPaquetesTotal = 0;
 		this.random = new GeneradorRandom();
 		this.sb = new StringBuilder();
 }
-	
+
+	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
+	int precioPorPaquete,  
+	int cantidadFiguritasTotal, 
+	int cantidadFiguritasPorPaquete){
+	this.cantPaquetesTotal = 0;
+	this.sb = new StringBuilder();
+	this.cantPersonas = cantPersonas;
+	this.random = new GeneradorRandom();
+	this.precioPorPaquete = precioPorPaquete;
+	this.personas = new ArrayList<Persona>(cantPersonas);
+	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
+	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
+	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
+}
+
 	@Override
 	public void registrarObservador(Observador obs){
 			this.observador = obs;
@@ -108,22 +124,12 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public void nuevaConfig(ArrayList<Persona> personas, int cantidadFiguritasTotal, int cantidadFiguritasPorPaquete){
+		for(Persona persona: personas){
+			persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
+			persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
+		}
+	}
 	
 	//Getters
 	
