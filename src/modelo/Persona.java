@@ -7,18 +7,20 @@ public class Persona {
 
 	private int id;
 	private Album miAlbum;
-	private StringBuilder toStringPersona;
+
 	
 	// > Constructor
 	public Persona(int id){
 		this.id = id;
-		miAlbum = new Album(id);
-		toStringPersona = new StringBuilder();
-}
+		miAlbum = new Album(id, 300, 5);
 
+}
+	
+	
 	// > Metodos de clase
-	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception
-	{ miAlbum.ingresarFigurita(numDeFigurita); }
+	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception{ 
+		miAlbum.ingresarFigurita(numDeFigurita); 
+	}
 
 	public boolean tieneFigurita(int numDeFigurita){
 	boolean existe = false;
@@ -134,6 +136,11 @@ public class Persona {
 	public Album getAlbum()
 	{ return miAlbum; }
 
+	public void setAlbum(int cantidadFiguritas, int cantidadFiguritasPorPaquete) {
+		
+		this.miAlbum = new Album(id, cantidadFiguritas, cantidadFiguritasPorPaquete);
+		
+	}
 	public LinkedList<Integer> getMisFiguritas()
 	{ return miAlbum.getFiguritasDeAlbum(); }
 
@@ -142,14 +149,17 @@ public class Persona {
 
 	@Override
 	public String toString(){
-	
-	toStringPersona.append("Persona [id= ")
+	StringBuilder sb = new StringBuilder();
+		
+	sb.append("Persona [id= ")
 		.append(id)
 		.append(", Figuritas conseguidas= ")
 		.append(miAlbum.getFiguritasDeAlbum().size())
-		.append(" de 683 ]");
+		.append(" de  ")
+		.append(miAlbum.getCantFiguritasTotal())
+		.append("]");
 
-	return  toStringPersona.toString();
+	return  sb.toString();
 }
 
 	@Override
