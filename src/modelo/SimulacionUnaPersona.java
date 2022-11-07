@@ -15,7 +15,12 @@ public class SimulacionUnaPersona implements Simulacion{
 	private StringBuilder sb;
 	private int precioPorPaquete;
 	private Observador observador;
-
+	
+	private int cantidadTotalFigusAlbum;
+	private int cantidadFigusPaq;
+	
+	private int iteracionesGlobales;
+	
 	// > Constructor con valores default (menos precio por paquete)
 	public SimulacionUnaPersona(int precioPorPaquete){
 	persona = new Persona(1);
@@ -27,7 +32,14 @@ public class SimulacionUnaPersona implements Simulacion{
 	int cantidadFiguritasTotal, 
 	int cantidadFiguritasPorPaquete){
 	persona = new Persona(1);
+	persona.setAlbum(cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
 	this.precioPorPaquete = precioPorPaquete;
+	
+	
+	this.cantidadFigusPaq = cantidadFiguritasPorPaquete;
+	this.cantidadTotalFigusAlbum = cantidadFiguritasTotal;
+	
+	//No funciona
 	persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
 	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
@@ -39,11 +51,15 @@ public class SimulacionUnaPersona implements Simulacion{
 	int cantPaquetes = 1;
 	while(!persona.albumEstaCompleto()){
 		
-		try { rellenarAlbum( PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas()); } 
+		try { rellenarAlbum( PaqueteFiguritasNormal.nuevo(cantidadTotalFigusAlbum, cantidadFigusPaq).getPaqueteFiguritas()); 
+			cantPaquetes++;
+		} 
+			
 		catch (Exception e) { e.printStackTrace();}
 
 		notificarObservadores();
 		gastoTotal = cantPaquetes * precioPorPaquete;
+		iteracionesGlobales++;
 	}
 		return gastoTotal;
 }
@@ -57,7 +73,7 @@ public class SimulacionUnaPersona implements Simulacion{
 
 	@Override
 	public int getIteracion() {
-	return 0;
+	return iteracionesGlobales;
 }
 
 	@Override
@@ -101,4 +117,9 @@ public class SimulacionUnaPersona implements Simulacion{
 	return this.getPaquetesAbiertos();
 }
 
+	@Override
+	public int getCostoActual() {
+		
+		return this.gastoTotal;
+	}
 }

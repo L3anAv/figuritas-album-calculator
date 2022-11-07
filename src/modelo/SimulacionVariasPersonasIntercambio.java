@@ -22,6 +22,13 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		private Generador random;
 		private Observador observador;
 		
+		
+		private int cantidadTotalFigusAlbum;
+		private int cantidadFigusPaq;
+		
+		
+		
+		
 	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
 	int precioPorPaquete){
 		this.precioPorPaquete = precioPorPaquete;
@@ -30,7 +37,11 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		this.cantPaquetesTotal = 0;
 		this.random = new GeneradorRandom();
 		this.sb = new StringBuilder();
-}
+
+		this.cantidadTotalFigusAlbum = 638;
+		this.cantidadFigusPaq = 5;
+	
+	}
 
 	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
 	int precioPorPaquete,  
@@ -42,6 +53,13 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	this.random = new GeneradorRandom();
 	this.precioPorPaquete = precioPorPaquete;
 	this.personas = new ArrayList<Persona>(cantPersonas);
+	
+
+	this.cantidadFigusPaq = cantidadFiguritasPorPaquete;
+	this.cantidadTotalFigusAlbum = cantidadFiguritasTotal;
+	
+	
+	//No funciona
 	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
 	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
@@ -55,7 +73,8 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	public void generarIndividuos(){	
 	for(int i = 0 ; i <= cantPersonas; i++){
 		Persona persona = new Persona(i);
- 		personas.add(persona);
+		persona.setAlbum(cantidadTotalFigusAlbum, cantidadFigusPaq);
+		personas.add(persona);
 	}
 }
 	
@@ -63,7 +82,7 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	int iteraciones = 0;
 	
 	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15){	
-		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
+		rellenarAlbum(PaqueteFiguritasNormal.nuevo(cantidadTotalFigusAlbum, cantidadFigusPaq).getPaqueteFiguritas(), p);
 		cantPaquetesTotal++;
 		iteraciones++;
 	}
@@ -106,15 +125,17 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 			intercambiarRepetidas();
 			notificarObservadores();
 			
-			try {
-				Thread.sleep(40);
-				escribirLog();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(40);
+//				escribirLog();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 			
 			iteraciones++;
 			this.iteracionesGlobales = iteraciones;
+			gastoTotal = cantPaquetesTotal * precioPorPaquete;
+		
 		}
 		
 		crearLog();
@@ -178,7 +199,11 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		
 	}
 
-
+	@Override
+	public int getCostoActual() {
+		
+		return this.gastoTotal;
+	}
 
 	@Override
 	public double promedioPaquetesXPersona() {

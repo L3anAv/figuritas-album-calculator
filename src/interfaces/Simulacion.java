@@ -15,6 +15,6 @@ public interface Simulacion {
 	public double promedioPaquetesXPersona();
 	public void escribirLog();
 	public void crearLog();
-
+	public int getCostoActual();
 
 }

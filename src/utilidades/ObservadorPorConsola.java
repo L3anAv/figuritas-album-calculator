@@ -22,7 +22,7 @@ public class ObservadorPorConsola implements Observador {
 	
 	@Override
 	public void notificar(){
-	System.out.print("It: " + sim.getIteracion() + " Paquetes abiertos: " + sim.getPaquetesAbiertos() + " Promedio paquetes por Persona: "  + sim.promedioPaquetesXPersona() +  "\n");
+	System.out.print("It: " + sim.getIteracion() + " Paquetes abiertos: " + sim.getPaquetesAbiertos() + " Promedio paquetes por Persona: "  + sim.promedioPaquetesXPersona() + " Costo Actual: " + sim.getCostoActual() +   "\n");
 		
 	for(Persona p: lista){	
 		System.out.println(p.toString());

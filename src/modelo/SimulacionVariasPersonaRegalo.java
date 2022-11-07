@@ -23,6 +23,13 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	private int iteracionesGlobales;
 	private ArrayList<Persona> personas;
 	
+	
+	private int cantidadTotalFigusAlbum;
+	private int cantidadFigusPaq;
+	
+	
+	
+	
 	//Constructor con valores default(menos participantes y precio paquetes)
 	public SimulacionVariasPersonaRegalo(int cantPersonas, int precioPorPaquete){
 	this.cantPaquetesTotal = 0;
@@ -31,7 +38,10 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	this.random = new GeneradorRandom();
 	this.precioPorPaquete = precioPorPaquete;
 	this.personas = new ArrayList<Persona>(cantPersonas);
-}
+	this.cantidadTotalFigusAlbum = 638;
+	this.cantidadFigusPaq = 5;
+	
+	}
 	//Constructor con valores seteados por usuario
 	public SimulacionVariasPersonaRegalo(int cantPersonas,
 	int precioPorPaquete,  
@@ -43,6 +53,13 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	this.random = new GeneradorRandom();
 	this.precioPorPaquete = precioPorPaquete;
 	this.personas = new ArrayList<Persona>(cantPersonas);
+	
+	this.cantidadFigusPaq = cantidadFiguritasPorPaquete;
+	this.cantidadTotalFigusAlbum = cantidadFiguritasTotal;
+	
+	
+	
+	//No funciona
 	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
 	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
@@ -61,6 +78,9 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		notificarObservadores();
 		iteraciones++;
 		this.iteracionesGlobales = iteraciones;
+		
+		//Thread.sleep(150);
+	
 	}
 	crearLog();
 	gastoTotal = cantPaquetesTotal * precioPorPaquete;
@@ -74,7 +94,10 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	public void generarIndividuos(){
 	for(int i = 0 ; i <= cantPersonas; i++){
 		Persona persona = new Persona(i);
- 		personas.add(persona);	
+				
+			persona.setAlbum(cantidadTotalFigusAlbum, cantidadFigusPaq);
+			
+			personas.add(persona);	
 	}
 }
 
@@ -82,7 +105,8 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	int iteraciones = 0;
 	for(Persona p : personas){
 		if (!p.albumEstaCompleto() && iteraciones < 15){
-			rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
+			rellenarAlbum(PaqueteFiguritasNormal.nuevo(cantidadTotalFigusAlbum, cantidadFigusPaq).getPaqueteFiguritas(), p);
+
 			iteraciones++;
 			cantPaquetesTotal++;
 		}
@@ -92,7 +116,9 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p){
 		for(int i = 0; i < paquete.size();i++) {
 			if(!p.albumEstaCompleto()){
-				try { p.insertarFiguritaEnAlbum(paquete.get(i)); }
+				try { 
+					p.insertarFiguritaEnAlbum(paquete.get(i)); 
+					}
 				catch ( Exception e) {e.printStackTrace(); }
 		}
 	}
@@ -102,6 +128,8 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	boolean aux = true;
 	for(Persona p: personas){	
 		aux = aux && p.albumEstaCompleto();
+	
+		
 	}
 	return aux;
 }
@@ -164,5 +192,16 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	@Override
 	public double promedioPaquetesXPersona() 
 	{ return cantPaquetesTotal/personas.size(); }
+	
+	@Override
+	public int getCostoActual() {
+		// TODO Auto-generated method stub
+		return cantPaquetesTotal * precioPorPaquete;
+	}
+
+
+	
+
 
 }
+

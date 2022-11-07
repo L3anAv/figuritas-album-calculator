@@ -6,8 +6,8 @@ public class Album {
 
 	private int idPropietario;
 	private LinkedList<Integer> album;
-	private int cantidadFiguritas = 638;
-	private int cantidadFiguritaPorPaquete = 5;
+	private int cantidadFiguritas;
+	private int cantidadFiguritaPorPaquete;
 	private LinkedList<Integer> figuritasRepetidas;
 
 	// > Constructor
@@ -15,19 +15,38 @@ public class Album {
 		album = new LinkedList<Integer>();
 		this.idPropietario = idPropietario;
 		figuritasRepetidas = new LinkedList<Integer>();
-}
+		this.cantidadFiguritas = 638;
+		this.cantidadFiguritaPorPaquete = 5;
+	}
 
+	public Album(int idPropietario, int cantidadFiguritas, int cantidadFiguritasPorPaquete) {
+		album = new LinkedList<Integer>();
+		this.idPropietario = idPropietario;
+		figuritasRepetidas = new LinkedList<Integer>();
+		this.cantidadFiguritaPorPaquete = cantidadFiguritasPorPaquete;
+		this.cantidadFiguritas = cantidadFiguritas;
+		
+	}
+	
+	
 	// > Metodos de clase
-	public void ingresarFigurita(int figurita) throws Exception{	
-
-		if(figurita < 1)
-			throw new Exception("El numero no pude ser menor a 1. No existen figuritas Negativas.");
-		else if(!album.contains(figurita))
+//	public void ingresarFigurita(int figurita) throws Exception{	
+//
+//		if(figurita < 1)
+//			throw new Exception("El numero no pude ser menor a 1. No existen figuritas Negativas.");
+//		else if(!album.contains(figurita))
+//			album.add(figurita);
+//		else 
+//			figuritasRepetidas.add(figurita);
+//}
+	
+	public void ingresarFigurita(int figurita) {
+	if(!album.contains(figurita))
 			album.add(figurita);
-		else 
-			figuritasRepetidas.add(figurita);
-}
-
+	else 
+		figuritasRepetidas.add(figurita);
+	}
+	
 	public boolean existeFiguritaEnAlbum(int numDeFigurita){
 	boolean existe = false;
 		if(album.contains(numDeFigurita))
@@ -51,7 +70,11 @@ public class Album {
 
 	public int getcantidadFiguritaPorPaquete()
 	{ return cantidadFiguritaPorPaquete; }
-
+	
+	public int getCantFiguritasTotal() {
+		return cantidadFiguritas;
+	}
+	
 	public void setCantidadFiguritasTotales(int nuevaCantidadFiguritasTotales)
 	{ cantidadFiguritas = nuevaCantidadFiguritasTotales; }
 
