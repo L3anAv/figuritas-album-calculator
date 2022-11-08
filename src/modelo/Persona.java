@@ -12,7 +12,7 @@ public class Persona {
 	// > Constructor
 	public Persona(int id){
 		this.id = id;
-		miAlbum = new Album(id, 300, 5);
+		miAlbum = new Album(id);
 
 }
 	
@@ -138,7 +138,7 @@ public class Persona {
 
 	public void setAlbum(int cantidadFiguritas, int cantidadFiguritasPorPaquete) {
 		
-		this.miAlbum = new Album(id, cantidadFiguritas, cantidadFiguritasPorPaquete);
+		this.miAlbum = new Album(id);
 		
 	}
 	public LinkedList<Integer> getMisFiguritas()
