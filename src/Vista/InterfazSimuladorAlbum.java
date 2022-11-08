@@ -23,7 +23,12 @@ public class InterfazSimuladorAlbum {
 	private JFrame frame;
 	private JTextField textField;
 	private JLabel lblErrorIngresoCantSims;
-	private String seleccionado;
+	//private String seleccionado;
+	
+	private enum uEleccion  {unaPersona, nPersonasRegalo, nPersonasIntercambio};
+	private uEleccion seleccionado;
+	
+	
 	private int cantPersonas;
 	public static void main(String[] args) 
 	{
@@ -116,20 +121,38 @@ public class InterfazSimuladorAlbum {
 	
 	SeleccionDeSimulacion.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent arg0){
-	String seleccionado = SeleccionDeSimulacion.getSelectedItem().toString();
-	setSeleccion(seleccionado);
-	frame.setTitle(seleccionado);
-	if(seleccionado.equals("Simulacion una sola persona")){
-	textField.setEnabled(false);
-	lblCantidadDePersonas.setText(" Campo no solicitado ");
-	lblCantidadDePersonas.setFont(new Font("Inconsolata",Font.ITALIC ,20));
-	lblCantidadDePersonas.setForeground(new Color(224, 27, 36));
-	} else {
-	textField.setEnabled(true);
-	lblCantidadDePersonas.setText("Cantidad de participantes: ");
-	lblCantidadDePersonas.setFont(new Font("Inconsolata",Font.ITALIC ,20));
-	lblCantidadDePersonas.setForeground(Color.WHITE);
-	}}});
+	
+		String seleccionado = SeleccionDeSimulacion.getSelectedItem().toString();
+	
+	
+	
+	
+		frame.setTitle(seleccionado);
+		if(seleccionado.equals("Simulacion una sola persona")){
+			setSeleccion(uEleccion.unaPersona);
+			textField.setEnabled(false);
+			lblCantidadDePersonas.setText(" Campo no solicitado ");
+			lblCantidadDePersonas.setFont(new Font("Inconsolata",Font.ITALIC ,20));
+			lblCantidadDePersonas.setForeground(new Color(224, 27, 36));
+			} 
+		if(seleccionado.equals("Simulacion varias personas con regalo")) {
+			setSeleccion(uEleccion.nPersonasRegalo);
+			textField.setEnabled(true);
+			lblCantidadDePersonas.setText("Cantidad de participantes: ");
+			lblCantidadDePersonas.setFont(new Font("Inconsolata",Font.ITALIC ,20));
+			lblCantidadDePersonas.setForeground(Color.WHITE);
+			}
+		if(seleccionado.equals("Simulacion de varias personas con intercambio")) {
+			setSeleccion(uEleccion.nPersonasIntercambio);
+			textField.setEnabled(true);
+			lblCantidadDePersonas.setText("Cantidad de participantes: ");
+			lblCantidadDePersonas.setFont(new Font("Inconsolata",Font.ITALIC ,20));
+			lblCantidadDePersonas.setForeground(Color.WHITE);
+			
+			
+		}
+	
+	}});
 
 	panel.add(SeleccionDeSimulacion);
 	frame.getContentPane().add(panel);
@@ -138,7 +161,7 @@ public class InterfazSimuladorAlbum {
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	private void setSeleccion(String seleccion) {
+	private void setSeleccion(uEleccion seleccion) {
 		this.seleccionado = seleccion;
 	}
 
@@ -162,11 +185,20 @@ public class InterfazSimuladorAlbum {
 	private void iniciarPantallaSettings() {
 		
 		
-		
-		
-		
-		InterfazSettingSimulacion avanzar = new InterfazSettingSimulacion();
-		avanzar.visualizarPantalla();
+		if(this.seleccionado == uEleccion.unaPersona) {
+			
+			InterfazSettingSimulacion avanzar = new InterfazSettingSimulacion();
+			avanzar.visualizarPantalla();
+		}
+		if(this.seleccionado == uEleccion.nPersonasRegalo) {
+			InterfazSettingSimulacion avanzar = new InterfazSettingSimulacion("nPersonasRegalo", this.cantPersonas);
+			avanzar.visualizarPantalla();
+		}
+		else {
+			InterfazSettingSimulacion avanzar = new InterfazSettingSimulacion("nPersonasIntercambio", this.cantPersonas);
+			avanzar.visualizarPantalla();
+			
+		}
 		
 		
 	}
