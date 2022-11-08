@@ -130,7 +130,7 @@ public class InterfazSettingSimulacion {
 	lblPrecioPaq.setFont(new Font("Inconsolata",Font.PLAIN ,14));
 	frame.getContentPane().add(lblPrecioPaq);
 	
-	JLabel lblCantSimulaciones = new JLabel("Cantidad de simulaciones a realizar:");
+	JLabel lblCantSimulaciones = new JLabel("Cantidad de simulaciones a realizar (Por Thread):");
 	lblCantSimulaciones.setBounds(46, 303, 281, 14);
 	lblCantSimulaciones.setFont(new Font("Inconsolata",Font.PLAIN ,14));
 	frame.getContentPane().add(lblCantSimulaciones);
