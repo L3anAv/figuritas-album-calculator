@@ -13,12 +13,18 @@ import javax.swing.JLabel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.JPanel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class InterfazSimuladorAlbum {
 
 	private JFrame frame;
 	private JTextField textField;
-
+	private JLabel lblErrorIngresoCantSims;
+	private String seleccionado;
+	private int cantPersonas;
 	public static void main(String[] args) 
 	{
 	EventQueue.invokeLater(new Runnable(){
@@ -53,9 +59,28 @@ public class InterfazSimuladorAlbum {
 	JPanel panel = new JPanel();
 	panel.setLayout(null);
 	panel.setBounds(60,12, 407, 299);
-
+	crearCartelErrorIngreso();
 	//Campo de texto para personas
 	textField = new JTextField();
+	frame.revalidate();
+	frame.repaint();
+	
+	
+	textField.addKeyListener(new KeyAdapter() {
+		@Override
+		public void keyTyped(KeyEvent e) {
+		
+			char c = e.getKeyChar();
+			
+			if(Character.isDigit(c)) {
+				cantPersonas = cantPersonas + c;
+			}
+			else {
+				lblErrorIngresoCantSims.setVisible(true);
+			}
+
+		}
+	});
 	textField.setBounds(22, 156, 343, 31);
 	textField.setEnabled(false);
 	textField.setColumns(10);
@@ -69,6 +94,12 @@ public class InterfazSimuladorAlbum {
 	lblCantidadDePersonas.setForeground(new Color(224, 27, 36));
 	
 	JButton botonInicio = new JButton("INICIAR");
+	botonInicio.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			frame.dispose();
+			iniciarPantallaSettings();
+		}
+	});
 	botonInicio.setBounds(145, 246, 106, 41);
 	panel.add(botonInicio);
 	botonInicio.setFocusPainted(false);
@@ -86,6 +117,7 @@ public class InterfazSimuladorAlbum {
 	SeleccionDeSimulacion.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent arg0){
 	String seleccionado = SeleccionDeSimulacion.getSelectedItem().toString();
+	setSeleccion(seleccionado);
 	frame.setTitle(seleccionado);
 	if(seleccionado.equals("Simulacion una sola persona")){
 	textField.setEnabled(false);
@@ -101,6 +133,45 @@ public class InterfazSimuladorAlbum {
 
 	panel.add(SeleccionDeSimulacion);
 	frame.getContentPane().add(panel);
+	
+	
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	private void setSeleccion(String seleccion) {
+		this.seleccionado = seleccion;
+	}
+
+	private void crearCartelErrorIngreso() {
+		
+		lblErrorIngresoCantSims = new JLabel("Ingrese solo numeros!");
+		lblErrorIngresoCantSims.setBounds(80, 205, 200, 19);
+		lblErrorIngresoCantSims.setFont(new Font("Inconsolata", Font.ITALIC, 11));
+		lblErrorIngresoCantSims.setForeground(Color.RED);
+		lblErrorIngresoCantSims.setVisible(false);
+		frame.getContentPane().add(lblErrorIngresoCantSims);
+		
+		frame.revalidate();
+		frame.repaint();
+		
+		
+		
+		
+	}
+	
+	private void iniciarPantallaSettings() {
+		
+		
+		
+		
+		
+		InterfazSettingSimulacion avanzar = new InterfazSettingSimulacion();
+		avanzar.visualizarPantalla();
+		
+		
+	}
+
+
 }
+
+

@@ -29,6 +29,9 @@ public class InterfazSettingSimulacion {
 	private JLayeredPane layeredPane;
 	private Simulacion sim;
 
+	
+	
+	
 	private JTextField field_CantTotalFigus;
 	private JTextField field_CantFigusPaq;
 	private JTextField field_Precio;
@@ -44,7 +47,8 @@ public class InterfazSettingSimulacion {
 	private int cantFigusPaq;
 	private int precioPaq;
 	private int cantSims;
-
+	private int cantParcipantes;
+	private String tipoSim;
 	//Variables default
 	private final int default_CantFigus = 630;
 	private final int default_CantFigusPaq = 5;
@@ -58,7 +62,7 @@ public class InterfazSettingSimulacion {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(new FlatDarkLaf());
-					InterfazSettingSimulacion window = new InterfazSettingSimulacion(new SimulacionUnaPersona(0));
+					InterfazSettingSimulacion window = new InterfazSettingSimulacion();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,14 +74,21 @@ public class InterfazSettingSimulacion {
 	/**
 	 * Create the application.
 	 */
-	public InterfazSettingSimulacion(Simulacion sim) {
+	public InterfazSettingSimulacion(String tipoSim ,int cantParticipantes) {
 		
-		this.sim = sim;
-		
+		this.tipoSim = tipoSim;
+		this.cantParcipantes = cantParticipantes;
 		initialize();
 		
 	}
 
+	public InterfazSettingSimulacion() {
+
+		this.tipoSim = "Simulacion una sola persona";
+		
+		initialize();
+		
+	}
 	private void initialize(){
 		iniciarFrame();
 		iniciarLabels();
@@ -346,6 +357,11 @@ public class InterfazSettingSimulacion {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
 	}		
 	
+	
+	
+	
+	
+	
 }
 	
 	
@@ -366,5 +382,11 @@ public class InterfazSettingSimulacion {
 		defaultLbl_Precio.setVisible(false);
 		layeredPane.add(defaultLbl_Precio, Integer.valueOf(2));
 	}
+
+
+	public void visualizarPantalla() {
+		this.frame.setVisible(true);
+	}
+
 }
 
