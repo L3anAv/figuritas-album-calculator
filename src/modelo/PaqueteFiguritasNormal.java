@@ -25,8 +25,8 @@ public class PaqueteFiguritasNormal{
 
 	// > Constructor
 	private PaqueteFiguritasNormal(){
-	cantidadTotalFiguritas = 5;
 	cantidadTotalFiguritas = 638;
+	cantidadFiguritasPaquete = 5;
 	paqueteFiguritas = new LinkedList<Integer>();
 }
 

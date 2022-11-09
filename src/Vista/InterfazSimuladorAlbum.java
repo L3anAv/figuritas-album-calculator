@@ -19,8 +19,7 @@ public class InterfazSimuladorAlbum {
 	private JFrame frame;
 	private JTextField textField;
 
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args){
 	EventQueue.invokeLater(new Runnable(){
 	public void run(){
 	try 
@@ -33,14 +32,13 @@ public class InterfazSimuladorAlbum {
 	{
 	e.printStackTrace();
 	}}});
-	}
+}
 
 	public InterfazSimuladorAlbum()
-	{initialize();}
+	{ initialize(); }
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	private void initialize()
-	{
+	private void initialize(){
 	String[] opcionesDeSimulacion = {"Simulacion una sola persona", "Simulacion varias personas con regalo",
 	"Simulacion de varias personas con intercambio"};
 	
