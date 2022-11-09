@@ -106,23 +106,8 @@ public class InterfazSettingSimulacion {
 		pantallaInicial.setBounds(120, 150, 500, 400);
 		pantallaInicial.setLayout(null);
 		
-		JComboBox SeleccionDeSimulacion = new JComboBox(opcionesDeSimulacion);
-		SeleccionDeSimulacion.setBounds(22, 47, 343, 38);
-		SeleccionDeSimulacion.setFont(new Font("Inconsolata", Font.PLAIN, 14));
-		SeleccionDeSimulacion.setFocusable(false);
-	
 		JButton botonInicio = crearBotonIrConfiguracion(pantallaInicial, pantallaConfiguracion);
-		
-		SeleccionDeSimulacion.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent arg0){
-				if(SeleccionDeSimulacion.getSelectedIndex() == 0) {
-					botonInicio.setEnabled(false);
-				}else {
-					botonInicio.setEnabled(true);
-			}
-		}
-	});
-		
+		JComboBox SeleccionDeSimulacion = crearSelectorDeSimulacion(botonInicio);
 		
 		pantallaInicial.add(botonInicio);
 		pantallaInicial.add(SeleccionDeSimulacion);
@@ -181,6 +166,28 @@ public class InterfazSettingSimulacion {
 		});
 		
 		return BotonIrConfiguracion;
+	}
+	
+// > Metodo que crea un JComboBox para el panel de inicio (Seleccion de tipo de simulacion).
+	private JComboBox crearSelectorDeSimulacion(JButton botonInicio) {
+		
+		JComboBox SeleccionDeSimulacion = new JComboBox(opcionesDeSimulacion);
+		
+		SeleccionDeSimulacion.setBounds(22, 47, 343, 38);
+		SeleccionDeSimulacion.setFont(new Font("Inconsolata", Font.PLAIN, 14));
+		SeleccionDeSimulacion.setFocusable(false);
+	
+		SeleccionDeSimulacion.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent arg0){
+				if(SeleccionDeSimulacion.getSelectedIndex() == 0) {
+					botonInicio.setEnabled(false);
+				}else {
+					botonInicio.setEnabled(true);
+			}
+		}
+	});
+		
+		return SeleccionDeSimulacion;
 	}
 	
 // > Metodo que crea un boton para el panel de configuracion.
