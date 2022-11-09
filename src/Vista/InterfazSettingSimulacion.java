@@ -328,6 +328,8 @@ public class InterfazSettingSimulacion {
 		public void keyTyped(KeyEvent e) {
 			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 				e.consume();
+			}else if(field_CantTotalFigus.getText().length() < 0){
+				cantTotalFigus = -1;
 			}else{
 				String cantTotalFigusText = "" + e.getKeyChar();
 				cantTotalFigus = Integer.parseInt(cantTotalFigusText);
@@ -338,17 +340,18 @@ public class InterfazSettingSimulacion {
 
 	field_CantTotalFigus.setBounds(46, 105, 290, 35);
 	field_CantTotalFigus.setColumns(10);
-	//layeredPane.add(field_CantTotalFigus, Integer.valueOf(1));
 	textFieldsParaConfig.add(field_CantTotalFigus);
-	
+
 	// > Text Cantidad de Figuritas por paquete (Toma el valor de Cantidad de Figuritas por paquete).
 	field_CantFigusPaq = new JTextField();
 	field_CantFigusPaq.addKeyListener(new KeyAdapter() {
-			@Override
+		@Override
 		public void keyTyped(KeyEvent e) {
 
 			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 				e.consume();
+			}else if(field_CantFigusPaq.getText().length() < 0){
+				cantFigusPaq = -1;
 			}else{
 				String cantFigusPaqText = "" + e.getKeyChar();
 				cantFigusPaq = Integer.parseInt(cantFigusPaqText);
@@ -370,6 +373,8 @@ public class InterfazSettingSimulacion {
 				
 				if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 					e.consume();
+				}else if(field_Precio.getText().length() < 0){
+					precioPaq = -1;
 				}else{
 					String precioPaqText = "" + e.getKeyChar();
 					precioPaq = Integer.parseInt(precioPaqText);
@@ -380,7 +385,6 @@ public class InterfazSettingSimulacion {
 	
 	field_Precio.setBounds(46, 269, 290, 35);
 	field_Precio.setColumns(10);
-	//layeredPane.add(field_Precio, Integer.valueOf(1));
 	textFieldsParaConfig.add(field_Precio);
 	
 	// > Text Cantidad de simulaciones (Toma la Cantidad de simulaciones).
@@ -391,6 +395,8 @@ public class InterfazSettingSimulacion {
 			
 			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 				e.consume();
+			}else if(field_CantSims.getText().length() < 0){
+				cantSims = -1;
 			}else{
 				String cantSimsText = "" + e.getKeyChar();
 				cantSims = Integer.parseInt(cantSimsText);
@@ -520,19 +526,21 @@ public class InterfazSettingSimulacion {
 	
 	private void iniciarSimulacion() {
 	
-	if(this.cantPesonasParaSimulacion <= 0){
-			JOptionPane.showMessageDialog(null, "Falta ingresar la cantidad de pesonas para la simulacion.", "Error", JOptionPane.ERROR_MESSAGE);
-	}else if(this.cantTotalFigus <= 0) {
+	//Control de campos antes de iniciar simulaciones
+	if(this.cantTotalFigus <= 0 || field_CantTotalFigus.getText().length() == 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad total de figuritas valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);	
-	}else if(this.cantFigusPaq <= 0) {
-		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de figuritas por paquete valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
-	}else if(this.precioPaq <= 0) {
-		JOptionPane.showMessageDialog(null, "Ingrese un precio valido (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
-	}else if(this.cantSims <= 0) {
-		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
-	}else {
-		// aca pongo que hacer
 	}
+	if(this.cantFigusPaq <= 0 || field_CantFigusPaq.getText().length() == 0) {
+		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de figuritas por paquete valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	if(this.precioPaq <= 0 || field_Precio.getText().length() == 0) {
+		JOptionPane.showMessageDialog(null, "Ingrese un precio valido (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	if(this.cantSims <= 0 || field_CantSims.getText().length() == 0) {
+		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
 	
 }
 
