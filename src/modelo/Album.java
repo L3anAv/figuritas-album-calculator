@@ -13,6 +13,7 @@ public class Album {
 	// > Constructor
 	public Album(int idPropietario){
 		album = new LinkedList<Integer>();
+		album.add(0);
 		this.idPropietario = idPropietario;
 		figuritasRepetidas = new LinkedList<Integer>();
 }
@@ -42,9 +43,12 @@ public class Album {
 
 	public LinkedList<Integer> getFiguritasDeAlbum()
 	{ return album; }
-
+	
 	public LinkedList<Integer> getFiguritasRepetidas()
 	{ return figuritasRepetidas; }
+	
+	public int getCantFiguritasTotal() 
+	{ return cantidadFiguritas;}
 	
 	public int getIdPropietarioAlbum()
 	{ return idPropietario; }

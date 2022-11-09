@@ -13,9 +13,7 @@ public class Persona {
 	public Persona(int id){
 		this.id = id;
 		miAlbum = new Album(id);
-
 }
-	
 	
 	// > Metodos de clase
 	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception{ 

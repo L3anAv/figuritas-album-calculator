@@ -9,8 +9,7 @@ public class FabricaDeSimulaciones implements Runnable {
 	public FabricaDeSimulaciones(Simulacion sim) {
 		this._sim = sim;
 	}
-	
-	
+
 	public static Simulacion getSimulacion(boolean config,
 	 String nombreDeSimulacion, 
 	int precioPorPaquete,
@@ -53,22 +52,14 @@ public class FabricaDeSimulaciones implements Runnable {
 }
 
 	public static void generarSimulacionesThread(Simulacion sim, int cantSims) {
-		
-		
 		int cores = Runtime.getRuntime().availableProcessors();
-		
 		for(int i = 1; i<=cores; i++) {
-			
 			FabricaDeSimulaciones simulacion = new FabricaDeSimulaciones(sim);
 			Thread thread = new Thread(simulacion);
 			thread.start();
 		}
-		
-
-		
 	}
-	
-	
+
 	@Override
 	public void run() {
 	try {
@@ -79,13 +70,7 @@ public class FabricaDeSimulaciones implements Runnable {
 	}
 	
 }
-	
-	
-	
-	
-	
-	
-	
+
 	public String getTodasLasSimulaciones(){
 	StringBuilder simulaciones = new StringBuilder();
 		simulaciones.append("Las simulaciones son: \n")
