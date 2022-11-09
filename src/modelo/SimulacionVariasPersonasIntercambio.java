@@ -127,7 +127,7 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 			
 //			try {
 //				Thread.sleep(40);
-//				escribirLog();
+//				//escribirLog();
 //			} catch (InterruptedException e) {
 //				e.printStackTrace();
 //			}

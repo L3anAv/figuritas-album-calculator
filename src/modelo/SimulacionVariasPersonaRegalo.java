@@ -79,7 +79,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		iteraciones++;
 		this.iteracionesGlobales = iteraciones;
 		
-		//Thread.sleep(150);
+		Thread.sleep(40);
 	
 	}
 	crearLog();

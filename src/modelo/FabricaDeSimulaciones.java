@@ -2,7 +2,15 @@ package modelo;
 
 import interfaces.Simulacion;
 
-public class FabricaDeSimulaciones {
+public class FabricaDeSimulaciones implements Runnable {
+
+	
+	public Simulacion _sim;
+	
+	public FabricaDeSimulaciones(Simulacion sim) {
+		this._sim = sim;
+	}
+	
 
 	public static Simulacion getSimulacion(boolean config,
 	 String nombreDeSimulacion, 
@@ -44,7 +52,47 @@ public class FabricaDeSimulaciones {
 	}
 		return null;
 }
+	
+	
+	
+	
+public static void generarSimulacionesThread(Simulacion sim, int cantSims) {
+		
+		
+		int cores = Runtime.getRuntime().availableProcessors();
+		
+		for(int i = 1; i<=2; i++) {
+			
+			FabricaDeSimulaciones simulacion = new FabricaDeSimulaciones(sim);
+			Thread thread = new Thread(simulacion);
+			thread.start();
+		}
+		
 
+		
+	}
+	
+	
+	@Override
+	public void run() {
+	try {
+		_sim.iniciarSimulacion();
+	} catch (Exception e) {
+		
+		e.printStackTrace();
+	}
+	
+}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String getTodasLasSimulaciones(){
 	StringBuilder simulaciones = new StringBuilder();
 		simulaciones.append("Las simulaciones son: \n")
