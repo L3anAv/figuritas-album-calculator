@@ -178,8 +178,6 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		
 	}
 
-
-
 	@Override
 	public double promedioPaquetesXPersona() {
 		return this.cantPaquetesTotal/cantPersonas;
