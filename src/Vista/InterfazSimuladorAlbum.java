@@ -51,14 +51,14 @@ public class InterfazSimuladorAlbum {
 	JPanel panel = new JPanel();
 	panel.setLayout(null);
 	panel.setBounds(60,12, 407, 299);
-
+	
 	//Campo de texto para personas
 	textField = new JTextField();
 	textField.setBounds(22, 156, 343, 31);
 	textField.setEnabled(false);
 	textField.setColumns(10);
 	panel.add(textField);
-	
+	 
 	//Label con indicacion para el textField
 	JLabel lblCantidadDePersonas = new JLabel(" Campo no solicitado ");
 	lblCantidadDePersonas.setBounds(12, 119, 343, 25);
@@ -85,6 +85,7 @@ public class InterfazSimuladorAlbum {
 	public void itemStateChanged(ItemEvent arg0){
 	String seleccionado = SeleccionDeSimulacion.getSelectedItem().toString();
 	frame.setTitle(seleccionado);
+	
 	if(seleccionado.equals("Simulacion una sola persona")){
 	textField.setEnabled(false);
 	lblCantidadDePersonas.setText(" Campo no solicitado ");
