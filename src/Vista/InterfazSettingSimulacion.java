@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.im.InputContext;
 import java.util.LinkedList;
 
@@ -58,6 +60,7 @@ public class InterfazSettingSimulacion {
 	private final String default_CantFigusPaq_text = "5";
 	private final String default_Precio_text = "150";
 	private String[] opcionesDeSimulacion = {
+			"Sin Seleccion",
 			"Simulacion una sola persona", 
 			"Simulacion varias personas con regalo",
 			"Simulacion de varias personas con intercambio"};
@@ -107,8 +110,19 @@ public class InterfazSettingSimulacion {
 		SeleccionDeSimulacion.setBounds(22, 47, 343, 38);
 		SeleccionDeSimulacion.setFont(new Font("Inconsolata", Font.PLAIN, 14));
 		SeleccionDeSimulacion.setFocusable(false);
-		
+	
 		JButton botonInicio = crearBotonIrConfiguracion(pantallaInicial, pantallaConfiguracion);
+		
+		SeleccionDeSimulacion.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent arg0){
+				if(SeleccionDeSimulacion.getSelectedIndex() == 0) {
+					botonInicio.setEnabled(false);
+				}else {
+					botonInicio.setEnabled(true);
+			}
+		}
+	});
+		
 		
 		pantallaInicial.add(botonInicio);
 		pantallaInicial.add(SeleccionDeSimulacion);
@@ -157,6 +171,7 @@ public class InterfazSettingSimulacion {
 		BotonIrConfiguracion.setFont(new Font("Inconsolata", Font.PLAIN, 13));
 		BotonIrConfiguracion.setForeground(new Color(255, 255, 255));
 		BotonIrConfiguracion.setBackground(new Color(36, 31, 49));
+		BotonIrConfiguracion.setEnabled(false);
 		
 		BotonIrConfiguracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
