@@ -39,7 +39,8 @@ public class InterfazSettingSimulacion {
 	private JTextField field_CantFigusPaq;
 	private JTextField field_Precio;
 	private JTextField field_CantSims;
-
+	private JTextField textFieldCantidadPersonas;
+	
 	//Labels de Valores default
 	private JLabel defaultLbl_CantFigus;
 	private JLabel defaultLbl_CantFigusPaq;
@@ -103,15 +104,32 @@ public class InterfazSettingSimulacion {
 	pantallaConfiguracion.setVisible(false);
 	
 	// JPanel -> PANTALLA DE INICIO:
-		pantallaInicial.setBounds(120, 150, 500, 400);
+	
+		pantallaInicial.setBounds(120, 90, 500, 500);
 		pantallaInicial.setLayout(null);
 		
-		JButton botonInicio = crearBotonIrConfiguracion(pantallaInicial, pantallaConfiguracion);
-		JComboBox SeleccionDeSimulacion = crearSelectorDeSimulacion(botonInicio);
+		// Label y un textField
+		JLabel labelSolicitudDeCantPersonas = new JLabel("No seleccionaste una simulacion.");
+		labelSolicitudDeCantPersonas.setBounds(20, 85, 343, 25);
+		labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 20));
+		labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
 		
+		textFieldCantidadPersonas = new JTextField();
+		textFieldCantidadPersonas.setBounds(20, 120, 343, 35);
+		textFieldCantidadPersonas.setEnabled(false);
+		textFieldCantidadPersonas.setColumns(10);
+		
+		JButton botonInicio = crearBotonIrConfiguracion(pantallaInicial, pantallaConfiguracion);
+		JComboBox SeleccionDeSimulacion = crearSelectorDeSimulacion(botonInicio,textFieldCantidadPersonas, labelSolicitudDeCantPersonas);
+		
+		pantallaInicial.add(labelSolicitudDeCantPersonas);
+		pantallaInicial.add(textFieldCantidadPersonas);
 		pantallaInicial.add(botonInicio);
 		pantallaInicial.add(SeleccionDeSimulacion);
 		frame.getContentPane().add(pantallaInicial);
+		
+		
+//                --------------
 		
 	// JPanel -> PANTALLA DE CONFIGURACION:
 		pantallaConfiguracion.setBounds(0,0, 640, 500);
@@ -151,7 +169,7 @@ public class InterfazSettingSimulacion {
 // > Metodo que crea un boton para el panel de inicio.
 	private JButton crearBotonIrConfiguracion(JPanel pantallaInicial, JPanel pantallaConfig){
 		JButton BotonIrConfiguracion = new JButton("Continuar a configuracion >> ");
-		BotonIrConfiguracion.setBounds(50, 135, 270, 41);
+		BotonIrConfiguracion.setBounds(50, 195, 270, 41);
 		BotonIrConfiguracion.setFocusPainted(false);
 		BotonIrConfiguracion.setFont(new Font("Inconsolata", Font.PLAIN, 13));
 		BotonIrConfiguracion.setForeground(new Color(255, 255, 255));
@@ -160,8 +178,8 @@ public class InterfazSettingSimulacion {
 		
 		BotonIrConfiguracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pantallaInicial.setVisible(false);
 				pantallaConfig.setVisible(true);
+				pantallaInicial.setVisible(false);
 			}
 		});
 		
@@ -169,20 +187,34 @@ public class InterfazSettingSimulacion {
 	}
 	
 // > Metodo que crea un JComboBox para el panel de inicio (Seleccion de tipo de simulacion).
-	private JComboBox crearSelectorDeSimulacion(JButton botonInicio) {
+	private JComboBox crearSelectorDeSimulacion(JButton botonInicio, JTextField textFieldCantidadPersonas, JLabel labelSolicitudDeCantPersonas ) {
 		
 		JComboBox SeleccionDeSimulacion = new JComboBox(opcionesDeSimulacion);
 		
-		SeleccionDeSimulacion.setBounds(22, 47, 343, 38);
+		SeleccionDeSimulacion.setBounds(22, 10, 343, 38);
 		SeleccionDeSimulacion.setFont(new Font("Inconsolata", Font.PLAIN, 14));
 		SeleccionDeSimulacion.setFocusable(false);
 	
 		SeleccionDeSimulacion.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent arg0){
-				if(SeleccionDeSimulacion.getSelectedIndex() == 0) {
+				if(SeleccionDeSimulacion.getSelectedIndex() == 0){
 					botonInicio.setEnabled(false);
-				}else {
+					labelSolicitudDeCantPersonas.setText("No seleccionaste una simulacion.");
+					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 20));
+					labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
+				}else if(SeleccionDeSimulacion.getSelectedIndex() == 1){
+					textFieldCantidadPersonas.setEnabled(false);
+					labelSolicitudDeCantPersonas.setText("Campo no solicitado ");
+					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 25));
+					labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
 					botonInicio.setEnabled(true);
+				}
+				else{
+					botonInicio.setEnabled(true);
+					textFieldCantidadPersonas.setEnabled(true);
+					labelSolicitudDeCantPersonas.setText("Cantidad de participantes: ");
+					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata",Font.PLAIN ,20));
+					labelSolicitudDeCantPersonas.setForeground(Color.WHITE);
 			}
 		}
 	});
