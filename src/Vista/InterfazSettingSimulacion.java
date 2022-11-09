@@ -32,34 +32,37 @@ import java.awt.event.KeyEvent;
 public class InterfazSettingSimulacion {
 
 	private JFrame frame;
-	private JLayeredPane layeredPane;
 	private Simulacion sim;
-
-	private JTextField field_CantTotalFigus;
-	private JTextField field_CantFigusPaq;
+	private JLayeredPane layeredPane;
+	
+	// Text Fields Pantalla
 	private JTextField field_Precio;
 	private JTextField field_CantSims;
-	private JTextField textFieldCantidadPersonas;
+	private JTextField field_CantFigusPaq;
+	private JTextField field_CantTotalFigus;
 	
-	//Labels de Valores default
+	// Labels de Valores default
+	private JLabel defaultLbl_Precio;
 	private JLabel defaultLbl_CantFigus;
 	private JLabel defaultLbl_CantFigusPaq;
-	private JLabel defaultLbl_Precio;
 	
-	//Jpanels
+	// Jpanels
 	private JPanel pantallaInicial;
 	private JPanel pantallaConfiguracion;
 	
-	//Variables 
-	private int cantTotalFigus;
-	private int cantFigusPaq;
-	private int precioPaq;
+	// Variables
 	private int cantSims;
+	private int precioPaq;
+	private int cantFigusPaq;
+	private int cantTotalFigus;
+	private int simulacionElegida;
+	private int cantPesonasParaSimulacion;
 	
-	//Variables default
+	// Variables default
+	
+	private final String default_Precio_text = "150";
 	private final String default_CantFigus_text = "638";
 	private final String default_CantFigusPaq_text = "5";
-	private final String default_Precio_text = "150";
 	private String[] opcionesDeSimulacion = {
 			"Sin Seleccion",
 			"Simulacion una sola persona", 
@@ -68,24 +71,24 @@ public class InterfazSettingSimulacion {
 	
 // >  Launch the application.
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(new FlatDarkLaf());
-					InterfazSettingSimulacion window = new InterfazSettingSimulacion(new SimulacionUnaPersona(0));
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	EventQueue.invokeLater(new Runnable() {
+	public void run() {
+		try {
+			UIManager.setLookAndFeel(new FlatDarkLaf());
+			InterfazSettingSimulacion window = new InterfazSettingSimulacion(new SimulacionUnaPersona(0));
+			window.frame.setVisible(true);
+		}catch(Exception e) {
+			e.printStackTrace();
 			}
-		});
-	}
+		}
+	});
+}
 
 // > Create the application.
 	public InterfazSettingSimulacion(Simulacion sim) {
 		this.sim = sim;
 		initialize();
-	}
+}
 
 // > Inicializacion de todo.
 	private void initialize(){
@@ -108,37 +111,37 @@ public class InterfazSettingSimulacion {
 		pantallaInicial.setBounds(120, 90, 500, 500);
 		pantallaInicial.setLayout(null);
 		
-		// Label y un textField
+		// Label Inicial: No seleccionaste la simulacion.
 		JLabel labelSolicitudDeCantPersonas = new JLabel("No seleccionaste una simulacion.");
-		labelSolicitudDeCantPersonas.setBounds(20, 85, 343, 25);
 		labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 20));
 		labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
+		labelSolicitudDeCantPersonas.setBounds(20, 85, 343, 25);
 		
-		textFieldCantidadPersonas = new JTextField();
-		textFieldCantidadPersonas.setBounds(20, 120, 343, 35);
-		textFieldCantidadPersonas.setEnabled(false);
-		textFieldCantidadPersonas.setColumns(10);
-		
+		// Text Field para ingreso de cantidad de personas -> Agregar a pantalla inicio.
+		JTextField textFieldPersonas = crearTextFieldParaCantidadPersona();
+		textFieldPersonas.setBounds(20, 120, 343, 35);
+		textFieldPersonas.setEnabled(false);
+
+		// Boton para Configuracion -> Agregar a pantalla inicio.
 		JButton botonInicio = crearBotonIrConfiguracion(pantallaInicial, pantallaConfiguracion);
-		JComboBox SeleccionDeSimulacion = crearSelectorDeSimulacion(botonInicio,textFieldCantidadPersonas, labelSolicitudDeCantPersonas);
+		JComboBox SeleccionDeSimulacion = crearSelectorDeSimulacion(botonInicio,textFieldPersonas, labelSolicitudDeCantPersonas);
 		
-		pantallaInicial.add(labelSolicitudDeCantPersonas);
-		pantallaInicial.add(textFieldCantidadPersonas);
 		pantallaInicial.add(botonInicio);
+		pantallaInicial.add(textFieldPersonas);
 		pantallaInicial.add(SeleccionDeSimulacion);
+		pantallaInicial.add(labelSolicitudDeCantPersonas);
 		frame.getContentPane().add(pantallaInicial);
-		
-		
+				
 //                --------------
 		
 	// JPanel -> PANTALLA DE CONFIGURACION:
 		pantallaConfiguracion.setBounds(0,0, 640, 500);
 		pantallaConfiguracion.setLayout(null);
 		
-		//Boton para panel -> Agregandolo a panel config.
-		JButton botonComenzar = crearBotonComenzarSimulacion();
-		botonComenzar.setBounds(250, 410, 110, 45);
-		pantallaConfiguracion.add(botonComenzar);
+		//Boton para panel -> Agregar boton para volver a atras.
+		JButton botonIrDetras = crearBotonIrAtras(pantallaInicial, pantallaConfiguracion);
+		botonIrDetras.setBounds(10, 10, 29, 25);
+		pantallaConfiguracion.add(botonIrDetras);
 		
 		//JLlabels para panel -> Agregando a panel config.
 		LinkedList<JLabel> labelsParaConfig = crearLabelsParaConfig();
@@ -154,10 +157,13 @@ public class InterfazSettingSimulacion {
 		LinkedList<JCheckBox> checkBoxParaConfig = crearcheckBoxParaConfig();
 		insertarComponentsEnPanel(checkBoxParaConfig, pantallaConfiguracion);
 		
+		//Boton para panel -> Agregandolo a panel config.
+		JButton botonComenzar = crearBotonComenzarSimulacion();
+		botonComenzar.setBounds(250, 410, 110, 45);
+		pantallaConfiguracion.add(botonComenzar);
+		
 		frame.getContentPane().add(pantallaConfiguracion);
-	
-	layeredPane = new JLayeredPane();
-	layeredPane.setBounds(0, 0, 640, 480);
+
 	frame.setResizable(false);
 	frame.setBounds(380, 180, 640, 500);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -169,7 +175,7 @@ public class InterfazSettingSimulacion {
 // > Metodo que crea un boton para el panel de inicio.
 	private JButton crearBotonIrConfiguracion(JPanel pantallaInicial, JPanel pantallaConfig){
 		JButton BotonIrConfiguracion = new JButton("Continuar a configuracion >> ");
-		BotonIrConfiguracion.setBounds(50, 195, 270, 41);
+		BotonIrConfiguracion.setBounds(53, 195, 280, 41);
 		BotonIrConfiguracion.setFocusPainted(false);
 		BotonIrConfiguracion.setFont(new Font("Inconsolata", Font.PLAIN, 13));
 		BotonIrConfiguracion.setForeground(new Color(255, 255, 255));
@@ -191,7 +197,7 @@ public class InterfazSettingSimulacion {
 		
 		JComboBox SeleccionDeSimulacion = new JComboBox(opcionesDeSimulacion);
 		
-		SeleccionDeSimulacion.setBounds(22, 10, 343, 38);
+		SeleccionDeSimulacion.setBounds(15, 10, 349, 38);
 		SeleccionDeSimulacion.setFont(new Font("Inconsolata", Font.PLAIN, 14));
 		SeleccionDeSimulacion.setFocusable(false);
 	
@@ -199,23 +205,30 @@ public class InterfazSettingSimulacion {
 			public void itemStateChanged(ItemEvent arg0){
 				if(SeleccionDeSimulacion.getSelectedIndex() == 0){
 					botonInicio.setEnabled(false);
+					textFieldCantidadPersonas.setEnabled(false);
 					labelSolicitudDeCantPersonas.setText("No seleccionaste una simulacion.");
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 20));
 					labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
-				}else if(SeleccionDeSimulacion.getSelectedIndex() == 1){
+					simulacionElegida = -1;
+				}
+				else if(SeleccionDeSimulacion.getSelectedIndex() == 1){
 					textFieldCantidadPersonas.setEnabled(false);
 					labelSolicitudDeCantPersonas.setText("Campo no solicitado ");
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 25));
 					labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
 					botonInicio.setEnabled(true);
+					simulacionElegida = 1;
 				}
 				else{
+					simulacionElegida = SeleccionDeSimulacion.getSelectedIndex();
 					botonInicio.setEnabled(true);
 					textFieldCantidadPersonas.setEnabled(true);
 					labelSolicitudDeCantPersonas.setText("Cantidad de participantes: ");
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata",Font.PLAIN ,20));
 					labelSolicitudDeCantPersonas.setForeground(Color.WHITE);
-			}
+				}
+				
+				//System.out.print(simulacionElegida);
 		}
 	});
 		
@@ -235,6 +248,22 @@ public class InterfazSettingSimulacion {
 		}
 	});
 	return btnStart;
+}
+
+	private JButton crearBotonIrAtras(JPanel pantallaInicial, JPanel pantallaConfig){
+	JButton botonIrAtras = new JButton("<");	
+	botonIrAtras.setFocusPainted(false);
+	botonIrAtras.setFont(new Font("Inconsolata", Font.PLAIN, 14));
+	botonIrAtras.setForeground(new Color(255, 255, 255));
+	botonIrAtras.setBackground(new Color(36, 31, 49));
+	botonIrAtras.addActionListener(new ActionListener(){
+	public void actionPerformed(ActionEvent e){
+		pantallaInicial.setVisible(true);
+		pantallaConfig.setVisible(false);
+		}
+	});
+	return botonIrAtras;
+		
 }
 	
 // > Metodo que crea los labels que indican que poner en cada textField para la simulacion.
@@ -360,6 +389,27 @@ public class InterfazSettingSimulacion {
 	return textFieldsParaConfig;
 }
 	
+	private JTextField crearTextFieldParaCantidadPersona(){
+	JTextField textFieldCantidadPersona = new JTextField();
+
+	textFieldCantidadPersona.setColumns(10);
+	
+	textFieldCantidadPersona.addKeyListener(new KeyAdapter(){		
+		@Override
+		public void keyTyped(KeyEvent e) {
+			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
+				e.consume();
+			}else{
+				String cantPersonasSimulacion = "" + e.getKeyChar();
+				cantPesonasParaSimulacion = Integer.parseInt(cantPersonasSimulacion);
+				//System.out.print(cantPesonasParaSimulacion);
+			}
+		}
+	});
+	
+	return textFieldCantidadPersona;
+}
+	
 	private LinkedList<JCheckBox> crearcheckBoxParaConfig(){
 		LinkedList<JCheckBox> cheackBoxsParaConfig = new LinkedList<JCheckBox>();
 		
@@ -432,7 +482,7 @@ public class InterfazSettingSimulacion {
 		cheackBoxsParaConfig.add(chkDefaultPrecio);
 		
 		return cheackBoxsParaConfig;
-	}
+}
 	
 	private void insertarComponentsEnPanel(LinkedList<?> listDeComponentsParaPanel, JPanel pantallaConfiguracion){
 		for(int i = 0; i < listDeComponentsParaPanel.size(); i++) {
@@ -442,20 +492,20 @@ public class InterfazSettingSimulacion {
 	
 	private void iniciarSimulacion() {
 		
-	if(this.cantTotalFigus <=0) {
+	if(this.cantTotalFigus <= 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad total de figuritas valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);	
-	}
-		
-	if(this.cantFigusPaq <=0) {
+	}else if(this.cantFigusPaq <= 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de figuritas por paquete valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
-	}
-	if(this.precioPaq <= 0) {
+	}else if(this.precioPaq <= 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese un precio valido (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-		
-	if(this.cantSims <= 0) {
+	}else if(this.cantSims <= 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
-	}		
+	}else {
+		
+		// aca pongo que hacer
+		
+	}
+	
 	
 }
 
