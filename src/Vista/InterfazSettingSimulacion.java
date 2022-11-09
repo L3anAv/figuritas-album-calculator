@@ -1,11 +1,13 @@
 package Vista;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.im.InputContext;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -79,14 +81,44 @@ public class InterfazSettingSimulacion {
 // > Inicializacion de todo.
 	private void initialize(){
 		iniciarFrame();
-		iniciarLabels();
-		iniciarTxtFields();
 }
 	
 // > Metodo que incia el frame principal.
 	private void iniciarFrame(){
 
+	//JFrame
 	frame = new JFrame();
+// > JPanels
+	// JPanel -> PANTALLA DE CONFIGURACION:
+	
+		pantallaConfiguracion = new JPanel();
+		pantallaConfiguracion.setBounds(0,0, 640, 500);
+		pantallaConfiguracion.setLayout(null);
+		
+		//Boton para panel -> Agregandolo a panel config.
+		JButton botonComenzar = crearBotonComenzarSimulacion();
+		botonComenzar.setBounds(250, 410, 110, 45);
+		pantallaConfiguracion.add(botonComenzar);
+		
+		//JLlabels para panel -> Agregando a panel config.
+		LinkedList<JLabel> labelsParaConfig = crearLabelsParaConfig();
+		insertarComponentsEnPanel(labelsParaConfig, pantallaConfiguracion);
+		//insertarLabelsEnPanel(labelsParaConfig, pantallaConfiguracion);
+		
+		//JTextFields para panel -> Agregando a panel config.
+		LinkedList<JTextField> TextFieldsParaConfig = crearTextFieldsParaConfig();
+		insertarComponentsEnPanel(TextFieldsParaConfig, pantallaConfiguracion);
+		//insertarTextFieldsEnPanel(TextFieldsParaConfig, pantallaConfiguracion);
+		
+		//JCheckBox para panel -> Agregando a panel config.
+		LinkedList<JCheckBox> checkBoxParaConfig = crearcheckBoxParaConfig();
+		insertarComponentsEnPanel(checkBoxParaConfig, pantallaConfiguracion);
+	
+	//pantallaConfiguracion.setVisible(false);
+	
+	
+	frame.getContentPane().add(pantallaConfiguracion);
+	
 	layeredPane = new JLayeredPane();
 	layeredPane.setBounds(0, 0, 640, 480);
 	frame.setResizable(false);
@@ -94,8 +126,12 @@ public class InterfazSettingSimulacion {
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.getContentPane().setLayout(null);
 	
-	JButton btnStart = new JButton("Comenzar");
-		
+	frame.setTitle("Simulacion Album Figuritas 2022");
+}
+	
+// > Metodo que crea el boton para el frame principal.
+	private JButton crearBotonComenzarSimulacion(){
+	JButton btnStart = new JButton("Comenzar");	
 	btnStart.setFocusPainted(false);
 	btnStart.setFont(new Font("Inconsolata", Font.PLAIN, 14));
 	btnStart.setForeground(new Color(255, 255, 255));
@@ -105,51 +141,47 @@ public class InterfazSettingSimulacion {
 			iniciarSimulacion();
 		}
 	});
-
-	btnStart.setBounds(250, 410, 110, 45);
-	frame.getContentPane().add(btnStart);
-	frame.setTitle("Simulacion Album Figuritas 2022");
+	return btnStart;
 }
-
-	
 	
 // > Metodo que crea los labels que indican que poner en cada textField para la simulacion.
-	private void iniciarLabels(){
-	
-	JLabel errorHJLabel = new JLabel("Error: solo se deben ingresar numeros.");
-	errorHJLabel.setForeground(new Color(224, 27, 36));
-	errorHJLabel.setFont(new Font("Inconsolata",Font.BOLD ,12));
-	frame.getContentPane().add(errorHJLabel);
-	
+	private LinkedList<JLabel> crearLabelsParaConfig(){
+
+	LinkedList<JLabel> labelsPanelConfig = new LinkedList<JLabel>();
+		
 	JLabel lblTitulo = new JLabel("Configuraciones para Simulacion");
 	lblTitulo.setBounds(46, 25, 350, 43);
 	lblTitulo.setFont(new Font("Inconsolata",Font.BOLD ,20));
-	frame.getContentPane().add(lblTitulo);
+	labelsPanelConfig.add(lblTitulo);
 	
 	JLabel lblCantTotalFigus = new JLabel("Cantidad total de figuritas:");
 	lblCantTotalFigus.setBounds(46, 80, 232, 14);
 	lblCantTotalFigus.setFont(new Font("Inconsolata",Font.PLAIN ,14));
-	frame.getContentPane().add(lblCantTotalFigus);
-		
+	labelsPanelConfig.add(lblCantTotalFigus);
+
 	JLabel lblFigusEnPaquete = new JLabel("Cantidad de figuritas por paquete: ");
 	lblFigusEnPaquete.setBounds(46, 165, 320, 14);
 	lblFigusEnPaquete.setFont(new Font("Inconsolata",Font.PLAIN ,14));
-	frame.getContentPane().add(lblFigusEnPaquete);
-	
+	labelsPanelConfig.add(lblFigusEnPaquete);
+
 	JLabel lblPrecioPaq = new JLabel("Precio por paquete:");
 	lblPrecioPaq.setBounds(46, 244, 174, 14);
 	lblPrecioPaq.setFont(new Font("Inconsolata",Font.PLAIN ,14));
-	frame.getContentPane().add(lblPrecioPaq);
-	
+	labelsPanelConfig.add(lblPrecioPaq);
+
 	JLabel lblCantSimulaciones = new JLabel("Cantidad de simulaciones a realizar:");
 	lblCantSimulaciones.setBounds(46, 325, 320, 14);
 	lblCantSimulaciones.setFont(new Font("Inconsolata",Font.PLAIN ,14));
-	frame.getContentPane().add(lblCantSimulaciones);
+	labelsPanelConfig.add(lblCantSimulaciones);
+
+	return labelsPanelConfig;
 }
 
 // > Metodo que crea los campos de texto para ingresar valores para la simulacion.
-	private void iniciarTxtFields(){
-
+	private LinkedList<JTextField> crearTextFieldsParaConfig(){
+		
+	LinkedList<JTextField> textFieldsParaConfig = new LinkedList<JTextField>();
+	
 	// > Text Cantidad Total De Figuritas (Tomar el valor cantidad de figuritas).
 	field_CantTotalFigus = new JTextField();
 	field_CantTotalFigus.addKeyListener(new KeyAdapter(){		
@@ -167,8 +199,9 @@ public class InterfazSettingSimulacion {
 
 	field_CantTotalFigus.setBounds(46, 105, 290, 35);
 	field_CantTotalFigus.setColumns(10);
-	layeredPane.add(field_CantTotalFigus, Integer.valueOf(1));
-
+	//layeredPane.add(field_CantTotalFigus, Integer.valueOf(1));
+	textFieldsParaConfig.add(field_CantTotalFigus);
+	
 	// > Text Cantidad de Figuritas por paquete (Toma el valor de Cantidad de Figuritas por paquete).
 	field_CantFigusPaq = new JTextField();
 	field_CantFigusPaq.addKeyListener(new KeyAdapter() {
@@ -187,7 +220,8 @@ public class InterfazSettingSimulacion {
 
 	field_CantFigusPaq.setBounds(46, 190, 290, 35);
 	field_CantFigusPaq.setColumns(10);
-	layeredPane.add(field_CantFigusPaq, Integer.valueOf(1));
+	//layeredPane.add(field_CantFigusPaq, Integer.valueOf(1));
+	textFieldsParaConfig.add(field_CantFigusPaq);
 	
 	// > Text Precio Por Paquete (Toma el precio por paquete de figuritas).
 	field_Precio = new JTextField();
@@ -207,7 +241,8 @@ public class InterfazSettingSimulacion {
 	
 	field_Precio.setBounds(46, 269, 290, 35);
 	field_Precio.setColumns(10);
-	layeredPane.add(field_Precio, Integer.valueOf(1));
+	//layeredPane.add(field_Precio, Integer.valueOf(1));
+	textFieldsParaConfig.add(field_Precio);
 	
 	// > Text Cantidad de simulaciones (Toma la Cantidad de simulaciones).
 	field_CantSims = new JTextField();
@@ -227,79 +262,100 @@ public class InterfazSettingSimulacion {
 
 	field_CantSims.setBounds(46, 345, 290, 35);
 	field_CantSims.setColumns(10);
-	layeredPane.add(field_CantSims, Integer.valueOf(1));
-	iniciarLblsDefault();
+	//layeredPane.add(field_CantSims, Integer.valueOf(1));
 	
-// > Checks Boxs para dar valores por default ---
+	//iniciarLblsDefault();
 	
-	// Check 1: Default Cantidad De Figuritas
-	JCheckBox chkDefaultCantFigus = new JCheckBox("Valor por defecto");
-	chkDefaultCantFigus.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-				
-			if(chkDefaultCantFigus.isSelected()){
-				cantTotalFigus = Integer.parseInt(default_CantFigus_text);
-				field_CantTotalFigus.setEnabled(false);
-				field_CantTotalFigus.setText(default_CantFigus_text);
-			}
-			else{
-				field_CantTotalFigus.setEnabled(true);
-				field_CantTotalFigus.setText("");
-				frame.revalidate();
-				frame.repaint();	
-		}
-	}
-});
-	// Posicionamiento y otros.
-	chkDefaultCantFigus.setBounds(365, 110, 185, 23);
-	frame.getContentPane().add(chkDefaultCantFigus);
 	
-	// Check 2: Default Cantidad Figus Paquete.
-	JCheckBox chkDefaultFigusPaq = new JCheckBox("Valor por defecto");
-	chkDefaultFigusPaq.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-		
-			if(chkDefaultFigusPaq.isSelected()) {
-				cantFigusPaq = Integer.parseInt(default_CantFigusPaq_text);
-				field_CantFigusPaq.setEnabled(false);
-				field_CantFigusPaq.setText(default_CantFigusPaq_text);
-				frame.revalidate();
-				frame.repaint();
-			}
-			else {
-				field_CantFigusPaq.setEnabled(true);
-				field_CantFigusPaq.setText("");
-				frame.revalidate();
-				frame.repaint();
-		}
-	}
-});
-	// Posicionamiento y otros.
-	chkDefaultFigusPaq.setBounds(365, 198, 152, 23);
-	frame.getContentPane().add(chkDefaultFigusPaq);
-		
-	// Check 3: Defaul Precio Por Paquete.
-	JCheckBox chkDefaultPrecio = new JCheckBox("Valor por defecto");
-	chkDefaultPrecio.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			
-			if(chkDefaultPrecio.isSelected()) {
-				precioPaq = Integer.parseInt(default_Precio_text);
-				field_Precio.setText(default_Precio_text);
-				field_Precio.setEnabled(false);
-			}
-			else {
-				field_Precio.setEnabled(true);
-				field_Precio.setText("");
-		}
-	}
-});
-	// Posicionamiento y otros.
-	chkDefaultPrecio.setBounds(365, 268, 166, 23);
-	frame.getContentPane().add(chkDefaultPrecio);
-	frame.getContentPane().add(layeredPane);
+	
+	textFieldsParaConfig.add(field_CantSims);
+	
+	
+	return textFieldsParaConfig;
+	
+	
 }
-
+	
+	private LinkedList<JCheckBox> crearcheckBoxParaConfig(){
+		LinkedList<JCheckBox> cheackBoxsParaConfig = new LinkedList<JCheckBox>();
+		
+	// > Checks Boxs para dar valores por default ---
+		
+		// Check 1: Default Cantidad De Figuritas
+		JCheckBox chkDefaultCantFigus = new JCheckBox("Valor por defecto");
+		chkDefaultCantFigus.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+					
+				if(chkDefaultCantFigus.isSelected()){
+					cantTotalFigus = Integer.parseInt(default_CantFigus_text);
+					field_CantTotalFigus.setEnabled(false);
+					field_CantTotalFigus.setText(default_CantFigus_text);
+				}
+				else{
+					field_CantTotalFigus.setEnabled(true);
+					field_CantTotalFigus.setText("");
+					frame.revalidate();
+					frame.repaint();	
+			}
+		}
+	});
+		// Posicionamiento y otros.
+		chkDefaultCantFigus.setBounds(365, 110, 185, 23);
+		cheackBoxsParaConfig.add(chkDefaultCantFigus);
+		
+		// Check 2: Default Cantidad Figus Paquete.
+		JCheckBox chkDefaultFigusPaq = new JCheckBox("Valor por defecto");
+		chkDefaultFigusPaq.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+			
+				if(chkDefaultFigusPaq.isSelected()) {
+					cantFigusPaq = Integer.parseInt(default_CantFigusPaq_text);
+					field_CantFigusPaq.setEnabled(false);
+					field_CantFigusPaq.setText(default_CantFigusPaq_text);
+					frame.revalidate();
+					frame.repaint();
+				}
+				else {
+					field_CantFigusPaq.setEnabled(true);
+					field_CantFigusPaq.setText("");
+					frame.revalidate();
+					frame.repaint();
+			}
+		}
+	});
+		// Posicionamiento y otros.
+		chkDefaultFigusPaq.setBounds(365, 198, 152, 23);
+		cheackBoxsParaConfig.add(chkDefaultFigusPaq);
+		
+		// Check 3: Defaul Precio Por Paquete.
+		JCheckBox chkDefaultPrecio = new JCheckBox("Valor por defecto");
+		chkDefaultPrecio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(chkDefaultPrecio.isSelected()) {
+					precioPaq = Integer.parseInt(default_Precio_text);
+					field_Precio.setText(default_Precio_text);
+					field_Precio.setEnabled(false);
+				}
+				else {
+					field_Precio.setEnabled(true);
+					field_Precio.setText("");
+			}
+		}
+	});
+		// Posicionamiento y otros.
+		chkDefaultPrecio.setBounds(365, 268, 166, 23);
+		cheackBoxsParaConfig.add(chkDefaultPrecio);
+		
+		return cheackBoxsParaConfig;
+	}
+	
+	private void insertarComponentsEnPanel(LinkedList<?> listDeComponentsParaPanel, JPanel pantallaConfiguracion){
+		for(int i = 0; i < listDeComponentsParaPanel.size(); i++) {
+			pantallaConfiguracion.add((Component) listDeComponentsParaPanel.get(i));
+		}
+	}
+	
 	private void iniciarSimulacion() {
 		
 	if(this.cantTotalFigus <=0) {
