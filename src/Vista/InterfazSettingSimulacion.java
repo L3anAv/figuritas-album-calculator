@@ -11,6 +11,7 @@ import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -56,6 +57,10 @@ public class InterfazSettingSimulacion {
 	private final String default_CantFigus_text = "638";
 	private final String default_CantFigusPaq_text = "5";
 	private final String default_Precio_text = "150";
+	private String[] opcionesDeSimulacion = {
+			"Simulacion una sola persona", 
+			"Simulacion varias personas con regalo",
+			"Simulacion de varias personas con intercambio"};
 	
 // >  Launch the application.
 	public static void main(String[] args) {
@@ -86,12 +91,30 @@ public class InterfazSettingSimulacion {
 // > Metodo que incia el frame principal.
 	private void iniciarFrame(){
 
-	//JFrame
+//JFrame
 	frame = new JFrame();
-// > JPanels
-	// JPanel -> PANTALLA DE CONFIGURACION:
 	
-		pantallaConfiguracion = new JPanel();
+// > JPanels
+	pantallaInicial = new JPanel();
+	pantallaConfiguracion = new JPanel();
+	pantallaConfiguracion.setVisible(false);
+	
+	// JPanel -> PANTALLA DE INICIO:
+		pantallaInicial.setBounds(120, 150, 500, 400);
+		pantallaInicial.setLayout(null);
+		
+		JComboBox SeleccionDeSimulacion = new JComboBox(opcionesDeSimulacion);
+		SeleccionDeSimulacion.setBounds(22, 47, 343, 38);
+		SeleccionDeSimulacion.setFont(new Font("Inconsolata", Font.PLAIN, 14));
+		SeleccionDeSimulacion.setFocusable(false);
+		
+		JButton botonInicio = crearBotonIrConfiguracion(pantallaInicial, pantallaConfiguracion);
+		
+		pantallaInicial.add(botonInicio);
+		pantallaInicial.add(SeleccionDeSimulacion);
+		frame.getContentPane().add(pantallaInicial);
+		
+	// JPanel -> PANTALLA DE CONFIGURACION:
 		pantallaConfiguracion.setBounds(0,0, 640, 500);
 		pantallaConfiguracion.setLayout(null);
 		
@@ -113,11 +136,8 @@ public class InterfazSettingSimulacion {
 		//JCheckBox para panel -> Agregando a panel config.
 		LinkedList<JCheckBox> checkBoxParaConfig = crearcheckBoxParaConfig();
 		insertarComponentsEnPanel(checkBoxParaConfig, pantallaConfiguracion);
-	
-	//pantallaConfiguracion.setVisible(false);
-	
-	
-	frame.getContentPane().add(pantallaConfiguracion);
+		
+		frame.getContentPane().add(pantallaConfiguracion);
 	
 	layeredPane = new JLayeredPane();
 	layeredPane.setBounds(0, 0, 640, 480);
@@ -128,8 +148,27 @@ public class InterfazSettingSimulacion {
 	
 	frame.setTitle("Simulacion Album Figuritas 2022");
 }
+
+// > Metodo que crea un boton para el panel de inicio.
+	private JButton crearBotonIrConfiguracion(JPanel pantallaInicial, JPanel pantallaConfig){
+		JButton BotonIrConfiguracion = new JButton("Continuar a configuracion >> ");
+		BotonIrConfiguracion.setBounds(50, 135, 270, 41);
+		BotonIrConfiguracion.setFocusPainted(false);
+		BotonIrConfiguracion.setFont(new Font("Inconsolata", Font.PLAIN, 13));
+		BotonIrConfiguracion.setForeground(new Color(255, 255, 255));
+		BotonIrConfiguracion.setBackground(new Color(36, 31, 49));
+		
+		BotonIrConfiguracion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pantallaInicial.setVisible(false);
+				pantallaConfig.setVisible(true);
+			}
+		});
+		
+		return BotonIrConfiguracion;
+	}
 	
-// > Metodo que crea el boton para el frame principal.
+// > Metodo que crea un boton para el panel de configuracion.
 	private JButton crearBotonComenzarSimulacion(){
 	JButton btnStart = new JButton("Comenzar");	
 	btnStart.setFocusPainted(false);
@@ -192,7 +231,7 @@ public class InterfazSettingSimulacion {
 			}else{
 				String cantTotalFigusText = "" + e.getKeyChar();
 				cantTotalFigus = Integer.parseInt(cantTotalFigusText);
-				System.out.print(cantTotalFigus);
+				//System.out.print(cantTotalFigus);
 			}
 		}
 	});
@@ -213,7 +252,7 @@ public class InterfazSettingSimulacion {
 			}else{
 				String cantFigusPaqText = "" + e.getKeyChar();
 				cantFigusPaq = Integer.parseInt(cantFigusPaqText);
-				System.out.print(cantFigusPaqText);
+				//System.out.print(cantFigusPaqText);
 			}
 		}
 	});
@@ -234,7 +273,7 @@ public class InterfazSettingSimulacion {
 				}else{
 					String precioPaqText = "" + e.getKeyChar();
 					precioPaq = Integer.parseInt(precioPaqText);
-					System.out.print(precioPaqText);
+					//System.out.print(precioPaqText);
 			}
 		}
 	});
@@ -255,25 +294,16 @@ public class InterfazSettingSimulacion {
 			}else{
 				String cantSimsText = "" + e.getKeyChar();
 				precioPaq = Integer.parseInt(cantSimsText);
-				System.out.print(cantSimsText);
+				//System.out.print(cantSimsText);
 			}
 		}
 	});
 
 	field_CantSims.setBounds(46, 345, 290, 35);
 	field_CantSims.setColumns(10);
-	//layeredPane.add(field_CantSims, Integer.valueOf(1));
-	
-	//iniciarLblsDefault();
-	
-	
-	
 	textFieldsParaConfig.add(field_CantSims);
 	
-	
 	return textFieldsParaConfig;
-	
-	
 }
 	
 	private LinkedList<JCheckBox> crearcheckBoxParaConfig(){
