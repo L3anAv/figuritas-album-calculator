@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public class Persona {
 	
 	// > Metodos de clase
 	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception{ 
-		System.out.println(numDeFigurita);
+		
 		miAlbum.ingresarFigurita(numDeFigurita); 
 	}
 
@@ -58,6 +59,12 @@ public class Persona {
 
 	
 	//INTERCAMBIO
+	
+	
+	
+	
+	
+	
 	public void intercambiarFiguritas(Persona personaParaIntercambiar) throws Exception{
 	
 	LinkedList<Integer> figusMiasParaIntercambiar = getFiguritasRepetidas();
@@ -66,33 +73,61 @@ public class Persona {
 	LinkedList<Integer> figuritasMiasIntercambiables = new LinkedList<Integer>();
 	LinkedList<Integer> figuritasOtraPersonaOfrecidas = new LinkedList<Integer>();
 	
-	for(int figuritaPosibleIntercambiable: figusMiasParaIntercambiar)
-	{
-		if(!personaParaIntercambiar.tieneFigurita(figuritaPosibleIntercambiable)
-		&& tieneFiguritaParaIntercambiar(figusDeOtraPersonaParaIntercambiar))
-			{
-			figuritasMiasIntercambiables.add(figuritaPosibleIntercambiable);
-			int figuritaOtraPersonaIntercambio = buscarFiguritaParaIntercambiar(figusDeOtraPersonaParaIntercambiar, figuritasOtraPersonaOfrecidas);
-			figuritasOtraPersonaOfrecidas.add(figuritaOtraPersonaIntercambio);
+	if(!figusMiasParaIntercambiar.isEmpty()) {
+		for(int figuritaPosibleIntercambiable : figusMiasParaIntercambiar) {
+		
+			if(!personaParaIntercambiar.tieneFigurita(figuritaPosibleIntercambiable) && !figusDeOtraPersonaParaIntercambiar.isEmpty() && !figusDeOtraPersonaParaIntercambiar.contains(figuritaPosibleIntercambiable)) {
+			
+				figuritasMiasIntercambiables.add(figuritaPosibleIntercambiable);
+			}
+		}
+	
+		for(int figuritaPosibleIntercambiable2 : figusDeOtraPersonaParaIntercambiar) {
+		
+			if(!tieneFigurita(figuritaPosibleIntercambiable2) && !figuritasMiasIntercambiables.contains(figuritaPosibleIntercambiable2)) {
+				
+				figuritasOtraPersonaOfrecidas.add(figuritaPosibleIntercambiable2);
+			}
+
 		}
 	}
+	
+	
+	
+//	for(int figuritaPosibleIntercambiable: figusMiasParaIntercambiar)
+//	{
+//		if(!personaParaIntercambiar.tieneFigurita(figuritaPosibleIntercambiable) && tieneFiguritaParaIntercambiar(figusDeOtraPersonaParaIntercambiar))
+//			{
+//			figuritasMiasIntercambiables.add(figuritaPosibleIntercambiable);
+//			int figuritaOtraPersonaIntercambio = buscarFiguritaParaIntercambiar(figusDeOtraPersonaParaIntercambiar, figuritasOtraPersonaOfrecidas);
+//			System.out.println(figuritaOtraPersonaIntercambio);
+//			figuritasOtraPersonaOfrecidas.add(figuritaOtraPersonaIntercambio);
+//		}
+//	}
 	// Realizo el intercambio de figuritas
-	realizarIntercambio(figuritasMiasIntercambiables, figuritasOtraPersonaOfrecidas, personaParaIntercambiar);
+	
+	
+	if(!figuritasMiasIntercambiables.isEmpty() && !figuritasOtraPersonaOfrecidas.isEmpty()) {
+		System.out.println("se hace");
+		realizarIntercambio(figuritasMiasIntercambiables, figuritasOtraPersonaOfrecidas, personaParaIntercambiar);
 	//Elimino de repetidas las figuritas intercambidas
 	eliminarDeRepetidasFiguExtraidas(figuritasMiasIntercambiables);
 	personaParaIntercambiar.eliminarDeRepetidasFiguExtraidas(figuritasOtraPersonaOfrecidas);
 	//Vacio las listas aux usadas en el metodo
 	figuritasMiasIntercambiables.clear();
 	figuritasOtraPersonaOfrecidas.clear();
-}
+	}
+	}
 
 	public void realizarIntercambio(LinkedList<Integer> figuritasMiasPersonaOfrecidas, LinkedList<Integer> figuritasOtraPersonaOfrecidas, Persona otraPersona) throws Exception{
-	for(int i = 0; i < figuritasMiasPersonaOfrecidas.size(); i++){
+	for(int i = 0; i < figuritasOtraPersonaOfrecidas.size(); i++){
 		insertarFiguritaEnAlbum(figuritasOtraPersonaOfrecidas.get(i));
+	}
+	for(int i = 0; i< figuritasMiasPersonaOfrecidas.size(); i++) {
+	
 		otraPersona.insertarFiguritaEnAlbum(figuritasMiasPersonaOfrecidas.get(i));
 	}
 }
-
 	public boolean tieneFiguritaParaIntercambiar(LinkedList<Integer> figusDeOtraPersonaParaIntercambiar){
 	int index = 0;
 	boolean existeFiguritaParaIntercambio = false;
@@ -106,8 +141,8 @@ public class Persona {
 
 	public int buscarFiguritaParaIntercambiar(LinkedList<Integer> figusParaIntercambio, LinkedList<Integer> figuritasOtraPersonaOfrecidas){
 	int index = 0;
-	int figurita = -1;
-		while(figurita == -1 && index < figusParaIntercambio.size()){
+	int figurita = 1;
+		while(figurita == 1 && index < figusParaIntercambio.size()){
 			if(figuritasOtraPersonaOfrecidas.size() == 0){
 				figurita = figusParaIntercambio.get(index);
 			}else if(!figuritasOtraPersonaOfrecidas.contains(figusParaIntercambio.get(index))){

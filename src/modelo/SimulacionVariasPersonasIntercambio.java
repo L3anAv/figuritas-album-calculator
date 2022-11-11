@@ -114,15 +114,15 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		generarIndividuos();
 		while(!satisfactorio()) {
 			rellenarAlbumsDeTodos();
-		//	intercambiarRepetidas();
+			intercambiarRepetidas();
 			notificarObservadores();
 			
-			try {
-				Thread.sleep(40);
-				escribirLog();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(40);
+//				escribirLog();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 			
 			iteraciones++;
 			this.iteracionesGlobales = iteraciones;
