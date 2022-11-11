@@ -77,7 +77,18 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		}
 }
 
-	private void intercambiarRepetidas(){
+	private void intercambiarRepetidas() throws Exception{
+		for(Persona p: personas){
+			Persona p2 = personas.get(random.nextIntCExclusion(personas.size(), p.getId()));
+			if (p.hayRepetidas() && p2.hayRepetidas()){
+				p.intercambiarFiguritas(p2);
+			}
+		}
+		
+		
+		
+		
+		
 		
 }
 	
@@ -103,7 +114,7 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		generarIndividuos();
 		while(!satisfactorio()) {
 			rellenarAlbumsDeTodos();
-			intercambiarRepetidas();
+		//	intercambiarRepetidas();
 			notificarObservadores();
 			
 			try {

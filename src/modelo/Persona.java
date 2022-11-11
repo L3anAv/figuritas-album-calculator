@@ -17,6 +17,7 @@ public class Persona {
 	
 	// > Metodos de clase
 	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception{ 
+		System.out.println(numDeFigurita);
 		miAlbum.ingresarFigurita(numDeFigurita); 
 	}
 
@@ -40,7 +41,7 @@ public class Persona {
 			existe = true;
 	return existe;
 }
-
+	//REGALO	
 	public void regalarFiguritas(Persona personaParaRegalarFigus) throws Exception{
 	LinkedList<Integer> figusParaRegalar = getFiguritasRepetidas();
 	LinkedList<Integer> figuritasRegaladas = new LinkedList<Integer>();
@@ -55,6 +56,8 @@ public class Persona {
 		figuritasRegaladas.clear();
 }
 
+	
+	//INTERCAMBIO
 	public void intercambiarFiguritas(Persona personaParaIntercambiar) throws Exception{
 	
 	LinkedList<Integer> figusMiasParaIntercambiar = getFiguritasRepetidas();
