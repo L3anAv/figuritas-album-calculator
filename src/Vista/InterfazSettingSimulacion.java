@@ -24,8 +24,12 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 
+import interfaces.Observador;
 import interfaces.Simulacion;
+import modelo.FabricaDeSimulaciones;
 import modelo.SimulacionUnaPersona;
+import utilidades.ObservadorPorConsola;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -524,22 +528,81 @@ public class InterfazSettingSimulacion {
 		}
 	}
 	
+	
+	private void setSimulacion() {
+		
+		if(this.simulacionElegida == 1) {
+			
+			this.sim = FabricaDeSimulaciones.getSimulacion(true, "unaPersona", precioPaq, cantTotalFigus, cantFigusPaq);
+
+		}
+		if(this.simulacionElegida == 2) {
+			System.out.println("esta");
+			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasRegalo", precioPaq,cantPesonasParaSimulacion ,cantTotalFigus, cantFigusPaq);
+			
+		}
+		
+		if(this.simulacionElegida == 3) {
+			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasIntercambio" ,cantPesonasParaSimulacion, precioPaq, cantTotalFigus, cantFigusPaq);
+			
+		}
+//		else {
+//			this.sim = FabricaDeSimulaciones.getSimulacion(false, "unaPersona", 200, 638, 5);
+//		}
+		
+	}
+	
+	
+	
+	
+	
 	private void iniciarSimulacion() {
 	
 	//Control de campos antes de iniciar simulaciones
 	if(this.cantTotalFigus <= 0 || field_CantTotalFigus.getText().length() == 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad total de figuritas valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);	
 	}
-	if(this.cantFigusPaq <= 0 || field_CantFigusPaq.getText().length() == 0) {
+	else if(this.cantFigusPaq <= 0 || field_CantFigusPaq.getText().length() == 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de figuritas por paquete valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
 	}
-	if(this.precioPaq <= 0 || field_Precio.getText().length() == 0) {
+	else if(this.precioPaq <= 0 || field_Precio.getText().length() == 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese un precio valido (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
-	if(this.cantSims <= 0 || field_CantSims.getText().length() == 0) {
+	else if(this.cantSims <= 0 || field_CantSims.getText().length() == 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
 	}
+	else {
+		setSimulacion();
+		
+		double cuenta =0;
+		
+		
+		
+		for(int i = 0; i < cantSims; i++) {
+			
+			sim.registrarObservador(new ObservadorPorConsola(sim));
+			try {
+				cuenta = sim.iniciarSimulacion();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		}
+		
+		
+		System.out.println(cuenta);
+	
+	
+	}
+	
+	
+		
+		
+		
 	
 	
 }
