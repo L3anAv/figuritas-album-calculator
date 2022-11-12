@@ -28,7 +28,7 @@ private Random _random;
 		
 		if(r == num) {
 			
-			if(r >= rango-1) {
+			if(r >= rango-1 && r != 0) {
 				
 				r = r -1;
 				

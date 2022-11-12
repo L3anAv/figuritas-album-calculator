@@ -174,9 +174,15 @@ public class Persona {
 
 	public void setAlbum(int cantidadFiguritas, int cantidadFiguritasPorPaquete) {
 		
+		this.miAlbum = new Album(id, cantidadFiguritas, cantidadFiguritasPorPaquete);
+		
+	}
+	public void setAlbum() {
+		
 		this.miAlbum = new Album(id);
 		
 	}
+	
 	public LinkedList<Integer> getMisFiguritas()
 	{ return miAlbum.getFiguritasDeAlbum(); }
 
