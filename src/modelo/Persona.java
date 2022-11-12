@@ -108,7 +108,7 @@ public class Persona {
 	
 	
 	if(!figuritasMiasIntercambiables.isEmpty() && !figuritasOtraPersonaOfrecidas.isEmpty()) {
-		System.out.println("se hace");
+		
 		realizarIntercambio(figuritasMiasIntercambiables, figuritasOtraPersonaOfrecidas, personaParaIntercambiar);
 	//Elimino de repetidas las figuritas intercambidas
 	eliminarDeRepetidasFiguExtraidas(figuritasMiasIntercambiables);

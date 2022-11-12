@@ -21,6 +21,11 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		public StringBuilder sb;
 		private Generador random;
 		private Observador observador;
+
+		private int cantidadTotalFigusAlbum;
+		private int cantidadFigusPaq;
+
+		
 		
 	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
 	int precioPorPaquete){
@@ -30,7 +35,12 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		this.cantPaquetesTotal = 0;
 		this.random = new GeneradorRandom();
 		this.sb = new StringBuilder();
-}
+
+		this.cantidadTotalFigusAlbum = 638;
+		this.cantidadFigusPaq = 5;
+
+	
+	}
 
 	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
 	int precioPorPaquete,  
@@ -42,9 +52,15 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	this.random = new GeneradorRandom();
 	this.precioPorPaquete = precioPorPaquete;
 	this.personas = new ArrayList<Persona>(cantPersonas);
-	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
-	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
-	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
+
+	this.cantidadFigusPaq = cantidadFiguritasPorPaquete;
+	this.cantidadTotalFigusAlbum = cantidadFiguritasTotal;
+	
+	
+	
+//	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
+//	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
+//	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
 }
 
 	@Override
@@ -54,8 +70,9 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	
 	public void generarIndividuos(){	
 	for(int i = 0 ; i <= cantPersonas; i++){
-		Persona persona = new Persona(i);
- 		personas.add(persona);
+		Persona persona = new Persona(i+1);
+		persona.setAlbum(cantidadTotalFigusAlbum, cantidadFigusPaq);
+		personas.add(persona);
 	}
 }
 	
@@ -63,7 +80,7 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	int iteraciones = 0;
 	
 	for(Persona p : personas) if (!p.albumEstaCompleto() && iteraciones < 15){	
-		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas(), p);
+		rellenarAlbum(PaqueteFiguritasNormal.nuevo(cantidadTotalFigusAlbum, cantidadFigusPaq).getPaqueteFiguritas(), p);
 		cantPaquetesTotal++;
 		iteraciones++;
 	}
