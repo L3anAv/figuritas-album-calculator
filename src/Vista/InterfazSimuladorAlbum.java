@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 public class InterfazSimuladorAlbum {
 
@@ -61,7 +62,7 @@ public class InterfazSimuladorAlbum {
 	 
 	//Label con indicacion para el textField
 	JLabel lblCantidadDePersonas = new JLabel(" Campo no solicitado ");
-	lblCantidadDePersonas.setBounds(12, 119, 343, 25);
+	lblCantidadDePersonas.setBounds(22, 123, 343, 25);
 	panel.add(lblCantidadDePersonas);
 	lblCantidadDePersonas.setFont(new Font("Inconsolata", Font.ITALIC, 20));
 	lblCantidadDePersonas.setForeground(new Color(224, 27, 36));
@@ -100,6 +101,8 @@ public class InterfazSimuladorAlbum {
 
 	panel.add(SeleccionDeSimulacion);
 	frame.getContentPane().add(panel);
+	
+	
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

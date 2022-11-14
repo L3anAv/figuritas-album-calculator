@@ -8,9 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.im.InputContext;
 import java.util.LinkedList;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -19,17 +17,15 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-
 import com.formdev.flatlaf.FlatDarkLaf;
-
 import interfaces.Observador;
 import interfaces.Simulacion;
 import modelo.FabricaDeSimulaciones;
 import modelo.SimulacionUnaPersona;
 import utilidades.ObservadorPorConsola;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -37,7 +33,6 @@ public class InterfazSettingSimulacion {
 
 	private JFrame frame;
 	private Simulacion sim;
-	private JLayeredPane layeredPane;
 	
 	// Text Fields Pantalla
 	private JTextField textFieldPersonas;
@@ -46,14 +41,15 @@ public class InterfazSettingSimulacion {
 	private JTextField field_CantFigusPaq;
 	private JTextField field_CantTotalFigus;
 	
-	// Labels de Valores default
-	private JLabel defaultLbl_Precio;
+	// Labels
 	private JLabel erroMsgCantPersonas;
-	private JLabel defaultLbl_CantFigus;
-	private JLabel defaultLbl_CantFigusPaq;
+
+	private JProgressBar progressBar;
 	
 	// Jpanels
+	private JPanel pantallaLoading;
 	private JPanel pantallaInicial;
+	private JPanel pantallaResultado;
 	private JPanel pantallaConfiguracion;
 	
 	// Variables
@@ -63,9 +59,14 @@ public class InterfazSettingSimulacion {
 	private int cantTotalFigus;
 	private int simulacionElegida;
 	private int cantPesonasParaSimulacion;
+	private String simulacionNombreElegida;
 	
-	// Variables default
+	//Boleanos para settear simulacion en default
+	private boolean preciofieldPrecioEstaDefault = false;
+	private boolean precioCantFigusPaqEstaDefault = false;
+	private boolean precioCantTotalFigusEstaDefault = false;
 	
+	// Variables default valores
 	private final String default_Precio_text = "150";
 	private final String default_CantFigus_text = "638";
 	private final String default_CantFigusPaq_text = "5";
@@ -108,9 +109,21 @@ public class InterfazSettingSimulacion {
 	frame = new JFrame();
 	
 // > JPanels
+	
+	// > Pantalla inicial
 	pantallaInicial = new JPanel();
+	
+	// > Pantalla configuracion
 	pantallaConfiguracion = new JPanel();
 	pantallaConfiguracion.setVisible(false);
+	
+	// > Pantalla loading
+	pantallaLoading = new JPanel();
+	pantallaLoading.setVisible(false);
+	
+	// > Pantalla Resultado
+	pantallaResultado = new JPanel();
+	pantallaResultado.setVisible(false);
 	
 	// JPanel -> PANTALLA DE INICIO:
 	
@@ -177,9 +190,24 @@ public class InterfazSettingSimulacion {
 		JButton botonComenzar = crearBotonComenzarSimulacion();
 		botonComenzar.setBounds(250, 410, 110, 45);
 		pantallaConfiguracion.add(botonComenzar);
-		
 		frame.getContentPane().add(pantallaConfiguracion);
-
+		
+//      --------------
+		
+	// JPanel -> PANTALLA DE CARGA:
+		
+		//Configuracion
+		pantallaLoading.setBounds(0,0, 640, 500);
+		pantallaLoading.setLayout(null);
+		
+		progressBar = new JProgressBar();
+		progressBar.setBounds(160, 195, 303, 31);
+		progressBar.setIndeterminate(true);
+		progressBar.setEnabled(true);
+		pantallaLoading.add(progressBar);
+		
+		frame.getContentPane().add(pantallaLoading);
+		
 	frame.setResizable(false);
 	frame.setBounds(380, 180, 640, 500);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -243,6 +271,8 @@ public class InterfazSettingSimulacion {
 				else{
 					botonInicio.setEnabled(false);
 					simulacionElegida = SeleccionDeSimulacion.getSelectedIndex();
+					//simulacionElegida
+					colocarSimulacionSeleccionada(opcionesDeSimulacion[simulacionElegida]);
 					textFieldCantidadPersonas.setEnabled(true);
 					labelSolicitudDeCantPersonas.setText("Cantidad de participantes: ");
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata",Font.PLAIN ,20));
@@ -256,6 +286,16 @@ public class InterfazSettingSimulacion {
 		return SeleccionDeSimulacion;
 	}
 	
+	private void colocarSimulacionSeleccionada(String eleccionSimulacion) {
+		if(eleccionSimulacion.equals("Simulacion una sola persona")) {
+			simulacionNombreElegida = "unaPersona";
+		}else if(eleccionSimulacion.equals("Simulacion varias personas con regalo")) {
+			simulacionNombreElegida = "nPersonasRegalo";
+		}else if(eleccionSimulacion.equals("Simulacion de varias personas con intercambio")) {
+			simulacionNombreElegida = "nPersonasIntercambio";
+		}
+	}
+	
 // > Metodo que crea un boton para el panel de configuracion.
 	private JButton crearBotonComenzarSimulacion(){
 	JButton btnStart = new JButton("Comenzar");	
@@ -265,7 +305,9 @@ public class InterfazSettingSimulacion {
 	btnStart.setBackground(new Color(36, 31, 49));
 	btnStart.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			iniciarSimulacion();
+			verificarAntesDeiniciarSimulacion();
+			pantallaConfiguracion.setVisible(false);
+			pantallaLoading.setVisible(true);
 		}
 	});
 	return btnStart;
@@ -462,12 +504,15 @@ public class InterfazSettingSimulacion {
 					cantTotalFigus = Integer.parseInt(default_CantFigus_text);
 					field_CantTotalFigus.setEnabled(false);
 					field_CantTotalFigus.setText(default_CantFigus_text);
-				}
-				else{
+					precioCantFigusPaqEstaDefault = true; 
+					//boleando precioCantTotalFigusEstaDefault = true
+					//preciofieldPrecioEstaDefault precioCantTotalFigusEstaDefault
+				}else{
+					precioCantFigusPaqEstaDefault = false; 
 					field_CantTotalFigus.setEnabled(true);
 					field_CantTotalFigus.setText("");
 					frame.revalidate();
-					frame.repaint();	
+					frame.repaint();
 			}
 		}
 	});
@@ -484,14 +529,13 @@ public class InterfazSettingSimulacion {
 					cantFigusPaq = Integer.parseInt(default_CantFigusPaq_text);
 					field_CantFigusPaq.setEnabled(false);
 					field_CantFigusPaq.setText(default_CantFigusPaq_text);
-					frame.revalidate();
-					frame.repaint();
+					precioCantTotalFigusEstaDefault = true;
+					//boleando precioCantFigusPaqEstaDefault = true
 				}
 				else {
+					precioCantTotalFigusEstaDefault = false;
 					field_CantFigusPaq.setEnabled(true);
 					field_CantFigusPaq.setText("");
-					frame.revalidate();
-					frame.repaint();
 			}
 		}
 	});
@@ -508,8 +552,10 @@ public class InterfazSettingSimulacion {
 					precioPaq = Integer.parseInt(default_Precio_text);
 					field_Precio.setText(default_Precio_text);
 					field_Precio.setEnabled(false);
+					preciofieldPrecioEstaDefault = true;
 				}
 				else {
+					preciofieldPrecioEstaDefault = false;
 					field_Precio.setEnabled(true);
 					field_Precio.setText("");
 			}
@@ -518,7 +564,6 @@ public class InterfazSettingSimulacion {
 		// Posicionamiento y otros.
 		chkDefaultPrecio.setBounds(365, 268, 166, 23);
 		cheackBoxsParaConfig.add(chkDefaultPrecio);
-		
 		return cheackBoxsParaConfig;
 }
 	
@@ -528,36 +573,24 @@ public class InterfazSettingSimulacion {
 		}
 	}
 	
-	
 	private void setSimulacion() {
 		
 		if(this.simulacionElegida == 1) {
-			
 			this.sim = FabricaDeSimulaciones.getSimulacion(true, "unaPersona", precioPaq, cantTotalFigus, cantFigusPaq);
-
 		}
 		if(this.simulacionElegida == 2) {
 			System.out.println("esta");
 			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasRegalo", precioPaq,cantPesonasParaSimulacion ,cantTotalFigus, cantFigusPaq);
 			
 		}
-		
 		if(this.simulacionElegida == 3) {
-			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasIntercambio" ,cantPesonasParaSimulacion, precioPaq, cantTotalFigus, cantFigusPaq);
-			
+			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasIntercambio", cantPesonasParaSimulacion, precioPaq, cantTotalFigus, cantFigusPaq);
 		}
-//		else {
-//			this.sim = FabricaDeSimulaciones.getSimulacion(false, "unaPersona", 200, 638, 5);
-//		}
 		
 	}
-	
-	
-	
-	
-	
-	private void iniciarSimulacion() {
-	
+
+	private void verificarAntesDeiniciarSimulacion() {
+
 	//Control de campos antes de iniciar simulaciones
 	if(this.cantTotalFigus <= 0 || field_CantTotalFigus.getText().length() == 0) {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad total de figuritas valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);	
@@ -573,39 +606,40 @@ public class InterfazSettingSimulacion {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	else {
-		setSimulacion();
-		
-		double cuenta =0;
-		
-		
-		
-		for(int i = 0; i < cantSims; i++) {
-			
-			sim.registrarObservador(new ObservadorPorConsola(sim));
-			try {
-				cuenta = sim.iniciarSimulacion();
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		
-		}
-		
-		
-		System.out.println(cuenta);
-	
-	
+		ejecutarSimulacion();
 	}
+//		setSimulacion();
+//		double cuenta =0;
+//		for(int i = 0; i < cantSims; i++){
+//			sim.registrarObservador(new ObservadorPorConsola(sim));
+//			try {
+//				cuenta = sim.iniciarSimulacion();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println(cuenta);
+//	}
 	
+	// Cambiar panel a uno nuevo con la barra de progreso en carga mientra iniciarSimulacion
+	// no haya terminado. Ya esta el panel.
+	// cuando iniciarSimulacion termino. cambiar pantalla final con dato de gasto.
+	// inciarSimulacion()
+		//Datos finales para inciar simulacion
+		//La config simulaciones debe ser por setters
+		// config(boolean):Solo true solo cuando los estaDefault son true;
+		// tipo de simulacion
+		// cantidad de veces a simular
+		// Clase sistema de simulacion: que devuelva la cantidad de plata promedio gastada entre los 
+		// participantes de la simulacion.
 	
-		
-		
-		
-	
-	
+	// Si pasa todos los controles, inicar la simulacion. 
+	// Cargar nuevo panel en frame.
+ 
 }
 
+	private void ejecutarSimulacion() {
+		
+	}
 }
 

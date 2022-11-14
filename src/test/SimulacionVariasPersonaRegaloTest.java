@@ -15,12 +15,4 @@ public class SimulacionVariasPersonaRegaloTest {
 	sim.iniciarSimulacion();
 	
 	}
-
-
-
-
-
-
-
-
 }
