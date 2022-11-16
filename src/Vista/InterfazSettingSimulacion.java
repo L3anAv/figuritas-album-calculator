@@ -573,20 +573,19 @@ public class InterfazSettingSimulacion {
 		}
 	}
 	
+	// Aca solo deberia retornar el tipo de simulacion
+	// y en un tipo sistema de simulacion darle todo y que retorne
 	private void setSimulacion() {
 		
 		if(this.simulacionElegida == 1) {
 			this.sim = FabricaDeSimulaciones.getSimulacion(true, "unaPersona", precioPaq, cantTotalFigus, cantFigusPaq);
 		}
 		if(this.simulacionElegida == 2) {
-			System.out.println("esta");
 			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasRegalo", precioPaq,cantPesonasParaSimulacion ,cantTotalFigus, cantFigusPaq);
-			
 		}
 		if(this.simulacionElegida == 3) {
 			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasIntercambio", cantPesonasParaSimulacion, precioPaq, cantTotalFigus, cantFigusPaq);
 		}
-		
 	}
 
 	private void verificarAntesDeiniciarSimulacion() {
@@ -606,9 +605,10 @@ public class InterfazSettingSimulacion {
 		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	else {
+		setSimulacion();
 		ejecutarSimulacion();
 	}
-//		setSimulacion();
+//		
 //		double cuenta =0;
 //		for(int i = 0; i < cantSims; i++){
 //			sim.registrarObservador(new ObservadorPorConsola(sim));
