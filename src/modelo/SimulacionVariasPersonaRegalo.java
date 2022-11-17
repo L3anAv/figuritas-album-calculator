@@ -52,6 +52,24 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	this.cantidadFigusPaq = cantidadFiguritasPorPaquete;
 	this.cantidadTotalFigusAlbum = cantidadFiguritasTotal;
 	
+	if(cantPersonas<1) {
+		throw new IllegalArgumentException("No pueden haber menos de 2 participantes");
+	}
+	if(precioPorPaquete < 0 ) {
+		throw new IllegalArgumentException("El Valor del precio no puede ser negativo");
+	}
+	if(cantidadFiguritasPorPaquete < 1) {
+		throw new IllegalArgumentException("La cantidad de Figuritas por paquete no puede ser menor a 1");
+	}
+	if(cantidadFiguritasTotal < 1) {
+		throw new IllegalArgumentException("La cantidad total de figuritas no puede ser menor a 1");
+	}
+	
+	
+	
+	
+	
+	
 	generarIndividuos();
 	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
 	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);

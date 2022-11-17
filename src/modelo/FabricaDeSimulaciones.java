@@ -34,10 +34,10 @@ public class FabricaDeSimulaciones{
 		Simulacion simulacion = new SimulacionUnaPersona(precioPorPaquete, cantidadFiguritasTotal,cantidadFiguritasPorPaquete );
 		return simulacion;
 	}else if(nombreDeSimulacion.equals("nPersonasRegalo")){
-		Simulacion simulacion = new SimulacionVariasPersonaRegalo(precioPorPaquete, cantPersonas,cantidadFiguritasTotal,cantidadFiguritasPorPaquete);
+		Simulacion simulacion = new SimulacionVariasPersonaRegalo(cantPersonas, precioPorPaquete,cantidadFiguritasTotal,cantidadFiguritasPorPaquete);
 		return simulacion;
 	}else if(nombreDeSimulacion.equals("nPersonasIntercambio")){
-		Simulacion simulacion = new SimulacionVariasPersonasIntercambio(precioPorPaquete, cantPersonas,cantidadFiguritasTotal,cantidadFiguritasPorPaquete);
+		Simulacion simulacion = new SimulacionVariasPersonasIntercambio(cantPersonas, precioPorPaquete, cantidadFiguritasTotal,cantidadFiguritasPorPaquete);
 		return simulacion;
 	}
 	

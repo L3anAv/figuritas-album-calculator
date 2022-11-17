@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
+import interfaces.Generador;
 import interfaces.Observador;
 import interfaces.Simulacion;
 
@@ -17,6 +19,10 @@ public class SimulacionUnaPersona implements Simulacion{
 	private int cantPaquetes;
 	private Observador observador;
 
+	
+	private Generador genPrefijado;
+	
+	
 //	// > Constructor con valores default (menos precio por paquete)
 //	public SimulacionUnaPersona(int precioPorPaquete){
 //	persona = new Persona(1);
@@ -31,6 +37,17 @@ public class SimulacionUnaPersona implements Simulacion{
 	persona = new Persona(1);
 	this.precioPorPaquete = precioPorPaquete;
 	this.sb = new StringBuilder();
+	
+	if(precioPorPaquete < 0 ) {
+		throw new IllegalArgumentException("El Valor del precio no puede ser negativo");
+	}
+	if(cantidadFiguritasPorPaquete < 1) {
+		throw new IllegalArgumentException("La cantidad de Figuritas por paquete no puede ser menor a 1");
+	}
+	if(cantidadFiguritasTotal < 1) {
+		throw new IllegalArgumentException("La cantidad total de figuritas no puede ser menor a 1");
+	}
+	
 	
 	persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
@@ -52,6 +69,23 @@ public class SimulacionUnaPersona implements Simulacion{
 		return (cantPaquetes*precioPorPaquete);
 }
 
+	public int iniciarTesting() throws Exception{
+		cantPaquetes = 1;
+		while(!persona.albumEstaCompleto()) {
+			rellenarAlbum(PaqueteFiguritasNormal.nuevo(getGenPrefijado()).getPaqueteFiguritas());
+			System.out.println(PaqueteFiguritasNormal.cantidadFiguritasPaquete);
+			System.out.println(persona.getAlbum().getFiguritasDeAlbum());
+			notificarObservadores();
+			iteracion++;
+			cantPaquetes++;
+			Thread.sleep(1000);
+		}
+		
+		return (cantPaquetes*precioPorPaquete);
+	}
+	
+	
+	
 	@Override
 	public void registrarObservador(Observador obs){
 		this.observador = obs;
@@ -105,4 +139,14 @@ public class SimulacionUnaPersona implements Simulacion{
 		observador.notificar();
 }
 
+	public Generador getGenPrefijado() {
+		return genPrefijado;
+	}
+
+	public void setGenPrefijado(Generador genPrefijado) {
+		this.genPrefijado = genPrefijado;
+	}
+
+	
+	
 }

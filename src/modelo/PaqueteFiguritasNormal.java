@@ -1,17 +1,19 @@
 package modelo;
 
 import java.util.LinkedList;
-import java.util.Random;
 
+import interfaces.Generador;
 import utilidades.GeneradorRandom;
 
 public class PaqueteFiguritasNormal{
 
 	private static int cantidadTotalFiguritas;
-	private static int cantidadFiguritasPaquete;
+	public static int cantidadFiguritasPaquete;
 	private LinkedList<Integer> paqueteFiguritas;
 	private static PaqueteFiguritasNormal paquete;
-
+	private static Generador generadorPref;
+	
+	
 	// > Generador de paquetes nuevos de figuritas.
 	public static PaqueteFiguritasNormal nuevo(){
 	paquete = new PaqueteFiguritasNormal(); // Instancia de paquete
@@ -38,6 +40,18 @@ public class PaqueteFiguritasNormal{
 		}
 		return paquete; // Retorno el paquete
 	}
+	//METODO PARA TESTEO
+	public static PaqueteFiguritasNormal nuevo(Generador gen){ 
+		paquete = new PaqueteFiguritasNormal(); // Instancia de paquete
+	//	GeneradorRandom numeroFiguritas = new GeneradorRandom(); // Random para numero de figurita
+		int cantidadFigus = paquete.getCantidadFiguritas(); // Cantidad de cada paquete
+		for(int i = 0; i < cantidadFigus ;i++){ // Relleno de figuritas el paquete
+			int numeroFigurita = gen.nextInt(i);
+			paquete.setFigurita(numeroFigurita);
+		}
+		return paquete; // Retorno el paquete
+	}
+	
 
 	// > Constructor
 	private PaqueteFiguritasNormal(){
@@ -46,6 +60,15 @@ public class PaqueteFiguritasNormal{
 	paqueteFiguritas = new LinkedList<Integer>();
 }
 
+	private PaqueteFiguritasNormal(Generador gen) {
+		cantidadTotalFiguritas = 638;
+		cantidadFiguritasPaquete = 5;
+		paqueteFiguritas = new LinkedList<Integer>();
+		generadorPref = gen;
+		
+		
+		
+	}
 	// > Getters && Setters
 
 	public static void setCantidadFiguritasPaquete(int nuevaCantidadPorPaquete)

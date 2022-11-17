@@ -27,7 +27,9 @@ public class ObservadorPorConsola implements Observador {
 	for(Persona p: lista){	
 		System.out.println(p.toString());
 	}
-}
+
+		
+	}
 
 	
 	
