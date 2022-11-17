@@ -48,6 +48,7 @@ public class SimulacionUnaPersona implements Simulacion{
 		throw new IllegalArgumentException("La cantidad total de figuritas no puede ser menor a 1");
 	}
 	
+	//cantPaquetes = 0;
 	
 	persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
@@ -57,12 +58,12 @@ public class SimulacionUnaPersona implements Simulacion{
 
 	@Override
 	public int iniciarSimulacion() throws Exception{
-	cantPaquetes = 1;
-	while(!persona.albumEstaCompleto()){
+	//cantPaquetes = 1;
+	while(!satisfactorio()){
 		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas());
 		notificarObservadores();
 		iteracion++;
-		cantPaquetes++;
+		//cantPaquetes++;
 	}
 		crearLog();
 		System.out.print("\n cantPaquetes*precioPorPaquete: " + cantPaquetes*precioPorPaquete);
@@ -71,7 +72,7 @@ public class SimulacionUnaPersona implements Simulacion{
 
 	public int iniciarTesting() throws Exception{
 		cantPaquetes = 1;
-		while(!persona.albumEstaCompleto()) {
+		while(!satisfactorio()) {
 			rellenarAlbum(PaqueteFiguritasNormal.nuevo(getGenPrefijado()).getPaqueteFiguritas());
 			System.out.println(PaqueteFiguritasNormal.cantidadFiguritasPaquete);
 			System.out.println(persona.getAlbum().getFiguritasDeAlbum());
@@ -91,10 +92,12 @@ public class SimulacionUnaPersona implements Simulacion{
 		this.observador = obs;
 }
 
-	protected void rellenarAlbum(LinkedList<Integer> paquete) throws Exception{
+	public void rellenarAlbum(LinkedList<Integer> paquete) throws Exception{
 	for(int i = 0; i < paquete.size();i++) 
 		persona.insertarFiguritaEnAlbum(paquete.get(i));
-}
+	
+	cantPaquetes++;
+	}
 
 	// > Getter & Setter
 	@Override
@@ -147,6 +150,11 @@ public class SimulacionUnaPersona implements Simulacion{
 		this.genPrefijado = genPrefijado;
 	}
 
-	
+	public boolean satisfactorio(){
+		return true && persona.albumEstaCompleto();
+	}
+	public int getPrecioPaquete() {
+		return this.precioPorPaquete;
+	}
 	
 }

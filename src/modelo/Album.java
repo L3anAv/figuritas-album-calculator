@@ -38,7 +38,7 @@ public class Album {
 	public void ingresarFigurita(int figurita) throws Exception{	
 
 		if(figurita < 1)
-			throw new Exception("El numero no pude ser menor a 1. No existen figuritas Negativas.");
+			throw new IllegalArgumentException("El numero no pude ser menor a 1. No existen figuritas Negativas.");
 		else if(!album.contains(figurita))
 			album.add(figurita);
 		else 
