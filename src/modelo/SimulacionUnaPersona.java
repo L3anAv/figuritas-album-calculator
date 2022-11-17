@@ -10,24 +10,28 @@ import interfaces.Simulacion;
 
 public class SimulacionUnaPersona implements Simulacion{
 
-	private int gastoTotal;
 	private Persona persona;
 	private StringBuilder sb;
+	private int iteracion;
 	private int precioPorPaquete;
+	private int cantPaquetes;
 	private Observador observador;
 
-	// > Constructor con valores default (menos precio por paquete)
-	public SimulacionUnaPersona(int precioPorPaquete){
-	persona = new Persona(1);
-	this.precioPorPaquete = precioPorPaquete;
-}
+//	// > Constructor con valores default (menos precio por paquete)
+//	public SimulacionUnaPersona(int precioPorPaquete){
+//	persona = new Persona(1);
+//	this.precioPorPaquete = precioPorPaquete;
+//}
 
 	// > Constructor con valores dados por el usuario
-	public SimulacionUnaPersona(int precioPorPaquete, 
-	int cantidadFiguritasTotal, 
+	public SimulacionUnaPersona(
+	int precioPorPaquete, 
+	int cantidadFiguritasTotal,
 	int cantidadFiguritasPorPaquete){
 	persona = new Persona(1);
 	this.precioPorPaquete = precioPorPaquete;
+	this.sb = new StringBuilder();
+	
 	persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
 	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
@@ -35,17 +39,22 @@ public class SimulacionUnaPersona implements Simulacion{
 }
 
 	@Override
-	public int iniciarSimulacion(){
-	int cantPaquetes = 1;
+	public int iniciarSimulacion() throws Exception{
+	cantPaquetes = 1;
 	while(!persona.albumEstaCompleto()){
-		
-		try { rellenarAlbum( PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas()); } 
-		catch (Exception e) { e.printStackTrace();}
-
+		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas());
 		notificarObservadores();
-		gastoTotal = cantPaquetes * precioPorPaquete;
+		iteracion++;
+		cantPaquetes++;
 	}
-		return gastoTotal;
+		crearLog();
+		System.out.print("\n cantPaquetes*precioPorPaquete: " + cantPaquetes*precioPorPaquete);
+		return (cantPaquetes*precioPorPaquete);
+}
+
+	@Override
+	public void registrarObservador(Observador obs){
+		this.observador = obs;
 }
 
 	protected void rellenarAlbum(LinkedList<Integer> paquete) throws Exception{
@@ -54,10 +63,9 @@ public class SimulacionUnaPersona implements Simulacion{
 }
 
 	// > Getter & Setter
-
 	@Override
 	public int getIteracion() {
-	return 0;
+	return iteracion;
 }
 
 	@Override
@@ -69,13 +77,13 @@ public class SimulacionUnaPersona implements Simulacion{
 
 	@Override
 	public int getPaquetesAbiertos(){
-		return 0;
+		return cantPaquetes;
 }
 
 	@Override
 	public void escribirLog(){
 	this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");	
-	this.sb.append(persona.toString()).append("\n");		
+	this.sb.append(persona.toString()).append("\n");
 }
 
 	@Override
@@ -86,19 +94,15 @@ public class SimulacionUnaPersona implements Simulacion{
 			e.printStackTrace();
 	}
 }
- 
-	private void notificarObservadores(){
-		observador.notificar();
-}
-
-	@Override
-	public void registrarObservador(Observador obs){
-		this.observador = obs;
-}
 
 	@Override
 	public double promedioPaquetesXPersona(){
 	return this.getPaquetesAbiertos();
+}
+
+
+	private void notificarObservadores(){
+		observador.notificar();
 }
 
 }

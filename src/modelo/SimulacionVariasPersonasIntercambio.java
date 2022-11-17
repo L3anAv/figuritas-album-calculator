@@ -21,26 +21,21 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 		public StringBuilder sb;
 		private Generador random;
 		private Observador observador;
-
 		private int cantidadTotalFigusAlbum;
 		private int cantidadFigusPaq;
 
 		
-		
-	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
-	int precioPorPaquete){
-		this.precioPorPaquete = precioPorPaquete;
-		this.personas = new ArrayList<Persona>(cantPersonas);
-		this.cantPersonas = cantPersonas;
-		this.cantPaquetesTotal = 0;
-		this.random = new GeneradorRandom();
-		this.sb = new StringBuilder();
-
-		this.cantidadTotalFigusAlbum = 638;
-		this.cantidadFigusPaq = 5;
-
-	
-	}
+//	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
+//	int precioPorPaquete){
+//		this.precioPorPaquete = precioPorPaquete;
+//		this.personas = new ArrayList<Persona>(cantPersonas);
+//		this.cantPersonas = cantPersonas;
+//		this.cantPaquetesTotal = 0;
+//		this.random = new GeneradorRandom();
+//		this.sb = new StringBuilder();
+//		this.cantidadTotalFigusAlbum = 638;
+//		this.cantidadFigusPaq = 5;
+//}
 
 	public SimulacionVariasPersonasIntercambio(int cantPersonas, 
 	int precioPorPaquete,  
@@ -52,15 +47,13 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	this.random = new GeneradorRandom();
 	this.precioPorPaquete = precioPorPaquete;
 	this.personas = new ArrayList<Persona>(cantPersonas);
-
 	this.cantidadFigusPaq = cantidadFiguritasPorPaquete;
 	this.cantidadTotalFigusAlbum = cantidadFiguritasTotal;
 	
-	
-	
-//	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
-//	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
-//	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
+	generarIndividuos();
+	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
+	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
+	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
 }
 
 	@Override
@@ -101,54 +94,31 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 				p.intercambiarFiguritas(p2);
 			}
 		}
-		
-		
-		
-		
-		
-		
 }
 	
 	public boolean satisfactorio() {
 		boolean aux = true;
-		
-		for(Persona p: personas) {
-			
-			aux = aux && p.albumEstaCompleto();
-			
+		for(Persona p: personas) {	
+			aux = aux && p.albumEstaCompleto();	
 		}
-		
 		return aux;
-	}
-	
-	
-	
+}
 	
 	@Override
 	public int iniciarSimulacion() throws Exception {
 		int iteraciones = 0;
 		this.iteracionesGlobales = 0;
-		generarIndividuos();
+		//generarIndividuos();
 		while(!satisfactorio()) {
 			rellenarAlbumsDeTodos();
 			intercambiarRepetidas();
 			notificarObservadores();
-			
-//			try {
-//				Thread.sleep(40);
-//				escribirLog();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-			
 			iteraciones++;
 			this.iteracionesGlobales = iteraciones;
 		}
-		
 		crearLog();
-		
-		
-		return iteraciones;
+		gastoTotal = cantPaquetesTotal * precioPorPaquete;
+		return gastoTotal;
 		
 	}
 
@@ -183,32 +153,28 @@ public class SimulacionVariasPersonasIntercambio implements Simulacion {
 	@Override
 	public void escribirLog() {
 		this.sb.append("It: " + getIteracion() + "Paquetes abiertos: " + getPaquetesAbiertos() + "\n");
-		
 		for(Persona p: personas) {
-			
 			this.sb.append(p.toString()).append("\n");
 		}
-	}
+}
 
 	@Override
 	public void crearLog() {
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"));
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"))){
 			writer.write(this.sb.toString());
-		} catch (IOException e) {
+		}catch (IOException e){
 			e.printStackTrace();
-		}
 	}
+}
+	
+	@Override
+	public double promedioPaquetesXPersona() 
+	{ return cantPaquetesTotal/personas.size(); }
+
 	
 	private void notificarObservadores() {
-		
 		observador.notificar();
-		
-	}
+}
 
-	@Override
-	public double promedioPaquetesXPersona() {
-		return this.cantPaquetesTotal/cantPersonas;
-	}
 }
 

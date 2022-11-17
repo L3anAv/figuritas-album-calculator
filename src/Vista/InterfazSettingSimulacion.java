@@ -25,6 +25,7 @@ import interfaces.Observador;
 import interfaces.Simulacion;
 import modelo.FabricaDeSimulaciones;
 import modelo.SimulacionUnaPersona;
+import modelo.SistemaDeSimulacion;
 import utilidades.ObservadorPorConsola;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -53,23 +54,21 @@ public class InterfazSettingSimulacion {
 	private JPanel pantallaConfiguracion;
 	
 	// Variables
+	
 	private int cantSims;
 	private int precioPaq;
 	private int cantFigusPaq;
 	private int cantTotalFigus;
 	private int simulacionElegida;
+	private boolean esOpcionUno = false;
 	private int cantPesonasParaSimulacion;
 	private String simulacionNombreElegida;
 	
-	//Boleanos para settear simulacion en default
-	private boolean preciofieldPrecioEstaDefault = false;
-	private boolean precioCantFigusPaqEstaDefault = false;
-	private boolean precioCantTotalFigusEstaDefault = false;
-	
 	// Variables default valores
 	private final String default_Precio_text = "150";
-	private final String default_CantFigus_text = "638";
 	private final String default_CantFigusPaq_text = "5";
+	private final String default_CantFigusTotal_text = "638";
+	
 	private String[] opcionesDeSimulacion = {
 			"Sin Seleccion",
 			"Simulacion una sola persona", 
@@ -82,7 +81,7 @@ public class InterfazSettingSimulacion {
 	public void run() {
 		try {
 			UIManager.setLookAndFeel(new FlatDarkLaf());
-			InterfazSettingSimulacion window = new InterfazSettingSimulacion(new SimulacionUnaPersona(0));
+			InterfazSettingSimulacion window = new InterfazSettingSimulacion();
 			window.frame.setVisible(true);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -92,8 +91,7 @@ public class InterfazSettingSimulacion {
 }
 
 // > Create the application.
-	public InterfazSettingSimulacion(Simulacion sim) {
-		this.sim = sim;
+	public InterfazSettingSimulacion(){
 		initialize();
 }
 
@@ -152,7 +150,6 @@ public class InterfazSettingSimulacion {
 		
 		// JComboBox -> Agregar seleccionador a pantalla de inicio.
 		JComboBox SeleccionDeSimulacion = crearSelectorDeSimulacion(botonInicio, textFieldPersonas, labelSolicitudDeCantPersonas);
-		
 		
 		pantallaInicial.add(botonInicio);
 		pantallaInicial.add(textFieldPersonas);
@@ -231,9 +228,11 @@ public class InterfazSettingSimulacion {
 				if(textFieldPersonas.getText().length() != 0) {
 					pantallaConfig.setVisible(true);
 					pantallaInicial.setVisible(false);
-					
-				} else if(textFieldPersonas.getText().length() < 0 || textFieldPersonas.getText().length() == 0) {
+				} else if((textFieldPersonas.getText().length() < 0 || textFieldPersonas.getText().length() == 0) && !esOpcionUno) {
 					erroMsgCantPersonas.setVisible(true);
+				}else if(textFieldPersonas.getText().length() == 0 && esOpcionUno){
+					pantallaConfig.setVisible(true);
+					pantallaInicial.setVisible(false);
 				}
 			}
 		});
@@ -261,8 +260,11 @@ public class InterfazSettingSimulacion {
 					simulacionElegida = -1;
 				}
 				else if(SeleccionDeSimulacion.getSelectedIndex() == 1){
-					botonInicio.setEnabled(false);
+					botonInicio.setEnabled(true);
+					colocarSimulacionSeleccionada(opcionesDeSimulacion[simulacionElegida]);
 					textFieldCantidadPersonas.setEnabled(false);
+					textFieldCantidadPersonas.setText("1");
+					cantPesonasParaSimulacion = Integer.parseInt(textFieldCantidadPersonas.getText());
 					labelSolicitudDeCantPersonas.setText("Campo no solicitado ");
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 25));
 					labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
@@ -271,7 +273,6 @@ public class InterfazSettingSimulacion {
 				else{
 					botonInicio.setEnabled(false);
 					simulacionElegida = SeleccionDeSimulacion.getSelectedIndex();
-					//simulacionElegida
 					colocarSimulacionSeleccionada(opcionesDeSimulacion[simulacionElegida]);
 					textFieldCantidadPersonas.setEnabled(true);
 					labelSolicitudDeCantPersonas.setText("Cantidad de participantes: ");
@@ -303,13 +304,14 @@ public class InterfazSettingSimulacion {
 	btnStart.setFont(new Font("Inconsolata", Font.PLAIN, 14));
 	btnStart.setForeground(new Color(255, 255, 255));
 	btnStart.setBackground(new Color(36, 31, 49));
+	
 	btnStart.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			verificarAntesDeiniciarSimulacion();
-			pantallaConfiguracion.setVisible(false);
-			pantallaLoading.setVisible(true);
+		public void actionPerformed(ActionEvent e){
+			try { verificarAntesDeiniciarSimulacion(); }
+			catch (Exception e1) { e1.printStackTrace(); }
 		}
 	});
+	
 	return btnStart;
 }
 
@@ -362,27 +364,35 @@ public class InterfazSettingSimulacion {
 	return labelsPanelConfig;
 }
 
-// > Metodo que crea los campos de texto para ingresar valores para la simulacion.
+	// > Metodo que crea los campos de texto para ingresar valores para la simulacion.
 	private LinkedList<JTextField> crearTextFieldsParaConfig(){
-		
+
 	LinkedList<JTextField> textFieldsParaConfig = new LinkedList<JTextField>();
-	
+
 	// > Text Cantidad Total De Figuritas (Tomar el valor cantidad de figuritas).
 	field_CantTotalFigus = new JTextField();
-	field_CantTotalFigus.addKeyListener(new KeyAdapter(){		
+	field_CantTotalFigus.addKeyListener(new KeyAdapter(){
+
 		@Override
-		public void keyTyped(KeyEvent e) {
+		public void keyTyped(KeyEvent e){
+
 			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 				e.consume();
-			}else if(field_CantTotalFigus.getText().length() < 0){
-				cantTotalFigus = -1;
-			}else{
-				String cantTotalFigusText = "" + e.getKeyChar();
-				cantTotalFigus = Integer.parseInt(cantTotalFigusText);
-				//System.out.print(cantTotalFigus);
+			}else if(field_CantTotalFigus.getText().length() == 0) {
+				field_CantTotalFigus.setText("");
 			}
 		}
-	});
+
+		@Override
+		public void keyReleased(KeyEvent e)
+		{
+			if(!field_CantTotalFigus.getText().equals("")){
+				cantTotalFigus = Integer.parseInt(field_CantTotalFigus.getText());
+				System.out.print(field_CantTotalFigus.getText());
+			}
+		}
+
+});
 
 	field_CantTotalFigus.setBounds(46, 105, 290, 35);
 	field_CantTotalFigus.setColumns(10);
@@ -390,45 +400,56 @@ public class InterfazSettingSimulacion {
 
 	// > Text Cantidad de Figuritas por paquete (Toma el valor de Cantidad de Figuritas por paquete).
 	field_CantFigusPaq = new JTextField();
+
 	field_CantFigusPaq.addKeyListener(new KeyAdapter() {
 		@Override
 		public void keyTyped(KeyEvent e) {
 
 			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 				e.consume();
-			}else if(field_CantFigusPaq.getText().length() < 0){
-				cantFigusPaq = -1;
-			}else{
-				String cantFigusPaqText = "" + e.getKeyChar();
-				cantFigusPaq = Integer.parseInt(cantFigusPaqText);
-				//System.out.print(cantFigusPaqText);
+			}else if(field_CantFigusPaq.getText().length() == 0) {
+				field_CantFigusPaq.setText("");
 			}
 		}
+
+		@Override
+		public void keyReleased(KeyEvent e){
+			if(!field_CantFigusPaq.getText().equals("")){
+				cantFigusPaq = Integer.parseInt(field_CantFigusPaq.getText());
+				System.out.print(field_CantFigusPaq.getText());
+			}
+		}
+
 	});
 
 	field_CantFigusPaq.setBounds(46, 190, 290, 35);
 	field_CantFigusPaq.setColumns(10);
-	//layeredPane.add(field_CantFigusPaq, Integer.valueOf(1));
 	textFieldsParaConfig.add(field_CantFigusPaq);
-	
+
 	// > Text Precio Por Paquete (Toma el precio por paquete de figuritas).
 	field_Precio = new JTextField();
 	field_Precio.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				
-				if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
+		@Override
+		public void keyTyped(KeyEvent e) {
+		
+			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 					e.consume();
-				}else if(field_Precio.getText().length() < 0){
-					precioPaq = -1;
-				}else{
-					String precioPaqText = "" + e.getKeyChar();
-					precioPaq = Integer.parseInt(precioPaqText);
-					//System.out.print(precioPaqText);
+			}else if(field_Precio.getText().length() == 0) {
+				field_Precio.setText("");
 			}
 		}
+
+		@Override
+		public void keyReleased(KeyEvent e)
+		{
+			if(!field_Precio.getText().equals("")){
+				precioPaq = Integer.parseInt(field_Precio.getText());
+				System.out.print(field_Precio.getText());
+			}
+		}
+
 	});
-	
+
 	field_Precio.setBounds(46, 269, 290, 35);
 	field_Precio.setColumns(10);
 	textFieldsParaConfig.add(field_Precio);
@@ -438,17 +459,23 @@ public class InterfazSettingSimulacion {
 	field_CantSims.addKeyListener(new KeyAdapter() {
 		@Override
 		public void keyTyped(KeyEvent e){
-			
+
 			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 				e.consume();
-			}else if(field_CantSims.getText().length() < 0){
-				cantSims = -1;
-			}else{
-				String cantSimsText = "" + e.getKeyChar();
-				cantSims = Integer.parseInt(cantSimsText);
-				//System.out.print(cantSimsText);
+			}else if(field_CantSims.getText().length() == 0) {
+				field_CantSims.setText("");
 			}
 		}
+
+		@Override
+		public void keyReleased(KeyEvent e)
+		{
+			if(!field_CantSims.getText().equals("")){
+				cantSims = Integer.parseInt(field_CantSims.getText());
+				System.out.print(field_CantSims.getText());
+			}
+		}
+
 	});
 
 	field_CantSims.setBounds(46, 345, 290, 35);
@@ -456,8 +483,9 @@ public class InterfazSettingSimulacion {
 	textFieldsParaConfig.add(field_CantSims);
 	
 	return textFieldsParaConfig;
+
 }
-	
+
 	private JTextField crearTextFieldParaCantidadPersona(JButton botonInicio){
 	JTextField textFieldCantidadPersona = new JTextField();
 
@@ -501,18 +529,14 @@ public class InterfazSettingSimulacion {
 			public void actionPerformed(ActionEvent e){
 					
 				if(chkDefaultCantFigus.isSelected()){
-					cantTotalFigus = Integer.parseInt(default_CantFigus_text);
 					field_CantTotalFigus.setEnabled(false);
-					field_CantTotalFigus.setText(default_CantFigus_text);
-					precioCantFigusPaqEstaDefault = true; 
-					//boleando precioCantTotalFigusEstaDefault = true
-					//preciofieldPrecioEstaDefault precioCantTotalFigusEstaDefault
+					field_CantTotalFigus.setText(default_CantFigusTotal_text);
+					cantTotalFigus = Integer.parseInt(default_CantFigusTotal_text);
+					//System.out.print(cantTotalFigus);
 				}else{
-					precioCantFigusPaqEstaDefault = false; 
 					field_CantTotalFigus.setEnabled(true);
-					field_CantTotalFigus.setText("");
-					frame.revalidate();
-					frame.repaint();
+//					frame.revalidate();
+//					frame.repaint();
 			}
 		}
 	});
@@ -526,16 +550,13 @@ public class InterfazSettingSimulacion {
 			public void actionPerformed(ActionEvent e){
 			
 				if(chkDefaultFigusPaq.isSelected()) {
-					cantFigusPaq = Integer.parseInt(default_CantFigusPaq_text);
 					field_CantFigusPaq.setEnabled(false);
 					field_CantFigusPaq.setText(default_CantFigusPaq_text);
-					precioCantTotalFigusEstaDefault = true;
-					//boleando precioCantFigusPaqEstaDefault = true
+					cantFigusPaq = Integer.parseInt(default_CantFigusPaq_text);
+					//System.out.print(cantFigusPaq);
 				}
 				else {
-					precioCantTotalFigusEstaDefault = false;
 					field_CantFigusPaq.setEnabled(true);
-					field_CantFigusPaq.setText("");
 			}
 		}
 	});
@@ -548,16 +569,14 @@ public class InterfazSettingSimulacion {
 		chkDefaultPrecio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(chkDefaultPrecio.isSelected()) {
-					precioPaq = Integer.parseInt(default_Precio_text);
+				if(chkDefaultPrecio.isSelected()){
 					field_Precio.setText(default_Precio_text);
 					field_Precio.setEnabled(false);
-					preciofieldPrecioEstaDefault = true;
+					precioPaq = Integer.parseInt(default_Precio_text);
+					//System.out.print(precioPaq);
 				}
 				else {
-					preciofieldPrecioEstaDefault = false;
 					field_Precio.setEnabled(true);
-					field_Precio.setText("");
 			}
 		}
 	});
@@ -572,73 +591,53 @@ public class InterfazSettingSimulacion {
 			pantallaConfiguracion.add((Component) listDeComponentsParaPanel.get(i));
 		}
 	}
-	
-	// Aca solo deberia retornar el tipo de simulacion
-	// y en un tipo sistema de simulacion darle todo y que retorne
-	private void setSimulacion() {
-		
-		if(this.simulacionElegida == 1) {
-			this.sim = FabricaDeSimulaciones.getSimulacion(true, "unaPersona", precioPaq, cantTotalFigus, cantFigusPaq);
-		}
-		if(this.simulacionElegida == 2) {
-			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasRegalo", precioPaq,cantPesonasParaSimulacion ,cantTotalFigus, cantFigusPaq);
-		}
-		if(this.simulacionElegida == 3) {
-			this.sim = FabricaDeSimulaciones.getSimulacion(true, "nPersonasIntercambio", cantPesonasParaSimulacion, precioPaq, cantTotalFigus, cantFigusPaq);
-		}
-	}
 
-	private void verificarAntesDeiniciarSimulacion() {
+	private void verificarAntesDeiniciarSimulacion() throws Exception {
 
 	//Control de campos antes de iniciar simulaciones
 	if(this.cantTotalFigus <= 0 || field_CantTotalFigus.getText().length() == 0) {
-		JOptionPane.showMessageDialog(null, "Ingrese una cantidad total de figuritas valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);	
+		JOptionPane.showMessageDialog(null, 
+				"Ingrese una cantidad total de figuritas valida (Mayor a 0)", 
+				"Error", 
+				JOptionPane.ERROR_MESSAGE);	
 	}
 	else if(this.cantFigusPaq <= 0 || field_CantFigusPaq.getText().length() == 0) {
-		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de figuritas por paquete valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, 
+				"Ingrese una cantidad de figuritas por paquete valida (Mayor a 0)", 
+				"Error", 
+				JOptionPane.ERROR_MESSAGE);
 	}
 	else if(this.precioPaq <= 0 || field_Precio.getText().length() == 0) {
-		JOptionPane.showMessageDialog(null, "Ingrese un precio valido (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
-	}
-	
-	else if(this.cantSims <= 0 || field_CantSims.getText().length() == 0) {
-		JOptionPane.showMessageDialog(null, "Ingrese una cantidad de simulaciones valida (Mayor a 0)", "Error", JOptionPane.ERROR_MESSAGE);
-	}
-	else {
-		setSimulacion();
+		JOptionPane.showMessageDialog(null, 
+				"Ingrese un precio valido (Mayor a 0)", 
+				"Error", 
+				JOptionPane.ERROR_MESSAGE);
+	}else if(this.cantSims <= 0 || field_CantSims.getText().length() == 0) {
+		JOptionPane.showMessageDialog(null, 
+				"Ingrese una cantidad de simulaciones valida (Mayor a 0)", 
+				"Error", 
+				JOptionPane.ERROR_MESSAGE);
+	}else{
+		pantallaConfiguracion.setVisible(false);
+		pantallaLoading.setVisible(true);
 		ejecutarSimulacion();
 	}
-//		
-//		double cuenta =0;
-//		for(int i = 0; i < cantSims; i++){
-//			sim.registrarObservador(new ObservadorPorConsola(sim));
-//			try {
-//				cuenta = sim.iniciarSimulacion();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		System.out.println(cuenta);
-//	}
-	
-	// Cambiar panel a uno nuevo con la barra de progreso en carga mientra iniciarSimulacion
-	// no haya terminado. Ya esta el panel.
-	// cuando iniciarSimulacion termino. cambiar pantalla final con dato de gasto.
-	// inciarSimulacion()
-		//Datos finales para inciar simulacion
-		//La config simulaciones debe ser por setters
-		// config(boolean):Solo true solo cuando los estaDefault son true;
-		// tipo de simulacion
-		// cantidad de veces a simular
-		// Clase sistema de simulacion: que devuelva la cantidad de plata promedio gastada entre los 
-		// participantes de la simulacion.
-	
-	// Si pasa todos los controles, inicar la simulacion. 
-	// Cargar nuevo panel en frame.
- 
 }
 
-	private void ejecutarSimulacion() {
+	private void ejecutarSimulacion() throws Exception {
+
+//		System.out.print("\n Valores antes de comenzar simulacion: "
+//		+ cantSims + "\n"
+//		+ precioPaq + "\n"
+//		+ cantTotalFigus + "\n"
+//		+ cantFigusPaq + "\n");
+		// Cantidad de personas
+		SistemaDeSimulacion sistemaSimulacion = new SistemaDeSimulacion(simulacionNombreElegida, cantPesonasParaSimulacion, cantSims, precioPaq, cantTotalFigus, cantFigusPaq);
+		System.out.println( "\n" + sistemaSimulacion.iniciarSimulacion());
+		
+
+		//De aca obtengo el resultado final y lo muestro en la ultima pantalla
+		
 		
 	}
 }

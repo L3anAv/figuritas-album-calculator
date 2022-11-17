@@ -22,25 +22,21 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	private Observador observador;
 	private int iteracionesGlobales;
 	private ArrayList<Persona> personas;
-	
 	private int cantidadTotalFigusAlbum;
 	private int cantidadFigusPaq;
-
 	
+//	//Constructor con valores default(menos participantes y precio paquetes)
+//	public SimulacionVariasPersonaRegalo(int cantPersonas, int precioPorPaquete){
+//	this.cantPaquetesTotal = 0;
+//	this.sb = new StringBuilder();
+//	this.cantPersonas = cantPersonas;
+//	this.random = new GeneradorRandom();
+//	this.precioPorPaquete = precioPorPaquete;
+//	this.personas = new ArrayList<Persona>(cantPersonas);
+//	this.cantidadTotalFigusAlbum = 638;
+//	this.cantidadFigusPaq = 5;
+//	}	
 	
-	//Constructor con valores default(menos participantes y precio paquetes)
-	public SimulacionVariasPersonaRegalo(int cantPersonas, int precioPorPaquete){
-	this.cantPaquetesTotal = 0;
-	this.sb = new StringBuilder();
-	this.cantPersonas = cantPersonas;
-	this.random = new GeneradorRandom();
-	this.precioPorPaquete = precioPorPaquete;
-	this.personas = new ArrayList<Persona>(cantPersonas);
-	this.cantidadTotalFigusAlbum = 638;
-	this.cantidadFigusPaq = 5;
-
-	
-	}	
 	//Constructor con valores seteados por usuario
 	public SimulacionVariasPersonaRegalo(int cantPersonas,
 	int precioPorPaquete,  
@@ -56,10 +52,10 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	this.cantidadFigusPaq = cantidadFiguritasPorPaquete;
 	this.cantidadTotalFigusAlbum = cantidadFiguritasTotal;
 	
-
-//	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
-//	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
-//	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
+	generarIndividuos();
+	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
+	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
+	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
 }
 	
 	@Override //Deberia retornar la cantidad de paquetes el gasto mejor dicho
@@ -67,7 +63,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 
 	int iteraciones = 0;
 	this.iteracionesGlobales = 0;
-	generarIndividuos();
+	//generarIndividuos();
 
 	while(!satisfactorio()){
 		rellenarAlbumsDeTodos();
@@ -100,6 +96,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		if (!p.albumEstaCompleto() && iteraciones < 15){
 			rellenarAlbum(PaqueteFiguritasNormal.nuevo(cantidadTotalFigusAlbum, cantidadFigusPaq).getPaqueteFiguritas(), p);
 			iteraciones++;
+			cantPaquetesTotal++;
 			cantPaquetesTotal++;
 		}
 	}
@@ -173,12 +170,13 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 }
 
-	private void notificarObservadores(){
-		observador.notificar();
-}
-
 	@Override
 	public double promedioPaquetesXPersona() 
 	{ return cantPaquetesTotal/personas.size(); }
+
+	
+	private void notificarObservadores(){
+		observador.notificar();
+}
 
 }

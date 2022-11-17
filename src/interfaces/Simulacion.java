@@ -11,10 +11,9 @@ public interface Simulacion {
 	public int iniciarSimulacion() throws Exception;
 	public int getIteracion();
 	public ArrayList<Persona> getPersonas();
-	public int getPaquetesAbiertos();
 	public double promedioPaquetesXPersona();
+	public int getPaquetesAbiertos();
 	public void escribirLog();
 	public void crearLog();
-
 
 }
