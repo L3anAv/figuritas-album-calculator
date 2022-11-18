@@ -168,6 +168,17 @@ public int getPaquetesAbiertos() {
 	return cantPaquetesTotal;
 }
 
+public void rellenarAlbumes_Testing(LinkedList<Integer> paquete, Persona p) throws Exception {	
+	for(int figu: paquete) {
+		p.insertarFiguritaEnAlbum(figu);
+	}
+}
+
+public void intercambiarRepetidas_Testing(Persona p, Persona other) throws Exception {
+	p.intercambiarFiguritas(other);
+}
+
+
 
 //Herramientas
 @Override
