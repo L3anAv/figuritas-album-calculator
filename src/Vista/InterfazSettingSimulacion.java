@@ -333,8 +333,6 @@ public class InterfazSettingSimulacion {
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata",Font.PLAIN ,20));
 					labelSolicitudDeCantPersonas.setForeground(Color.WHITE);
 				}
-				
-				//System.out.print(simulacionElegida);
 		}
 	});
 		
@@ -665,16 +663,15 @@ public class InterfazSettingSimulacion {
 				"Ingrese una cantidad de simulaciones valida (Mayor a 0)", 
 				"Error", 
 				JOptionPane.ERROR_MESSAGE);
-	}
-	
-	else{ 
+	}else{ 
 		ejecutarSimulacion();
 		}
 
 	}
 
+	// > Ejecucion de sistema de simulacion
 	private void ejecutarSimulacion() throws Exception{
-		//Pantalla final se la tendria que pasar
+		
 		SistemaDeSimulacion sistemaSimulacion = 
 				new SistemaDeSimulacion(
 						simulacionNombreElegida, 
