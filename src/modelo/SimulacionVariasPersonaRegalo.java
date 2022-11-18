@@ -132,6 +132,19 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 }
 
+	
+	public void rellenarAlbumes_Testing(LinkedList<Integer> paquete, Persona p) throws Exception {	
+		for(int figu: paquete) {
+			p.insertarFiguritaEnAlbum(figu);
+		}
+	}
+	
+	public void compartirRepetidas_Testing(Persona p, Persona other) throws Exception {
+		
+		p.regalarFiguritas(other);
+	}
+	
+	
 	public void nuevaConfig(ArrayList<Persona> personas, int cantidadFiguritasTotal, int cantidadFiguritasPorPaquete){
 	for(Persona persona: personas){
 		persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);

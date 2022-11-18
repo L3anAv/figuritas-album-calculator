@@ -112,6 +112,7 @@ private void intercambiarRepetidas() throws Exception{
 	}
 }
 
+
 public boolean satisfactorio() {
 	boolean aux = true;
 	for(Persona p: personas) {	
@@ -144,6 +145,9 @@ public void nuevaConfig(ArrayList<Persona> personas, int cantidadFiguritasTotal,
 		persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
 	}
 }
+
+
+
 
 //Getters
 
