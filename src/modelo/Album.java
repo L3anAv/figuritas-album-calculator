@@ -17,9 +17,7 @@ public class Album {
 		this.idPropietario = idPropietario;
 		figuritasRepetidas = new LinkedList<Integer>();
 		this.cantidadFiguritas = 638;
-		this.cantidadFiguritaPorPaquete = 5;
-
-	
+		this.cantidadFiguritaPorPaquete = 5;	
 	}
 	
 	

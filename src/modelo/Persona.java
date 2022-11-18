@@ -59,12 +59,6 @@ public class Persona {
 
 	
 	//INTERCAMBIO
-	
-	
-	
-	
-	
-	
 	public void intercambiarFiguritas(Persona personaParaIntercambiar) throws Exception{
 	
 	LinkedList<Integer> figusMiasParaIntercambiar = getFiguritasRepetidas();

@@ -38,15 +38,18 @@ public class InterfazSettingSimulacion {
 	private JTextField field_CantSims;
 	private JTextField field_CantFigusPaq;
 	private JTextField field_CantTotalFigus;
-	private JTextField resultadoFinal;
+	private JTextField resultadoFinalTotal;
+	private JTextField resultadoFinalxPersona;
 
 	//GIF
 	BufferedImage image;
 	
 	// Labels
+	private JLabel LblresultadoFinalxPersona;
 	private JLabel erroMsgCantPersonas;
 	private JProgressBar progressBar;
 	private JLabel LblResultado;
+
 
 	// Jpanels
 	private JPanel pantallaLoading;
@@ -209,21 +212,33 @@ public class InterfazSettingSimulacion {
 	// JPanel --> PANTALLA FINAL:
 		pantallaResultado.setBounds(0,0, 640, 500);
 		pantallaResultado.setLayout(null);
-		
-		LblResultado = new JLabel("Promedio de gasto en paquetes de figuritas: ");
+
+		LblResultado = new JLabel("Promedio de gasto en paquetes de figuritas (General): ");
 		LblResultado.setFont(new Font("Inconsolata", Font.PLAIN, 15));
-		LblResultado.setBounds(115, 145, 510, 25);
-		
-		resultadoFinal = new JTextField("");
-		resultadoFinal.setBounds(135, 185, 300, 40);
-		resultadoFinal.setEnabled(false);
-		resultadoFinal.setFont(new Font("Inconsolata", Font.PLAIN, 25));
-		resultadoFinal.setHorizontalAlignment(SwingConstants.CENTER);
-		
+		LblResultado.setBounds(115, 125, 510, 25);
+
+		LblresultadoFinalxPersona = new JLabel("Promedio de gasto en paquetes de figuritas (Por persona): ");
+		LblresultadoFinalxPersona.setFont(new Font("Inconsolata", Font.PLAIN, 15));
+		LblresultadoFinalxPersona.setBounds(115, 220, 510, 25);
+
+		resultadoFinalTotal = new JTextField("");
+		resultadoFinalTotal.setBounds(135, 165, 300, 40);
+		resultadoFinalTotal.setEnabled(false);
+		resultadoFinalTotal.setFont(new Font("Inconsolata", Font.PLAIN, 25));
+		resultadoFinalTotal.setHorizontalAlignment(SwingConstants.CENTER);
+
+		resultadoFinalxPersona = new JTextField("");
+		resultadoFinalxPersona.setBounds(135, 255, 300, 40);
+		resultadoFinalxPersona.setEnabled(false);
+		resultadoFinalxPersona.setFont(new Font("Inconsolata", Font.PLAIN, 25));
+		resultadoFinalxPersona.setHorizontalAlignment(SwingConstants.CENTER);
+
 		JButton botonOtraSimulacion = crearbotonOtraSimulacion(pantallaResultado, pantallaInicial);
-		
+
+		pantallaResultado.add(LblresultadoFinalxPersona);
+		pantallaResultado.add(resultadoFinalxPersona);
 		pantallaResultado.add(botonOtraSimulacion);
-		pantallaResultado.add(resultadoFinal);
+		pantallaResultado.add(resultadoFinalTotal);
 		pantallaResultado.add(LblResultado);
 		
 		frame.getContentPane().add(pantallaResultado);
@@ -239,7 +254,7 @@ public class InterfazSettingSimulacion {
 // > 
 	private JButton crearbotonOtraSimulacion(JPanel pantallaResultado, JPanel pantallaInicial){
 		JButton botonOtraSimulacion = new JButton("Configurar nueva simulacion >");
-		botonOtraSimulacion.setBounds(125, 310, 320, 45);
+		botonOtraSimulacion.setBounds(125, 360, 320, 45);
 		botonOtraSimulacion.setFocusPainted(false);
 		botonOtraSimulacion.setFont(new Font("Inconsolata", Font.PLAIN, 13));
 		botonOtraSimulacion.setForeground(new Color(255, 255, 255));
@@ -672,11 +687,13 @@ public class InterfazSettingSimulacion {
 						precioPaq,
 						cantTotalFigus, 
 						cantFigusPaq,
-						resultadoFinal,
+						resultadoFinalTotal,
+						resultadoFinalxPersona,
 						LblResultado,
 						pantallaLoading,
 						pantallaResultado
 						);
+		
 		sistemaSimulacion.execute();
 	}
 }

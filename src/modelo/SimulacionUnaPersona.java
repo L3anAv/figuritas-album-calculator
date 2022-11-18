@@ -19,8 +19,11 @@ public class SimulacionUnaPersona implements Simulacion{
 	private int cantPaquetes;
 	private Observador observador;
 	private Generador genPrefijado;
+	private int cantidadFiguritasTotal;
+	private int cantidadFiguritasPorPaquete;
 
 	// > Constructor con valores dados por el usuario
+	// > Setters
 	public SimulacionUnaPersona(
 	int precioPorPaquete, 
 	int cantidadFiguritasTotal,
@@ -40,20 +43,22 @@ public class SimulacionUnaPersona implements Simulacion{
 		throw new IllegalArgumentException("La cantidad total de figuritas no puede ser menor a 1");
 	}
 	
+	this.cantidadFiguritasTotal = cantidadFiguritasTotal;
+	this.cantidadFiguritasPorPaquete = cantidadFiguritasPorPaquete;
+	
 	cantPaquetes = 0;
 	persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
-	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
-	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
 }
 
 	@Override
 	public int iniciarSimulacion() throws Exception{
 
 		while(!satisfactorio()){
-			rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas());
+			rellenarAlbum(PaqueteFiguritasNormal.nuevo(cantidadFiguritasTotal, cantidadFiguritasPorPaquete).getPaqueteFiguritas());
 			notificarObservadores();
 			iteracion++;
+			cantPaquetes++;
 		}
 
 		crearLog();
@@ -69,8 +74,6 @@ public class SimulacionUnaPersona implements Simulacion{
 	public void rellenarAlbum(LinkedList<Integer> paquete) throws Exception{
 	for(int i = 0; i < paquete.size();i++) 
 		persona.insertarFiguritaEnAlbum(paquete.get(i));
-	
-	cantPaquetes++;
 	}
 
 

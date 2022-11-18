@@ -20,7 +20,8 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 	private int cantidadDeFiguritasTotal;
 	private int cantidadPorPaquete;
 	private int cantPesonasParaSimulacion;
-	private JTextField resultadoFinal;
+	private JTextField resultadoFinalPromedioTotal;
+	private JTextField resultadoFinalxPersona;
 	private JPanel pantallaLoading;
 	private JPanel pantallaResultado;
 
@@ -34,6 +35,7 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 			int cantidadDeFiguritasTotal,
 			int cantidadPorPaquete,
 			JTextField resultadoFinal,
+			JTextField resultadoFinalxPersona,
 			JLabel LblResultado,
 			JPanel pantallaLoading,
 			JPanel pantallaResultado)
@@ -45,7 +47,8 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 		this.cantidadPorPaquete = cantidadPorPaquete;
 		this.cantidadDeFiguritasTotal = cantidadDeFiguritasTotal;
 		this.cantPesonasParaSimulacion = cantPesonasParaSimulacion;
-		this.resultadoFinal = resultadoFinal;
+		this.resultadoFinalPromedioTotal = resultadoFinal;
+		this.resultadoFinalxPersona = resultadoFinalxPersona;
 		this.pantallaLoading = pantallaLoading;
 		this.pantallaResultado = pantallaResultado;
 }
@@ -55,7 +58,7 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 		int promedio = iniciarSimulacion();
 		return promedio;
 	}
-	
+
 	@Override
 	public void done(){
 		
@@ -64,16 +67,16 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 				if(cantPesonasParaSimulacion != 1) {
 					pantallaLoading.setVisible(false);
 					pantallaResultado.setVisible(true);
-					resultadoFinal.setText(get().toString());
-					System.out.print("Promedio obtenido desde el get: " + get() / cantPesonasParaSimulacion + " \n");
-					
+					resultadoFinalPromedioTotal.setText(get().toString());
+					int resultado = (get() / cantPesonasParaSimulacion);
+					String resultadoString = Integer.toString(resultado);
+					resultadoFinalxPersona.setText(resultadoString);
 				}
 				else{
 					pantallaLoading.setVisible(false);
 					pantallaResultado.setVisible(true);
-					resultadoFinal.setText(get().toString());
-					System.out.print("Promedio obtenido desde el get: " + get().toString() + " \n");
-					
+					resultadoFinalPromedioTotal.setText(get().toString());
+					resultadoFinalxPersona.setText("----");
 				}
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
