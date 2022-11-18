@@ -3,31 +3,13 @@ package modelo;
 import interfaces.Simulacion;
 
 public class FabricaDeSimulaciones{
-	
-//	public static Simulacion getSimulacion(String nombreDeSimulacion, 
-//	int precioPorPaquete,
-//	int cantidadFiguritasTotal, 
-//	int cantidadFiguritasPorPaquete){
-//	
-//	
-//	if(nombreDeSimulacion == null){
-//		throw new NullPointerException("El nombre de simulacion solictada no puede ser nulo.");
-//		
-//	}else if(nombreDeSimulacion.equals("unaPersona")){
-//		Simulacion simulacion = new SimulacionUnaPersona(precioPorPaquete, cantidadFiguritasTotal,cantidadFiguritasPorPaquete );
-//		return simulacion;
-//	}
-//	
-//	return null;
-//}
 
-	// Hacer un solo constructor que si cantPersonas == 0 simulacion 1 persona
 	public static Simulacion getSimulacion( String nombreDeSimulacion, 
 	int cantPersonas,
 	int precioPorPaquete, 
 	int cantidadFiguritasTotal,
 	int cantidadFiguritasPorPaquete){
-	
+
 	if(nombreDeSimulacion == null){
 		throw new NullPointerException("El nombre de simulacion solictada no puede ser nulo.");
 	}else if(nombreDeSimulacion.equals("unaPersona") && cantPersonas == 1){
@@ -40,7 +22,7 @@ public class FabricaDeSimulaciones{
 		Simulacion simulacion = new SimulacionVariasPersonasIntercambio(cantPersonas, precioPorPaquete, cantidadFiguritasTotal,cantidadFiguritasPorPaquete);
 		return simulacion;
 	}
-	
+
 	return null;
 }
 

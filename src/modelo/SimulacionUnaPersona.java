@@ -18,22 +18,14 @@ public class SimulacionUnaPersona implements Simulacion{
 	private int precioPorPaquete;
 	private int cantPaquetes;
 	private Observador observador;
-
-	
 	private Generador genPrefijado;
-	
-	
-//	// > Constructor con valores default (menos precio por paquete)
-//	public SimulacionUnaPersona(int precioPorPaquete){
-//	persona = new Persona(1);
-//	this.precioPorPaquete = precioPorPaquete;
-//}
 
 	// > Constructor con valores dados por el usuario
 	public SimulacionUnaPersona(
 	int precioPorPaquete, 
 	int cantidadFiguritasTotal,
 	int cantidadFiguritasPorPaquete){
+	
 	persona = new Persona(1);
 	this.precioPorPaquete = precioPorPaquete;
 	this.sb = new StringBuilder();
@@ -49,7 +41,6 @@ public class SimulacionUnaPersona implements Simulacion{
 	}
 	
 	cantPaquetes = 0;
-	
 	persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
 	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
@@ -58,17 +49,17 @@ public class SimulacionUnaPersona implements Simulacion{
 
 	@Override
 	public int iniciarSimulacion() throws Exception{
-	//cantPaquetes = 1;
-	while(!satisfactorio()){
-		rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas());
-		notificarObservadores();
-		iteracion++;
-		//cantPaquetes++;
-	}
+
+		while(!satisfactorio()){
+			rellenarAlbum(PaqueteFiguritasNormal.nuevo().getPaqueteFiguritas());
+			notificarObservadores();
+			iteracion++;
+		}
+
 		crearLog();
-		System.out.print("\n cantPaquetes*precioPorPaquete: " + cantPaquetes*precioPorPaquete);
 		return (cantPaquetes*precioPorPaquete);
-}
+	}
+
 
 	@Override
 	public void registrarObservador(Observador obs){
@@ -81,6 +72,7 @@ public class SimulacionUnaPersona implements Simulacion{
 	
 	cantPaquetes++;
 	}
+
 
 	// > Getter & Setter
 	@Override

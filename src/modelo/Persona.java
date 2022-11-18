@@ -110,13 +110,13 @@ public class Persona {
 	if(!figuritasMiasIntercambiables.isEmpty() && !figuritasOtraPersonaOfrecidas.isEmpty()) {
 		
 		realizarIntercambio(figuritasMiasIntercambiables, figuritasOtraPersonaOfrecidas, personaParaIntercambiar);
-	//Elimino de repetidas las figuritas intercambidas
-	eliminarDeRepetidasFiguExtraidas(figuritasMiasIntercambiables);
-	personaParaIntercambiar.eliminarDeRepetidasFiguExtraidas(figuritasOtraPersonaOfrecidas);
-	//Vacio las listas aux usadas en el metodo
-	figuritasMiasIntercambiables.clear();
-	figuritasOtraPersonaOfrecidas.clear();
-	}
+		//Elimino de repetidas las figuritas intercambidas
+		eliminarDeRepetidasFiguExtraidas(figuritasMiasIntercambiables);
+		personaParaIntercambiar.eliminarDeRepetidasFiguExtraidas(figuritasOtraPersonaOfrecidas);
+		//Vacio las listas aux usadas en el metodo
+		figuritasMiasIntercambiables.clear();
+		figuritasOtraPersonaOfrecidas.clear();
+		}
 	}
 
 	public void realizarIntercambio(LinkedList<Integer> figuritasMiasPersonaOfrecidas, LinkedList<Integer> figuritasOtraPersonaOfrecidas, Persona otraPersona) throws Exception{
@@ -124,7 +124,6 @@ public class Persona {
 		insertarFiguritaEnAlbum(figuritasOtraPersonaOfrecidas.get(i));
 	}
 	for(int i = 0; i< figuritasMiasPersonaOfrecidas.size(); i++) {
-	
 		otraPersona.insertarFiguritaEnAlbum(figuritasMiasPersonaOfrecidas.get(i));
 	}
 }
