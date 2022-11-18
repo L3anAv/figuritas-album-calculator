@@ -108,7 +108,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 }
 
-	protected void rellenarAlbumsDeTodos(){
+	protected void rellenarAlbumsDeTodos() throws Exception{
 	int iteraciones = 0;
 	for(Persona p : personas){
 		if (!p.albumEstaCompleto() && iteraciones < 15){
@@ -120,11 +120,11 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 }
 
-	private void rellenarAlbum(LinkedList<Integer> paquete, Persona p){
+	public void rellenarAlbum(LinkedList<Integer> paquete, Persona p) throws Exception{
 		for(int i = 0; i < paquete.size();i++) {
 			if(!p.albumEstaCompleto()){
-				try { p.insertarFiguritaEnAlbum(paquete.get(i)); }
-				catch ( Exception e) {e.printStackTrace(); }
+					p.insertarFiguritaEnAlbum(paquete.get(i)); 
+
 		}
 	}
 }
@@ -137,7 +137,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	return aux;
 }
 	
-	private void compartirRepetidas() throws Exception{	
+	public void compartirRepetidas() throws Exception{	
 	for(Persona p: personas){
 		Persona p2 = personas.get(random.nextIntCExclusion(personas.size(), p.getId()));
 		if (p.hayRepetidas()){

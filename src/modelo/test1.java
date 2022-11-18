@@ -12,12 +12,14 @@ public class test1 {
 		//sim.iniciarSimulacion();
 	
 	
-		Simulacion sim = new SimulacionVariasPersonasIntercambio(1, 250, 150, 7);
+//		Simulacion sim = new SimulacionVariasPersonasIntercambio(1, 250, 150, 7);
+//		sim.registrarObservador(new ObservadorPorConsola(sim));
+//
+//		sim.iniciarSimulacion();
+	
+		Simulacion sim = new SimulacionUnaPersona(200, 500, 5);
 		sim.registrarObservador(new ObservadorPorConsola(sim));
-
 		sim.iniciarSimulacion();
-	
-
-	
+		System.out.println("\n " +sim.getPaquetesAbiertos());
 }
 }

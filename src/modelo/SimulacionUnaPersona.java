@@ -48,7 +48,7 @@ public class SimulacionUnaPersona implements Simulacion{
 		throw new IllegalArgumentException("La cantidad total de figuritas no puede ser menor a 1");
 	}
 	
-	//cantPaquetes = 0;
+	cantPaquetes = 0;
 	
 	persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
 	persona.getAlbum().setCantidadFiguritasPorPaquete(cantidadFiguritasPorPaquete);
@@ -70,23 +70,6 @@ public class SimulacionUnaPersona implements Simulacion{
 		return (cantPaquetes*precioPorPaquete);
 }
 
-	public int iniciarTesting() throws Exception{
-		cantPaquetes = 1;
-		while(!satisfactorio()) {
-			rellenarAlbum(PaqueteFiguritasNormal.nuevo(getGenPrefijado()).getPaqueteFiguritas());
-			System.out.println(PaqueteFiguritasNormal.cantidadFiguritasPaquete);
-			System.out.println(persona.getAlbum().getFiguritasDeAlbum());
-			notificarObservadores();
-			iteracion++;
-			cantPaquetes++;
-			Thread.sleep(1000);
-		}
-		
-		return (cantPaquetes*precioPorPaquete);
-	}
-	
-	
-	
 	@Override
 	public void registrarObservador(Observador obs){
 		this.observador = obs;

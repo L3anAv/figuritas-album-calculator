@@ -39,8 +39,8 @@ public class Album {
 
 		if(figurita < 1)
 			throw new IllegalArgumentException("El numero no pude ser menor a 1. No existen figuritas Negativas.");
-		else if(!album.contains(figurita))
-			album.add(figurita);
+		else if(!album.contains(figurita)) {
+			album.add(figurita);}
 		else 
 			figuritasRepetidas.add(figurita);
 }

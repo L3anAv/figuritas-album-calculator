@@ -12,6 +12,10 @@ public class GeneradorPrefijado implements Generador {
 		this.indice = 1;
 		this.rango = rango;
 	}
+	public GeneradorPrefijado(int rangoIn, int rangoFin) {
+		this.indice = rangoIn;
+		this.rango = rangoFin;
+	}
 	
 	@Override
 	public int nextInt(int rango) {
