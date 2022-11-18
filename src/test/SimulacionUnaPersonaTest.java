@@ -9,14 +9,13 @@ import org.junit.Test;
 
 import interfaces.Simulacion;
 import modelo.SimulacionUnaPersona;
-import utilidades.GeneradorPrefijado;
-import utilidades.ObservadorPorConsola;
 
 public class SimulacionUnaPersonaTest {
 
 	@Test
 	public void creacionDeSimulacionTest() {
 	
+		@SuppressWarnings("unused")
 		Simulacion sim = new SimulacionUnaPersona(200, 683, 5);
 		
 	}
@@ -24,6 +23,7 @@ public class SimulacionUnaPersonaTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void precioNegativo() {
 		
+		@SuppressWarnings("unused")
 		Simulacion sim = new SimulacionUnaPersona(-1, 683, 5);
 		
 	}
@@ -32,17 +32,19 @@ public class SimulacionUnaPersonaTest {
 	public void cantidadTotalNegativa() {
 		
 		
+		@SuppressWarnings("unused")
 		Simulacion sim = new SimulacionUnaPersona(200, -1, 5);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void cantidadEnPaqNegativa() {
 		
+		@SuppressWarnings("unused")
 		Simulacion sim = new SimulacionUnaPersona(200, 683, -1);
 		
 		
 	}
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test(expected = IllegalArgumentException.class)
 	public void insertarFiguritaNegativa() throws Exception {
 		
@@ -54,7 +56,7 @@ public class SimulacionUnaPersonaTest {
 			
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void insertarFiguritasHastaTotal() throws Exception {
 		SimulacionUnaPersona sim = new SimulacionUnaPersona(200, 10, 1);
@@ -81,7 +83,7 @@ public class SimulacionUnaPersonaTest {
 	
 	
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void retornarGastoPromedio() throws Exception {
 		SimulacionUnaPersona sim = new SimulacionUnaPersona(200, 10, 1);

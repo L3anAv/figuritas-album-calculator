@@ -23,7 +23,7 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 	private JTextField resultadoFinal;
 	private JPanel pantallaLoading;
 	private JPanel pantallaResultado;
-	private JLabel LblResultado;
+
 	private LinkedList<Integer> resultadosDeSimulacion;
 	
 	public SistemaDeSimulacion(

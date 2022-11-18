@@ -11,25 +11,28 @@ import interfaces.Simulacion;
 import modelo.Persona;
 import modelo.SimulacionVariasPersonaRegalo;
 import utilidades.GeneradorPrefijado;
+import utilidades.ObservadorPorConsola;
 
 public class SimulacionVariasPersonaRegaloTest {
 
 	@Test
 	public void testConObservadores() throws Exception {
 		
-	//SimulacionVariasPersonaRegalo sim = new SimulacionVariasPersonaRegalo(2, 1);
-	//sim.registrarObservador(new ObservadorPorConsola(sim)); 
-	//sim.iniciarSimulacion();
+	SimulacionVariasPersonaRegalo sim = new SimulacionVariasPersonaRegalo(2, 1, 200, 5);
+	sim.registrarObservador(new ObservadorPorConsola(sim)); 
+	sim.iniciarSimulacion();
 	
 	}
 
 	@Test
 	public void creacionDeSimulacionTest() {
 	
+		@SuppressWarnings("unused")
 		Simulacion sim = new SimulacionVariasPersonaRegalo(2, 200, 100, 5);
 		
 	}
 
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void precioNegativo() {
 		
@@ -37,6 +40,7 @@ public class SimulacionVariasPersonaRegaloTest {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void cantidadTotalNegativa() {
 		
@@ -44,6 +48,7 @@ public class SimulacionVariasPersonaRegaloTest {
 		Simulacion sim = new SimulacionVariasPersonaRegalo(2, 200, -1, 5);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void cantidadEnPaqNegativa() {
 		
@@ -52,7 +57,7 @@ public class SimulacionVariasPersonaRegaloTest {
 		
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test(expected = IllegalArgumentException.class)
 	public void insertarFiguritaNegativa() throws Exception {
 		
@@ -64,7 +69,7 @@ public class SimulacionVariasPersonaRegaloTest {
 			
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void insertarFiguritasHastaCompletar() throws Exception {
 		
@@ -98,7 +103,7 @@ public class SimulacionVariasPersonaRegaloTest {
 		assertTrue(sim.satisfactorio());
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void generarPaquetesYRegalar() throws Exception {
 		
@@ -122,6 +127,7 @@ public class SimulacionVariasPersonaRegaloTest {
 		
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public LinkedList<Integer> generarPaquetes(int rangoIn ,int rangoFin){
 		
 		LinkedList ret = new LinkedList<Integer>();

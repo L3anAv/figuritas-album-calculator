@@ -9,34 +9,37 @@ import org.junit.Test;
 import interfaces.Generador;
 import interfaces.Simulacion;
 import modelo.Persona;
-import modelo.SimulacionVariasPersonaRegalo;
 import modelo.SimulacionVariasPersonasIntercambio;
 import utilidades.GeneradorPrefijado;
 
 public class SimulacionVariasPersonasIntercambioTest {
 
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void creacionDeSimulacionTest() {
 		Simulacion sim = new SimulacionVariasPersonasIntercambio(2, 200, 100, 5);	
 	}
 
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void precioNegativo() {		
 		Simulacion sim = new SimulacionVariasPersonasIntercambio(2, -200, 100, 5);		
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void cantidadTotalNegativa() {
 		Simulacion sim = new SimulacionVariasPersonasIntercambio(2, 200, -1, 5);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void cantidadEnPaqNegativa() {
 		Simulacion sim = new SimulacionVariasPersonasIntercambio(2, 200, 100, -5);	
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test(expected = IllegalArgumentException.class)
 	public void insertarFiguritaNegativa() throws Exception {
 		SimulacionVariasPersonasIntercambio sim = new SimulacionVariasPersonasIntercambio(2, 200, 11, 1);
@@ -45,7 +48,7 @@ public class SimulacionVariasPersonasIntercambioTest {
 		sim.rellenarAlbumes_Testing(paquete, sim.getPersonas().get(0));	
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void insertarFiguritasHastaCompletar() throws Exception {
 		
@@ -81,6 +84,7 @@ public class SimulacionVariasPersonasIntercambioTest {
 	
 	
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void generarPaquetesEIntercambiar() throws Exception {
 		
@@ -109,6 +113,7 @@ public class SimulacionVariasPersonasIntercambioTest {
 		
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public LinkedList<Integer> generarPaquetes(int rangoIn ,int rangoFin){
 		
 		LinkedList ret = new LinkedList<Integer>();

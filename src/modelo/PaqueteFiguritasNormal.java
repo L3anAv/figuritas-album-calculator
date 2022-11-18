@@ -11,7 +11,7 @@ public class PaqueteFiguritasNormal{
 	public static int cantidadFiguritasPaquete;
 	private LinkedList<Integer> paqueteFiguritas;
 	private static PaqueteFiguritasNormal paquete;
-	private static Generador generadorPref;
+	
 	
 	
 	// > Generador de paquetes nuevos de figuritas.
@@ -60,15 +60,7 @@ public class PaqueteFiguritasNormal{
 	paqueteFiguritas = new LinkedList<Integer>();
 }
 
-	private PaqueteFiguritasNormal(Generador gen) {
-		cantidadTotalFiguritas = 638;
-		cantidadFiguritasPaquete = 5;
-		paqueteFiguritas = new LinkedList<Integer>();
-		generadorPref = gen;
-		
-		
-		
-	}
+
 	// > Getters && Setters
 
 	public static void setCantidadFiguritasPaquete(int nuevaCantidadPorPaquete)

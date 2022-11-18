@@ -1,8 +1,6 @@
 package utilidades;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.util.ArrayList;
 
 import interfaces.Observador;
@@ -13,7 +11,7 @@ public class ObservadorPorConsola implements Observador {
 	
 	private Simulacion sim;
 	private ArrayList<Persona> lista;
-	private String sb;
+	
 	
 	public ObservadorPorConsola(Simulacion sim){
 		this.sim = sim;

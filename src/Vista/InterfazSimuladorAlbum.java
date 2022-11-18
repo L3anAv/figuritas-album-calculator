@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
+
 
 public class InterfazSimuladorAlbum {
 

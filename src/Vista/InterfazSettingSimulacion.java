@@ -8,33 +8,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+
 import com.formdev.flatlaf.FlatDarkLaf;
-import interfaces.Observador;
-import interfaces.Simulacion;
-import modelo.FabricaDeSimulaciones;
-import modelo.SimulacionUnaPersona;
 import modelo.SistemaDeSimulacion;
-import utilidades.ObservadorPorConsola;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class InterfazSettingSimulacion {
 
 	private JFrame frame;
-	private Simulacion sim;
+	//private Simulacion sim;
 
 	// Text Fields Pantalla
 	private JTextField textFieldPersonas;
@@ -44,6 +40,9 @@ public class InterfazSettingSimulacion {
 	private JTextField field_CantTotalFigus;
 	private JTextField resultadoFinal;
 
+	//GIF
+	BufferedImage image;
+	
 	// Labels
 	private JLabel erroMsgCantPersonas;
 	private JProgressBar progressBar;
@@ -150,6 +149,7 @@ public class InterfazSettingSimulacion {
 		erroMsgCantPersonas.setVisible(false);
 		
 		// JComboBox -> Agregar seleccionador a pantalla de inicio.
+		@SuppressWarnings("rawtypes")
 		JComboBox SeleccionDeSimulacion = crearSelectorDeSimulacion(botonInicio, textFieldPersonas, labelSolicitudDeCantPersonas);
 		
 		pantallaInicial.add(botonInicio);
@@ -203,7 +203,7 @@ public class InterfazSettingSimulacion {
 		progressBar.setIndeterminate(true);
 		progressBar.setEnabled(true);
 		pantallaLoading.add(progressBar);
-		
+	
 		frame.getContentPane().add(pantallaLoading);
 		
 	// JPanel --> PANTALLA FINAL:
@@ -283,6 +283,7 @@ public class InterfazSettingSimulacion {
 	}
 	
 // > Metodo que crea un JComboBox para el panel de inicio (Seleccion de tipo de simulacion).
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox crearSelectorDeSimulacion(JButton botonInicio, JTextField textFieldCantidadPersonas, JLabel labelSolicitudDeCantPersonas ) {
 		
 		JComboBox SeleccionDeSimulacion = new JComboBox(opcionesDeSimulacion);
