@@ -78,7 +78,7 @@ public void registrarObservador(Observador obs){
 }
 
 public void generarIndividuos(){	
-for(int i = 0 ; i <= cantPersonas; i++){
+for(int i = 0 ; i < cantPersonas; i++){
 	Persona persona = new Persona(i+1);
 	persona.setAlbum(cantidadTotalFigusAlbum, cantidadFigusPaq);
 	personas.add(persona);

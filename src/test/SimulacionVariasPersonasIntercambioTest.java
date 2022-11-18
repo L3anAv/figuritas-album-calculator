@@ -49,7 +49,7 @@ public class SimulacionVariasPersonasIntercambioTest {
 	@Test
 	public void insertarFiguritasHastaCompletar() throws Exception {
 		
-		SimulacionVariasPersonasIntercambio sim = new SimulacionVariasPersonasIntercambio(1, 200, 10, 5);
+		SimulacionVariasPersonasIntercambio sim = new SimulacionVariasPersonasIntercambio(2, 200, 10, 5);
 		
 		LinkedList paquete1 = new LinkedList<Integer>();
 		LinkedList paquete2 = new LinkedList<Integer>();
@@ -84,7 +84,7 @@ public class SimulacionVariasPersonasIntercambioTest {
 	@Test
 	public void generarPaquetesEIntercambiar() throws Exception {
 		
-		SimulacionVariasPersonasIntercambio sim = new SimulacionVariasPersonasIntercambio(1, 200, 30, 5);
+		SimulacionVariasPersonasIntercambio sim = new SimulacionVariasPersonasIntercambio(2, 200, 30, 5);
 		
 		
 		LinkedList paqPersona1 = generarPaquetes(1, 20);
