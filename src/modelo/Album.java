@@ -22,8 +22,8 @@ public class Album {
 
 	public Album(int idPropietario, int cantidadFiguritas, int cantidadFiguritasPorPaquete) {
 
-		album.add(0);
 		album = new LinkedList<Integer>();
+		album.add(0);
 		this.idPropietario = idPropietario;
 		this.cantidadFiguritas = cantidadFiguritas;
 		figuritasRepetidas = new LinkedList<Integer>();
