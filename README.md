@@ -47,7 +47,21 @@ Simulación de completado del album de figuritas mundial 2022 en JAVA. Proyecto 
 2. ObservadorPorConsola
 3. GeneradorPrefijado
 
-## Descripción de Responsabilidades de Clases (Modelo) ✍🏻
+## Descripción del modelo de interfaces [interfaces] ✍🏻
+
+###### <u>Interfaz <i>Generador</i>:</u>
+
+> Contiene los nextInt y nextIntCExclusion, ambos utilizados para crear generadores.
+
+###### <u>Interfaz <i>Observador</i>:</u>
+
+> Contiene el metodo notificar, el cual se utiliza en los observadores para generar salidas en consola.
+
+###### <u>Interfaz <i>Simulacion</i>:</u>
+
+> Esta interfaz contiene todos los metodos que son utilizados en todas las simulaciones para el proceso de simulación.
+
+## Descripción de Responsabilidades de Clases [Modelo] ✍🏻
 
 ###### <u>Clase <i>Persona</i>:</u>
 
@@ -83,7 +97,7 @@ Simulación de completado del album de figuritas mundial 2022 en JAVA. Proyecto 
 >	Encargada de realizar la simulación de completado de album entre n personas donde se realizan intercambios de 1 a 1 figurita solo con la condición que las figuritas intercambiadas no las posean las personas que realizan el intercambio. 
 >	Responsable además de dar la cantidad total de gasto de las personas para completar los n participantes cada uno su album.
 
-## Descripción de Responsabilidades de Clases (Utilidades) ✍🏻
+## Descripción de Responsabilidades de Clases [Utilidades] ✍🏻
 
 ###### <u>Clase <i>GeneradorPrefijado</i>:</u>
 
@@ -95,5 +109,11 @@ Simulación de completado del album de figuritas mundial 2022 en JAVA. Proyecto 
 
 ###### <u>Clase <i>ObservadorPorConsola</i>:</u>
 
-> Clase encargada de crear los observadores que utilizan los datos de la simulacion y los muestran por consola. 
+> Clase encargada de crear los observadores que utilizan los datos de la simulación y los muestran por consola. 
+
+## Descripción del modelo de interfaces [Vista] ✍🏻
+
+###### <u>Clase <i>InterfazSettingSimulacion</i>:</u>
+> La clase encargada de manejar todo el codigo que maneja la interfaz (Codigo usuario). La misma le permite al usuario seleccionar el tipo de simulacion que quiere, especificar parametros como cantidad de personas, cantidad de figuritas, precio, étc, para luego generar la simulacion y mostrar el resultado de la misma en pantalla.
+
 
