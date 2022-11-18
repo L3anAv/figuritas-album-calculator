@@ -16,11 +16,11 @@ public class Persona {
 		miAlbum = new Album(id);
 }
 	
-	// > Metodos de clase
-	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception{ 
-		
+// > Metodos de clase
+
+	public void insertarFiguritaEnAlbum(int numDeFigurita) throws Exception{
 		miAlbum.ingresarFigurita(numDeFigurita); 
-	}
+}
 
 	public boolean tieneFigurita(int numDeFigurita){
 	boolean existe = false;
@@ -42,7 +42,8 @@ public class Persona {
 			existe = true;
 	return existe;
 }
-	//REGALO	
+	
+
 	public void regalarFiguritas(Persona personaParaRegalarFigus) throws Exception{
 	LinkedList<Integer> figusParaRegalar = getFiguritasRepetidas();
 	LinkedList<Integer> figuritasRegaladas = new LinkedList<Integer>();
@@ -57,61 +58,41 @@ public class Persona {
 		figuritasRegaladas.clear();
 }
 
-	
-	//INTERCAMBIO
 	public void intercambiarFiguritas(Persona personaParaIntercambiar) throws Exception{
-	
+
 	LinkedList<Integer> figusMiasParaIntercambiar = getFiguritasRepetidas();
 	LinkedList<Integer> figusDeOtraPersonaParaIntercambiar = personaParaIntercambiar.getFiguritasRepetidas();
 	
 	LinkedList<Integer> figuritasMiasIntercambiables = new LinkedList<Integer>();
 	LinkedList<Integer> figuritasOtraPersonaOfrecidas = new LinkedList<Integer>();
-	
+
 	if(!figusMiasParaIntercambiar.isEmpty()) {
 		for(int figuritaPosibleIntercambiable : figusMiasParaIntercambiar) {
-		
-			if(!personaParaIntercambiar.tieneFigurita(figuritaPosibleIntercambiable) && !figusDeOtraPersonaParaIntercambiar.isEmpty() && !figusDeOtraPersonaParaIntercambiar.contains(figuritaPosibleIntercambiable)) {
-			
+			if(!personaParaIntercambiar.tieneFigurita(figuritaPosibleIntercambiable) && !figusDeOtraPersonaParaIntercambiar.isEmpty() && !figusDeOtraPersonaParaIntercambiar.contains(figuritaPosibleIntercambiable)){
 				figuritasMiasIntercambiables.add(figuritaPosibleIntercambiable);
 			}
 		}
-	
+
 		for(int figuritaPosibleIntercambiable2 : figusDeOtraPersonaParaIntercambiar) {
-		
-			if(!tieneFigurita(figuritaPosibleIntercambiable2) && !figuritasMiasIntercambiables.contains(figuritaPosibleIntercambiable2)) {
-				
+			if(!tieneFigurita(figuritaPosibleIntercambiable2) && !figuritasMiasIntercambiables.contains(figuritaPosibleIntercambiable2)){
 				figuritasOtraPersonaOfrecidas.add(figuritaPosibleIntercambiable2);
 			}
-
 		}
 	}
-	
-	
-	
-//	for(int figuritaPosibleIntercambiable: figusMiasParaIntercambiar)
-//	{
-//		if(!personaParaIntercambiar.tieneFigurita(figuritaPosibleIntercambiable) && tieneFiguritaParaIntercambiar(figusDeOtraPersonaParaIntercambiar))
-//			{
-//			figuritasMiasIntercambiables.add(figuritaPosibleIntercambiable);
-//			int figuritaOtraPersonaIntercambio = buscarFiguritaParaIntercambiar(figusDeOtraPersonaParaIntercambiar, figuritasOtraPersonaOfrecidas);
-//			System.out.println(figuritaOtraPersonaIntercambio);
-//			figuritasOtraPersonaOfrecidas.add(figuritaOtraPersonaIntercambio);
-//		}
-//	}
-	// Realizo el intercambio de figuritas
-	
-	
-	if(!figuritasMiasIntercambiables.isEmpty() && !figuritasOtraPersonaOfrecidas.isEmpty()) {
-		
+
+	if(!figuritasMiasIntercambiables.isEmpty() && !figuritasOtraPersonaOfrecidas.isEmpty()){
+			
 		realizarIntercambio(figuritasMiasIntercambiables, figuritasOtraPersonaOfrecidas, personaParaIntercambiar);
+			
 		//Elimino de repetidas las figuritas intercambidas
 		eliminarDeRepetidasFiguExtraidas(figuritasMiasIntercambiables);
 		personaParaIntercambiar.eliminarDeRepetidasFiguExtraidas(figuritasOtraPersonaOfrecidas);
+			
 		//Vacio las listas aux usadas en el metodo
 		figuritasMiasIntercambiables.clear();
 		figuritasOtraPersonaOfrecidas.clear();
-		}
 	}
+}
 
 	public void realizarIntercambio(LinkedList<Integer> figuritasMiasPersonaOfrecidas, LinkedList<Integer> figuritasOtraPersonaOfrecidas, Persona otraPersona) throws Exception{
 	for(int i = 0; i < figuritasOtraPersonaOfrecidas.size(); i++){
@@ -120,30 +101,6 @@ public class Persona {
 	for(int i = 0; i< figuritasMiasPersonaOfrecidas.size(); i++) {
 		otraPersona.insertarFiguritaEnAlbum(figuritasMiasPersonaOfrecidas.get(i));
 	}
-}
-	public boolean tieneFiguritaParaIntercambiar(LinkedList<Integer> figusDeOtraPersonaParaIntercambiar){
-	int index = 0;
-	boolean existeFiguritaParaIntercambio = false;
-		while(!existeFiguritaParaIntercambio && index < figusDeOtraPersonaParaIntercambiar.size()){
-			if(!tieneFigurita(figusDeOtraPersonaParaIntercambiar.get(index)))
-				existeFiguritaParaIntercambio = true;
-			index++;
-	}
-	return existeFiguritaParaIntercambio;
-}
-
-	public int buscarFiguritaParaIntercambiar(LinkedList<Integer> figusParaIntercambio, LinkedList<Integer> figuritasOtraPersonaOfrecidas){
-	int index = 0;
-	int figurita = 1;
-		while(figurita == 1 && index < figusParaIntercambio.size()){
-			if(figuritasOtraPersonaOfrecidas.size() == 0){
-				figurita = figusParaIntercambio.get(index);
-			}else if(!figuritasOtraPersonaOfrecidas.contains(figusParaIntercambio.get(index))){
-				figurita = figusParaIntercambio.get(index);
-			}
-		index++;
-	}
-	return figurita;
 }
 
 	public void eliminarDeRepetidasFiguExtraidas(LinkedList<Integer> figuritasParaEliminarDeRepetidas){
@@ -161,20 +118,15 @@ public class Persona {
 
 	public int getId() 
 	{ return id; }
-
+	
 	public Album getAlbum()
 	{ return miAlbum; }
 
-	public void setAlbum(int cantidadFiguritas, int cantidadFiguritasPorPaquete) {
-		
-		this.miAlbum = new Album(id, cantidadFiguritas, cantidadFiguritasPorPaquete);
-		
-	}
-	public void setAlbum() {
-		
-		this.miAlbum = new Album(id);
-		
-	}
+	public void setAlbum(int cantidadFiguritas, int cantidadFiguritasPorPaquete) 
+	{ this.miAlbum = new Album(id, cantidadFiguritas, cantidadFiguritasPorPaquete); }
+	
+	public void setAlbum() 
+	{ this.miAlbum = new Album(id); }
 	
 	public LinkedList<Integer> getMisFiguritas()
 	{ return miAlbum.getFiguritasDeAlbum(); }
@@ -212,4 +164,5 @@ public class Persona {
 	Persona other = (Persona) obj;
 	return this.id == other.id;
 }
+
 }

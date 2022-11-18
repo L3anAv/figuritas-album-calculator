@@ -7,15 +7,15 @@ import org.junit.Test;
 import modelo.Persona;
 
 public class PersonaTest {
-	
+
 	private Persona persona1;
 	private Persona persona2;
-	
+
 	@Before /* > Creacion de personas para testear metodos */
 	public void seteo(){		
 	persona1 = new Persona(1);
 	persona2 = new Persona(2);
-	
+
 		//Tiene repetida la figurita: 7 y 8
 		//No tiene la figurita: 5 y 6
 		try{
@@ -72,52 +72,18 @@ public class PersonaTest {
 	persona1.regalarFiguritas(persona2);
 	assertTrue(persona2.tieneFigurita(7));
 }
-	
+
 /* > Testeos de que la persona 1 ya no tenga las figuritas repetidas que ya regalo. */
 	@Test 
 	public void personaNoContengaFiguritaRegalada7() throws Exception {
 	persona1.regalarFiguritas(persona2);
 	assertFalse(persona1.existeFiguritaRepetida(7));
 }
-	
+
 	@Test 
 	public void personaNoContengaFiguritaRegalada8() throws Exception{
 	persona1.regalarFiguritas(persona2);
 	assertFalse(persona1.existeFiguritaRepetida(8));
 }
-	
-/* > Testeo de metodos de intercambio de figuritas repetidas. */
-	
-	@Test /* Testeo de metodo encargado de ver si una persona tiene una figurita de interes para otro */
-	public void personaTieneFiguritaParaIntercambiar()
-	{ assertTrue(persona1.tieneFiguritaParaIntercambiar(persona2.getFiguritasRepetidas())); }
-	
-	@Test /* Testeo de metodo encargado de devolver las figuritas para intercambiar de una persona a otra persona. */
-	public void personaDevuelveUnaFiguParaIntercambiarCorrectamente(){
-	
-	Persona persona3 = new Persona(3);
-	Persona persona4 = new Persona(4);
-	
-	try {
-		// > Necesita la figurita 3
-		persona3.insertarFiguritaEnAlbum(1);
-		persona3.insertarFiguritaEnAlbum(2);
-		
-		// > Tiene repetida solo la figurita 3
-		persona4.insertarFiguritaEnAlbum(1);
-		persona4.insertarFiguritaEnAlbum(2);
-		persona4.insertarFiguritaEnAlbum(3);
-		persona4.insertarFiguritaEnAlbum(3);
-		
-	}
-	catch (Exception e) 
-		{ e.printStackTrace(); }
 
-	LinkedList<Integer> figuritasOfrecidas = new LinkedList<Integer>();
-	LinkedList<Integer> persona4FiguritasRepetidas = persona4.getFiguritasRepetidas();
-	
-	int figuritaParaCambiarQueNecesitaP3 = persona3.buscarFiguritaParaIntercambiar(persona4FiguritasRepetidas, figuritasOfrecidas);
-	assertTrue(figuritaParaCambiarQueNecesitaP3 == 3);	
-}
-	
 }

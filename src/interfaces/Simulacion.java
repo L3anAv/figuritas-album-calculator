@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import modelo.Persona;
 
 public interface Simulacion {
-	
-	//Metodos
 	public void registrarObservador(Observador obs);
 	public int iniciarSimulacion() throws Exception;
 	public int getIteracion();
@@ -15,5 +13,4 @@ public interface Simulacion {
 	public int getPaquetesAbiertos();
 	public void escribirLog();
 	public void crearLog();
-
 }

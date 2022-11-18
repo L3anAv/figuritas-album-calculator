@@ -15,9 +15,12 @@ public class AlbumTest {
 }
 
 	@Test /* Testeo de metodo que comprueba si existe una figurita en el album False*/ 
-	public void existeFiguritaFalse(){
-	assertFalse(miAlbum.existeFiguritaEnAlbum(0));
-}
+	public void existeFiguritaFalse() throws Exception
+	{ 
+		miAlbum.ingresarFigurita(2);
+		miAlbum.ingresarFigurita(3);
+		assertFalse(miAlbum.existeFiguritaEnAlbum(1)); 
+	}
 
 	@Test /* Testeo de metodo que insgresa figurita en el album */
 	public void ingresandoFiguritaEnAlbum(){
@@ -30,15 +33,22 @@ public class AlbumTest {
 
 	@Test /* Testeo de metodo que comprubea que el album de figurita esta completo True */
 	public void albumEstaCompletoTrue() throws Exception{
-		for(int i = 1; i <= 683; i++)
+		
+		for(int i = 1; i < 638; i++) {
 			miAlbum.ingresarFigurita(i);
+		}
+
 	assertTrue(miAlbum.estaCompletoAlbum());
 }
 
 	@Test /* Testeo de metodo que comprubea que el album de figurita esta completo False */
-	public void albumEstaCompletoFalse(){
-	assertFalse(miAlbum.estaCompletoAlbum());
-}
+	public void albumEstaCompletoFalse() throws Exception
+	{
+		for(int i = 1; i <= 200; i++)
+			miAlbum.ingresarFigurita(i);
+		
+		assertFalse(miAlbum.estaCompletoAlbum()); 
+	}
 
 	@Test(expected = Exception.class)
 	public void albumIngresoValorInvalido() throws Exception{

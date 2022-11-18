@@ -10,7 +10,7 @@ public class Album {
 	private int cantidadFiguritaPorPaquete; 
 	private LinkedList<Integer> figuritasRepetidas;
 
-	// > Constructor
+	// > Constructores
 	public Album(int idPropietario){
 		album = new LinkedList<Integer>();
 		album.add(0);
@@ -19,18 +19,17 @@ public class Album {
 		this.cantidadFiguritas = 638;
 		this.cantidadFiguritaPorPaquete = 5;	
 	}
-	
-	
+
 	public Album(int idPropietario, int cantidadFiguritas, int cantidadFiguritasPorPaquete) {
-		album = new LinkedList<Integer>();
+
 		album.add(0);
+		album = new LinkedList<Integer>();
 		this.idPropietario = idPropietario;
+		this.cantidadFiguritas = cantidadFiguritas;
 		figuritasRepetidas = new LinkedList<Integer>();
 		this.cantidadFiguritaPorPaquete = cantidadFiguritasPorPaquete;
-		this.cantidadFiguritas = cantidadFiguritas;
-		
-	}
 
+	}
 
 	// > Metodos de clase
 	public void ingresarFigurita(int figurita) throws Exception{	
@@ -43,9 +42,6 @@ public class Album {
 			figuritasRepetidas.add(figurita);
 }
 
-	
-	
-	
 	public boolean existeFiguritaEnAlbum(int numDeFigurita){
 	boolean existe = false;
 		if(album.contains(numDeFigurita))

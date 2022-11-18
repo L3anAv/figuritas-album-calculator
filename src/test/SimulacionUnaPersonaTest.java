@@ -80,38 +80,30 @@ public class SimulacionUnaPersonaTest {
 		assertTrue(sim.satisfactorio());
 		
 	}
-	
-	
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
-	public void retornarGastoPromedio() throws Exception {
-		SimulacionUnaPersona sim = new SimulacionUnaPersona(200, 10, 1);
+	public void retornarGastoPromedio() throws Exception{
+		
+		SimulacionUnaPersona sim = new SimulacionUnaPersona(100, 10, 5);
+		
 		LinkedList paquete1 = new LinkedList<Integer>();
 		LinkedList paquete2 = new LinkedList<Integer>();
-		
 		paquete1.add(1);
 		paquete1.add(2);
 		paquete1.add(3);
 		paquete1.add(4);
 		paquete1.add(5);
-		
-		paquete2.add(2);
 		paquete2.add(6);
 		paquete2.add(7);
 		paquete2.add(8);
 		paquete2.add(9);
-		
-		sim.rellenarAlbum(paquete1);
-		sim.rellenarAlbum(paquete2);
-		
+		paquete2.add(10);
+		sim.rellenarAlbum_Test(paquete1);
+		sim.rellenarAlbum_Test(paquete2);
 		int cuenta = sim.getPaquetesAbiertos()* sim.getPrecioPaquete();
 		
-		assertEquals(cuenta, 400);
-		
-		
+		assertEquals(200, cuenta);
 	}
-	
-	
-	
+
 }

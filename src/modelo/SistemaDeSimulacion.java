@@ -14,44 +14,41 @@ import utilidades.ObservadorPorConsola;
 public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 
 	private Integer iteraciones;
-	private Simulacion simulacion;
-	private String nombreDeSimulacion;
 	private int precioPorPaquete;
-	private int cantidadDeFiguritasTotal;
+	private Simulacion simulacion;
 	private int cantidadPorPaquete;
-	private int cantPesonasParaSimulacion;
-	private JTextField resultadoFinalPromedioTotal;
-	private JTextField resultadoFinalxPersona;
 	private JPanel pantallaLoading;
 	private JPanel pantallaResultado;
-
+	private String nombreDeSimulacion;
+	private int cantidadDeFiguritasTotal;
+	private JTextField resultadoFinalxPersona;
+	private Integer cantPesonasParaSimulacion;
+	private JTextField resultadoFinalPromedioTotal;
 	private LinkedList<Integer> resultadosDeSimulacion;
-	
-	public SistemaDeSimulacion(
-			String nombreDeSimulacion,
-			int cantPesonasParaSimulacion,
-			int cantidadDeIteraciones,
-			int precioPorPaquete,
-			int cantidadDeFiguritasTotal,
-			int cantidadPorPaquete,
+
+// > Constructor de sistema de simulacion
+
+	public SistemaDeSimulacion( String nombreDeSimulacion, int cantPesonasParaSimulacion, int cantidadDeIteraciones, int precioPorPaquete, int cantidadDeFiguritasTotal, int cantidadPorPaquete,
 			JTextField resultadoFinal,
 			JTextField resultadoFinalxPersona,
 			JLabel LblResultado,
 			JPanel pantallaLoading,
-			JPanel pantallaResultado)
-		{
-		resultadosDeSimulacion = new LinkedList<Integer>();
+			JPanel pantallaResultado){
+		
 		iteraciones = cantidadDeIteraciones;
+		this.pantallaLoading = pantallaLoading;
 		this.precioPorPaquete = precioPorPaquete;
+		this.pantallaResultado = pantallaResultado;
 		this.nombreDeSimulacion = nombreDeSimulacion;
 		this.cantidadPorPaquete = cantidadPorPaquete;
+		resultadosDeSimulacion = new LinkedList<Integer>();
 		this.cantidadDeFiguritasTotal = cantidadDeFiguritasTotal;
 		this.cantPesonasParaSimulacion = cantPesonasParaSimulacion;
 		this.resultadoFinalPromedioTotal = resultadoFinal;
 		this.resultadoFinalxPersona = resultadoFinalxPersona;
-		this.pantallaLoading = pantallaLoading;
-		this.pantallaResultado = pantallaResultado;
 }
+
+// > Metodos de SwingWorker
 
 	@Override
 	protected Integer doInBackground() throws Exception {
@@ -61,7 +58,7 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 
 	@Override
 	public void done(){
-		
+
 		if(this.isCancelled() == false){
 			try {
 				if(cantPesonasParaSimulacion != 1) {
@@ -80,10 +77,12 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 				}
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
-			}
 		}
 	}
-	
+}
+
+// > Metodo de clase
+
 	public int iniciarSimulacion() throws Exception{
 		
 		int i = 0;
@@ -118,5 +117,5 @@ public class SistemaDeSimulacion extends SwingWorker<Integer, Integer>{
 	public int calcularPromedioDeGasto(int gastoTotalEnPaquetes){
 		return (gastoTotalEnPaquetes / resultadosDeSimulacion.size());
 }
-	
+
 }

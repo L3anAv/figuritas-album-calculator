@@ -12,53 +12,51 @@ import utilidades.GeneradorRandom;
 
 
 public class SimulacionVariasPersonaRegalo implements Simulacion{
-	
-	private int gastoTotal;
+
 	public StringBuilder sb;
 	private int cantPersonas;
 	private Generador random;
+	private int cantidadFigusPaq;
 	private int precioPorPaquete;
 	private int cantPaquetesTotal;
 	private Observador observador;
 	private int iteracionesGlobales;
 	private ArrayList<Persona> personas;
 	private int cantidadTotalFigusAlbum;
-	private int cantidadFigusPaq;
 	
-	//Constructor con valores seteados por usuario
-	public SimulacionVariasPersonaRegalo(int cantPersonas,
-	int precioPorPaquete,  
-	int cantidadFiguritasTotal, 
-	int cantidadFiguritasPorPaquete){
+// > Constructor de simulacion
+
+	public SimulacionVariasPersonaRegalo(int cantPersonas, int precioPorPaquete, int cantidadFiguritasTotal, int cantidadFiguritasPorPaquete){
+
+	if(cantPersonas<1) 
+		throw new IllegalArgumentException("No pueden haber menos de 2 participantes");
+
+	if(precioPorPaquete < 0 ) 
+		throw new IllegalArgumentException("El Valor del precio no puede ser negativo");
+
+	if(cantidadFiguritasPorPaquete < 1) 
+		throw new IllegalArgumentException("La cantidad de Figuritas por paquete no puede ser menor a 1");
+
+	if(cantidadFiguritasTotal < 1) 
+		throw new IllegalArgumentException("La cantidad total de figuritas no puede ser menor a 1");
+
 	this.cantPaquetesTotal = 0;
 	this.sb = new StringBuilder();
 	this.cantPersonas = cantPersonas;
 	this.random = new GeneradorRandom();
 	this.precioPorPaquete = precioPorPaquete;
-	this.personas = new ArrayList<Persona>(cantPersonas);
-	
 	this.cantidadFigusPaq = cantidadFiguritasPorPaquete;
+	this.personas = new ArrayList<Persona>(cantPersonas);
 	this.cantidadTotalFigusAlbum = cantidadFiguritasTotal;
-	
-	if(cantPersonas<1) {
-		throw new IllegalArgumentException("No pueden haber menos de 2 participantes");
-	}
-	if(precioPorPaquete < 0 ) {
-		throw new IllegalArgumentException("El Valor del precio no puede ser negativo");
-	}
-	if(cantidadFiguritasPorPaquete < 1) {
-		throw new IllegalArgumentException("La cantidad de Figuritas por paquete no puede ser menor a 1");
-	}
-	if(cantidadFiguritasTotal < 1) {
-		throw new IllegalArgumentException("La cantidad total de figuritas no puede ser menor a 1");
-	}
-	
+
 	generarIndividuos();
 	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
-	
+
 }
-	
-	@Override //Deberia retornar la cantidad de paquetes el gasto mejor dicho
+
+// > Metodos de clase
+
+	@Override
 	public int iniciarSimulacion() throws Exception{
 
 	int iteraciones = 0;
@@ -72,12 +70,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		this.iteracionesGlobales = iteraciones;
 	}
 	crearLog();
-	gastoTotal = cantPaquetesTotal * precioPorPaquete;
-	return gastoTotal;
-}
-	
-	public void registrarObservador(Observador obs){
-		this.observador = obs;
+		return (cantPaquetesTotal * precioPorPaquete);
 }
 
 	public void generarIndividuos(){
@@ -102,43 +95,36 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 
 	public void rellenarAlbum(LinkedList<Integer> paquete, Persona p) throws Exception{
 		for(int i = 0; i < paquete.size();i++) {
-			if(!p.albumEstaCompleto()){
-					p.insertarFiguritaEnAlbum(paquete.get(i)); 
-
-		}
+			if(!p.albumEstaCompleto())
+			{ p.insertarFiguritaEnAlbum(paquete.get(i)); }
 	}
 }
-	
+
 	public boolean satisfactorio(){
 	boolean aux = true;
-	for(Persona p: personas){	
-		aux = aux && p.albumEstaCompleto();
-	}
+	for(Persona p: personas)
+	{ aux = aux && p.albumEstaCompleto(); }
 	return aux;
 }
-	
+
 	public void compartirRepetidas() throws Exception{	
 	for(Persona p: personas){
 		Persona p2 = personas.get(random.nextIntCExclusion(personas.size(), p.getId()));
-		if (p.hayRepetidas()){
-			p.regalarFiguritas(p2);
-		}
+		if (p.hayRepetidas())
+		{ p.regalarFiguritas(p2); }
 	}
 }
 
-	
+// > Metodos aux para Test
+
 	public void rellenarAlbumes_Testing(LinkedList<Integer> paquete, Persona p) throws Exception {	
-		for(int figu: paquete) {
-			p.insertarFiguritaEnAlbum(figu);
-		}
-	}
-	
-	public void compartirRepetidas_Testing(Persona p, Persona other) throws Exception {
-		
-		p.regalarFiguritas(other);
-	}
-	
-	
+		for(int figu: paquete) 
+		{ p.insertarFiguritaEnAlbum(figu); }
+}
+
+	public void compartirRepetidas_Testing(Persona p, Persona other) throws Exception 
+	{ p.regalarFiguritas(other); }
+
 	public void nuevaConfig(ArrayList<Persona> personas, int cantidadFiguritasTotal, int cantidadFiguritasPorPaquete){
 	for(Persona persona: personas){
 		persona.getAlbum().setCantidadFiguritasTotales(cantidadFiguritasTotal);
@@ -146,23 +132,32 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 	}
 }
 
-	//Getters
-	public int getIteracion() {
-		return this.iteracionesGlobales;
-}
+// > Getters && Setters
+
+	public int getIteracion() 
+	{ return this.iteracionesGlobales; }
+
+	private void notificarObservadores()
+	{ observador.notificar(); }
 
 	@Override
-	public ArrayList<Persona> getPersonas(){
-		return this.personas;
-}
+	public void registrarObservador(Observador obs)
+	{ this.observador = obs; }
+	
+	@Override
+	public ArrayList<Persona> getPersonas()
+	{ return this.personas; }
 
 	@Override
-	public int getPaquetesAbiertos(){
-		return cantPaquetesTotal;
-}
+	public int getPaquetesAbiertos()
+	{ return cantPaquetesTotal; }
 
 	@Override
-	public void escribirLog(){	
+	public double promedioPaquetesXPersona() 
+	{ return cantPaquetesTotal/personas.size(); }
+
+	@Override
+	public void escribirLog(){
 
 	this.sb.append("It: ").append(getIteracion())
 	.append("Paquetes abiertos: ").append(getPaquetesAbiertos())
@@ -180,14 +175,6 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 			e.printStackTrace();
 	}
 }
-
-	@Override
-	public double promedioPaquetesXPersona() 
-	{ return cantPaquetesTotal/personas.size(); }
-
 	
-	private void notificarObservadores(){
-		observador.notificar();
-}
 
 }

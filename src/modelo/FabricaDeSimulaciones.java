@@ -4,11 +4,7 @@ import interfaces.Simulacion;
 
 public class FabricaDeSimulaciones{
 
-	public static Simulacion getSimulacion( String nombreDeSimulacion, 
-	int cantPersonas,
-	int precioPorPaquete, 
-	int cantidadFiguritasTotal,
-	int cantidadFiguritasPorPaquete){
+	public static Simulacion getSimulacion( String nombreDeSimulacion, int cantPersonas, int precioPorPaquete,  int cantidadFiguritasTotal, int cantidadFiguritasPorPaquete){
 
 	if(nombreDeSimulacion == null){
 		throw new NullPointerException("El nombre de simulacion solictada no puede ser nulo.");
