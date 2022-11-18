@@ -21,6 +21,7 @@ Simulación de completado del album de figuritas mundial 2022 en JAVA. Proyecto 
 5. SimulacionUnaPersona
 6. SimulacionVariasPersonasRegalo
 7. SimulacionVariasPersonasIntercambio
+8. SistemaDeSimulacion
 
 - ### Paquete Interfaces
 
@@ -35,12 +36,16 @@ Simulación de completado del album de figuritas mundial 2022 en JAVA. Proyecto 
 - ### Paquete Test
 
 1. PersonaTest
-2. SimulacionVariasPersonasRegaloTest
+2. AlbumTest
+3. SimulacionUnaPersona
+4. SimulacionVariasPersonasRegaloTest
+5. SimulacionVariasPersonasIntercambioTest
 
 - ### Paquete Utilidades
 
 1. GeneradorRandom
 2. ObservadorPorConsola
+3. GeneradorPrefijado
 
 ## Descripción de Responsabilidades de Clases (Modelo) ✍🏻
 
@@ -77,4 +82,18 @@ Simulación de completado del album de figuritas mundial 2022 en JAVA. Proyecto 
 
 >	Encargada de realizar la simulación de completado de album entre n personas donde se realizan intercambios de 1 a 1 figurita solo con la condición que las figuritas intercambiadas no las posean las personas que realizan el intercambio. 
 >	Responsable además de dar la cantidad total de gasto de las personas para completar los n participantes cada uno su album.
+
+## Descripción de Responsabilidades de Clases (Utilidades) ✍🏻
+
+###### <u>Clase <i>GeneradorPrefijado</i>:</u>
+
+> Encargada de crear un generador de numeros, el cual funciona con un rango especificado al momento de crearlo. Es utilizado en las clases de Test.
+
+###### <u>Clase <i>GeneradorRandom</i>:</u>
+
+> Esta clase crea un generador de tipo Random, el cual contiene un metodo especial que genera numeros aleatorios y excluye uno pasado por parametro.
+
+###### <u>Clase <i>ObservadorPorConsola</i>:</u>
+
+> Clase encargada de crear los observadores que utilizan los datos de la simulacion y los muestran por consola. 
 
