@@ -116,7 +116,7 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 }
 
 // > Metodos aux para Test
-
+	
 	public void rellenarAlbumes_Testing(LinkedList<Integer> paquete, Persona p) throws Exception {	
 		for(int figu: paquete) 
 		{ p.insertarFiguritaEnAlbum(figu); }

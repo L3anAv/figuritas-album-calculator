@@ -94,8 +94,6 @@ public class SimulacionVariasPersonaRegaloTest {
 
 		sim.rellenarAlbumes_Testing(paquete1, p1);
 		sim.rellenarAlbumes_Testing(paquete2, p1);
-		
-		
 		sim.rellenarAlbumes_Testing(paquete1, p2);
 		sim.rellenarAlbumes_Testing(paquete2, p2);
 

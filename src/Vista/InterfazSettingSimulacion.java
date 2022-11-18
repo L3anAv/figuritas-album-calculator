@@ -28,9 +28,9 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import modelo.SistemaDeSimulacion;
 
 public class InterfazSettingSimulacion {
-
+	
+	//Frame principal
 	private JFrame frame;
-	//private Simulacion sim;
 
 	// Text Fields Pantalla
 	private JTextField textFieldPersonas;
@@ -40,16 +40,12 @@ public class InterfazSettingSimulacion {
 	private JTextField field_CantTotalFigus;
 	private JTextField resultadoFinalTotal;
 	private JTextField resultadoFinalxPersona;
-
-	//GIF
-	BufferedImage image;
 	
 	// Labels
 	private JLabel LblresultadoFinalxPersona;
 	private JLabel erroMsgCantPersonas;
 	private JProgressBar progressBar;
 	private JLabel LblResultado;
-
 
 	// Jpanels
 	private JPanel pantallaLoading;
