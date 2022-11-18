@@ -53,15 +53,9 @@ public class SimulacionVariasPersonaRegalo implements Simulacion{
 		throw new IllegalArgumentException("La cantidad total de figuritas no puede ser menor a 1");
 	}
 	
-	
-	
-	
-	
-	
 	generarIndividuos();
 	nuevaConfig(personas, cantidadFiguritasTotal, cantidadFiguritasPorPaquete);
-	PaqueteFiguritasNormal.setCantidadFiguritasTotales(cantidadFiguritasTotal);
-	PaqueteFiguritasNormal.setCantidadFiguritasPaquete(cantidadFiguritasPorPaquete);
+	
 }
 	
 	@Override //Deberia retornar la cantidad de paquetes el gasto mejor dicho

@@ -12,20 +12,6 @@ public class PaqueteFiguritasNormal{
 	private LinkedList<Integer> paqueteFiguritas;
 	private static PaqueteFiguritasNormal paquete;
 	private static Generador generadorPref;
-	
-	
-	// > Generador de paquetes nuevos de figuritas.
-	public static PaqueteFiguritasNormal nuevo(){
-	paquete = new PaqueteFiguritasNormal(); // Instancia de paquete
-	GeneradorRandom numeroFiguritas = new GeneradorRandom(); // Random para numero de figurita
-	int cantidadFigus = paquete.getCantidadFiguritas(); // Cantidad de cada paquete
-	int cantidadTotalFigus = paquete.getCantidadTotalFiguritas(); // Cantidad total de figuritas album
-	for(int i = 0; i < cantidadFigus ;i++){ // Relleno de figuritas el paquete
-		int numeroFigurita = numeroFiguritas.nextIntCExclusion(cantidadTotalFigus, 0);
-		paquete.setFigurita(numeroFigurita);
-	}
-	return paquete; // Retorno el paquete
-}
 
 	public static PaqueteFiguritasNormal nuevo(int cantTotalFigus, int cantFigusPaq){ 
 		paquete = new PaqueteFiguritasNormal(); // Instancia de paquete	
@@ -34,8 +20,6 @@ public class PaqueteFiguritasNormal{
 		int cantidadTotalFigus = cantTotalFigus; // Cantidad total de figuritas album
 		for(int i = 0; i < cantidadFigus ;i++){ // Relleno de figuritas el paquete
 			int numeroFigurita = numeroFiguritas.nextIntCExclusion(cantidadTotalFigus, 0);
-		
-			
 			paquete.setFigurita(numeroFigurita);
 		}
 		return paquete; // Retorno el paquete
@@ -55,7 +39,7 @@ public class PaqueteFiguritasNormal{
 
 	// > Constructor
 	private PaqueteFiguritasNormal(){
-	cantidadTotalFiguritas = 638;
+	cantidadTotalFiguritas = 632;
 	cantidadFiguritasPaquete = 5;
 	paqueteFiguritas = new LinkedList<Integer>();
 }
