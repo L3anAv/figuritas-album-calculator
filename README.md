@@ -1,6 +1,6 @@
 # 📜 Documentación 📜
 
-Simulación de completado del album de figuritas mundial 2022 en JAVA. Proyecto realizado para la materia Programacion III de la Universidad Nacional General Sarmiento.
+Simulación de completado del album de figuritas mundial 2022 en JAVA. Proyecto realizado por Luciano Agustín Inama y Matias Avila para la materia Programacion III de la Universidad Nacional General Sarmiento.
 
 ## Paquetes 📦
 
