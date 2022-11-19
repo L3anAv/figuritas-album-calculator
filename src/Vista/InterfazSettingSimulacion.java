@@ -375,8 +375,6 @@ public class InterfazSettingSimulacion {
 		public void actionPerformed(ActionEvent e){
 			try { 
 				verificarAntesDeiniciarSimulacion();
-				pantallaConfiguracion.setVisible(false);
-				pantallaLoading.setVisible(true);
 			}
 			catch (Exception e1) { e1.printStackTrace(); }
 		}
@@ -677,14 +675,21 @@ public class InterfazSettingSimulacion {
 				"Ingrese una cantidad de simulaciones valida (Mayor a 0)", 
 				"Error", 
 				JOptionPane.ERROR_MESSAGE);
-	}else{ 
-		ejecutarSimulacion();
-		}
+	}else if(this.cantPesonasParaSimulacion != 0 &&
+			this.cantTotalFigus != 0 &&
+			this.cantFigusPaq != 0 &&
+			this.precioPaq != 0 &&
+			this.cantSims != 0)
+		
+		{ ejecutarSimulacion(); }
 
 	}
 
 	// > Ejecucion de sistema de simulacion
 	private void ejecutarSimulacion() throws Exception{
+		
+		pantallaConfiguracion.setVisible(false);
+		pantallaLoading.setVisible(true);
 		
 		SistemaDeSimulacion sistemaSimulacion = 
 				new SistemaDeSimulacion(
