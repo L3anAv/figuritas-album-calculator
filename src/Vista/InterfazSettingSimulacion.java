@@ -43,6 +43,7 @@ public class InterfazSettingSimulacion {
 	
 	// Labels
 	private JLabel LblresultadoFinalxPersona;
+	private JLabel erroMsgCantPersonasMenor;
 	private JLabel erroMsgCantPersonas;
 	private JProgressBar progressBar;
 	private JLabel LblResultado;
@@ -143,9 +144,16 @@ public class InterfazSettingSimulacion {
 		textFieldPersonas.setEnabled(false);
 		
 		// JLabelErrorMsg
-		erroMsgCantPersonas = crearLabelErroCantPersonas();
+		String error = "Error: ingrese una cantidad de personas.";
+		erroMsgCantPersonas = crearLabelErroCantPersonas(error);
 		erroMsgCantPersonas.setBounds(20, 152, 343, 35);
 		erroMsgCantPersonas.setVisible(false);
+		
+		// JLabelErrorMsg
+		String errorCantPersonas = "Error: ingrese una cantidad mayor o igual a 2.";
+		erroMsgCantPersonasMenor = crearLabelErroCantPersonas(errorCantPersonas);
+		erroMsgCantPersonasMenor.setBounds(20, 152, 343, 35);
+		erroMsgCantPersonasMenor.setVisible(false);
 		
 		// JComboBox -> Agregar seleccionador a pantalla de inicio.
 		@SuppressWarnings("rawtypes")
@@ -153,6 +161,7 @@ public class InterfazSettingSimulacion {
 		
 		pantallaInicial.add(botonInicio);
 		pantallaInicial.add(textFieldPersonas);
+		pantallaInicial.add(erroMsgCantPersonasMenor);
 		pantallaInicial.add(erroMsgCantPersonas);
 		pantallaInicial.add(SeleccionDeSimulacion);
 		pantallaInicial.add(labelSolicitudDeCantPersonas);
@@ -275,10 +284,13 @@ public class InterfazSettingSimulacion {
 		BotonIrConfiguracion.setForeground(new Color(255, 255, 255));
 		BotonIrConfiguracion.setBackground(new Color(36, 31, 49));
 		BotonIrConfiguracion.setEnabled(false);
-		
+			
 		BotonIrConfiguracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				if(textFieldPersonas.getText().length() != 0) {
+				
+				if(textFieldPersonas.getText().length() != 0 && cantPesonasParaSimulacion >= 2) {
+					erroMsgCantPersonasMenor.setVisible(false);
+					erroMsgCantPersonas.setVisible(false);
 					pantallaConfig.setVisible(true);
 					pantallaInicial.setVisible(false);
 				} else if((textFieldPersonas.getText().length() < 0 || textFieldPersonas.getText().length() == 0) && !esOpcionUno) {
@@ -286,6 +298,8 @@ public class InterfazSettingSimulacion {
 				}else if(textFieldPersonas.getText().length() == 0 && esOpcionUno){
 					pantallaConfig.setVisible(true);
 					pantallaInicial.setVisible(false);
+				}else if(cantPesonasParaSimulacion < 2 && textFieldPersonas.getText().length() > 0){
+					erroMsgCantPersonasMenor.setVisible(true);
 				}
 			}
 		});
@@ -561,8 +575,8 @@ public class InterfazSettingSimulacion {
 	return textFieldCantidadPersona;
 }
 	
-	private JLabel crearLabelErroCantPersonas() {
-		JLabel errorMsg = new JLabel("Error: ingrese una cantidad de personas.");
+	private JLabel crearLabelErroCantPersonas(String error) {
+		JLabel errorMsg = new JLabel(error);
 		errorMsg.setFont(new Font("Inconsolata", Font.BOLD, 12));
 		errorMsg.setForeground(new Color(224, 27, 36));
 		
