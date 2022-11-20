@@ -10,7 +10,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -287,14 +286,15 @@ public class InterfazSettingSimulacion {
 			
 		BotonIrConfiguracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				
-				if((textFieldPersonas.getText().length() != 0 && cantPesonasParaSimulacion >= 2) ||
-					(textFieldPersonas.getText().equals("1") && esOpcionUno)){
+
+				if(textFieldPersonas.getText().length() > 0 &&
+					(!esOpcionUno && cantPesonasParaSimulacion >= 2) ||
+					(cantPesonasParaSimulacion == 1 && esOpcionUno)){
 					erroMsgCantPersonasMenor.setVisible(false);
 					erroMsgCantPersonas.setVisible(false);
 					pantallaConfig.setVisible(true);
 					pantallaInicial.setVisible(false);
-				}else if((textFieldPersonas.getText().length() < 0 || textFieldPersonas.getText().length() == 0) && !esOpcionUno) {
+				}else if(textFieldPersonas.getText().length() <= 0){
 					erroMsgCantPersonas.setVisible(true);
 				}else if(textFieldPersonas.getText().length() == 0 && esOpcionUno){
 					pantallaConfig.setVisible(true);
@@ -327,7 +327,6 @@ public class InterfazSettingSimulacion {
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 20));
 					labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
 					simulacionElegida = -1;
-					esOpcionUno = false;
 				}
 				else if(SeleccionDeSimulacion.getSelectedIndex() == 1){
 					botonInicio.setEnabled(true);
@@ -342,14 +341,14 @@ public class InterfazSettingSimulacion {
 					esOpcionUno = true;
 				}
 				else{
-					botonInicio.setEnabled(false);
+					esOpcionUno = false;
+					//botonInicio.setEnabled(false);
 					simulacionElegida = SeleccionDeSimulacion.getSelectedIndex();
 					colocarSimulacionSeleccionada(opcionesDeSimulacion[simulacionElegida]);
 					textFieldCantidadPersonas.setEnabled(true);
 					labelSolicitudDeCantPersonas.setText("Cantidad de participantes: ");
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata",Font.PLAIN ,20));
 					labelSolicitudDeCantPersonas.setForeground(Color.WHITE);
-					esOpcionUno = false;
 				}
 		}
 	});
@@ -559,19 +558,32 @@ public class InterfazSettingSimulacion {
 
 	textFieldCantidadPersona.setColumns(10);
 	textFieldCantidadPersona.addKeyListener(new KeyAdapter(){		
+		
 		@Override
-		public void keyTyped(KeyEvent e) {
+		public void keyTyped(KeyEvent e){
 			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 				e.consume();
-			}else if(textFieldCantidadPersona.getText().length() >= 0){
-				String cantPersonasSimulacion = "" + e.getKeyChar();
-				cantPesonasParaSimulacion = Integer.parseInt(cantPersonasSimulacion);
+			}/*
+			else if(textFieldCantidadPersona.getText().length() == 0){
+			textFieldCantidadPersona.setText("");
+			String cantPersonasSimulacion = "" + e.getKeyChar();
+			cantPesonasParaSimulacion = Integer.parseInt(cantPersonasSimulacion);
+			botonInicio.setEnabled(false);*/
+			else if(textFieldCantidadPersona.getText().length() > 0) {
 				botonInicio.setEnabled(true);
-			}else if(textFieldCantidadPersona.getText().length() < 0){
-				cantPesonasParaSimulacion = -1;
-				botonInicio.setEnabled(false);
 			}
 		}
+		
+		@Override
+		public void keyReleased(KeyEvent e)
+		{
+			if(textFieldCantidadPersona.getText().length() > 0){
+				cantPesonasParaSimulacion = Integer.parseInt(textFieldCantidadPersona.getText());
+				System.out.print("\n"+cantPesonasParaSimulacion);
+			}
+		}
+		
+		
 	});
 	
 	return textFieldCantidadPersona;
