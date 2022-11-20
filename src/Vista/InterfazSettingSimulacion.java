@@ -563,13 +563,7 @@ public class InterfazSettingSimulacion {
 		public void keyTyped(KeyEvent e){
 			if(!((int) e.getKeyChar() > 47 && (int) e.getKeyChar() < 58)){
 				e.consume();
-			}/*
-			else if(textFieldCantidadPersona.getText().length() == 0){
-			textFieldCantidadPersona.setText("");
-			String cantPersonasSimulacion = "" + e.getKeyChar();
-			cantPesonasParaSimulacion = Integer.parseInt(cantPersonasSimulacion);
-			botonInicio.setEnabled(false);*/
-			else if(textFieldCantidadPersona.getText().length() > 0) {
+			}else if(textFieldCantidadPersona.getText().length() > 0) {
 				botonInicio.setEnabled(true);
 			}
 		}
