@@ -60,7 +60,7 @@ public class InterfazSettingSimulacion {
 	private int cantFigusPaq;
 	private int cantTotalFigus;
 	private int simulacionElegida;
-	private boolean esOpcionUno = false;
+	private boolean esOpcionUno;
 	private int cantPesonasParaSimulacion;
 	private String simulacionNombreElegida;
 
@@ -288,17 +288,18 @@ public class InterfazSettingSimulacion {
 		BotonIrConfiguracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				
-				if(textFieldPersonas.getText().length() != 0 && cantPesonasParaSimulacion >= 2) {
+				if((textFieldPersonas.getText().length() != 0 && cantPesonasParaSimulacion >= 2) ||
+					(textFieldPersonas.getText().equals("1") && esOpcionUno)){
 					erroMsgCantPersonasMenor.setVisible(false);
 					erroMsgCantPersonas.setVisible(false);
 					pantallaConfig.setVisible(true);
 					pantallaInicial.setVisible(false);
-				} else if((textFieldPersonas.getText().length() < 0 || textFieldPersonas.getText().length() == 0) && !esOpcionUno) {
+				}else if((textFieldPersonas.getText().length() < 0 || textFieldPersonas.getText().length() == 0) && !esOpcionUno) {
 					erroMsgCantPersonas.setVisible(true);
 				}else if(textFieldPersonas.getText().length() == 0 && esOpcionUno){
 					pantallaConfig.setVisible(true);
 					pantallaInicial.setVisible(false);
-				}else if(cantPesonasParaSimulacion < 2 && textFieldPersonas.getText().length() > 0){
+				}else if(cantPesonasParaSimulacion < 2 && textFieldPersonas.getText().length() > 0 && !esOpcionUno){
 					erroMsgCantPersonasMenor.setVisible(true);
 				}
 			}
@@ -326,6 +327,7 @@ public class InterfazSettingSimulacion {
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 20));
 					labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
 					simulacionElegida = -1;
+					esOpcionUno = false;
 				}
 				else if(SeleccionDeSimulacion.getSelectedIndex() == 1){
 					botonInicio.setEnabled(true);
@@ -337,6 +339,7 @@ public class InterfazSettingSimulacion {
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata", Font.BOLD, 25));
 					labelSolicitudDeCantPersonas.setForeground(new Color(224, 27, 36));
 					simulacionElegida = 1;
+					esOpcionUno = true;
 				}
 				else{
 					botonInicio.setEnabled(false);
@@ -346,6 +349,7 @@ public class InterfazSettingSimulacion {
 					labelSolicitudDeCantPersonas.setText("Cantidad de participantes: ");
 					labelSolicitudDeCantPersonas.setFont(new Font("Inconsolata",Font.PLAIN ,20));
 					labelSolicitudDeCantPersonas.setForeground(Color.WHITE);
+					esOpcionUno = false;
 				}
 		}
 	});
